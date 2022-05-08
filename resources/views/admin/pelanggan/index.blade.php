@@ -51,7 +51,7 @@
                                                             <th></th>
                                                             <th>Kode</th>
                                                             <th>Nama</th>
-                                                            {{-- <th>Alamat</th> --}}
+                                                            <th>Sales</th>
                                                             <th>Kontak</th>
                                                             {{-- <th>KTP</th> --}}
                                                             {{-- <th>Toko yang Dipegang</th> --}}
@@ -59,7 +59,7 @@
                                                             {{-- <th>Jatuh Tempo</th> --}}
                                                             <th>Keterangan</th>
                                                             <th>Omset</th>
-                                                            {{-- <th>Sebagai </th> --}}
+                                                            <th>Status </th>
                                                             <th> Action </th>
                                                         </tr>
                                                     </thead>
@@ -71,11 +71,15 @@
                                                             </td>
                                                             <td class="left">{{ $data->kode }}</td>
                                                             <td>{{ $data->nama }}</td>
+                                                            <td>{{ $data->agens->nama }}</td>
                                                             <td class="left">
                                                                 <a href="tel:{{ $data->kontak }}">{{ $data->kontak }}</a>
                                                             </td>
                                                             <td class="left">{{ $data->keterangan }}</td>
                                                             <td>{{ $data->omset }}</td>
+                                                            <td>
+                                                                <span class="label label-sm label-success"> Approved </span>
+                                                            </td>
                                                             <td> 
                                                                 {{-- <div class="btn-group btn-group-circle btn-group-solid">
                                                                     <a href="/admin/pegawai/agen/{{ $data->slug }}" type="button" class="btn btn-info"><i class="fa fa-info"></i></a>
@@ -122,6 +126,7 @@
                                                     <tr>
                                                         <th class="mdl-data-table__cell--non-numeric">Kode</th>
                                                         <th class="mdl-data-table__cell--non-numeric">Nama</th>
+                                                        <th class="mdl-data-table__cell--non-numeric">Sales</th>
                                                         <th>Kategori</th>
                                                         <th>Kontak</th>
                                                         <th>Alamat</th>
@@ -134,24 +139,33 @@
                                                     <tr>
                                                         <td class="mdl-data-table__cell--non-numeric">{{ $data->kode }}</td>
                                                         <td class="mdl-data-table__cell--non-numeric">{{ $data->nama }}</td>
+                                                        <td class="mdl-data-table__cell--non-numeric">{{ $data->agens->nama }}</td>
                                                         <td>{{ ucwords($data->kategori) }}</td>
                                                         <td>
                                                             <a href="tel:{{$data->kontak}}"> {{ $data->kontak }}</a>
                                                         </td>
                                                         <td>{{ $data->alamat }}</td>
-                                                        <td>{{ $data->status }}</td>
                                                         <td>
-                                                            <form action="{{ route('admin.pelanggan.approve', $data->id) }}" method="POST">
-                                                                {{-- @method('PUT') --}}
+                                                            <span class="label label-sm label-warning"> Pending </span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('admin.pelanggan.limit', $data->id) }}" class="btn btn-circle btn-success">
+                                                                <i class="fa fa-plus"></i> 
+                                                            </a>
+                                                            {{-- <form action="{{ route('admin.pelanggan.approve', $data->id) }}" method="POST">
                                                                 @csrf
                                                                 <input type="hidden" name="status" value="$data->id" />
-											                    <button type="submit" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab margin-right-10 btn-success">
-											                        <i class="material-icons">add</i>
+											                    <button type="submit" class="btn btn-circle btn-success">
+											                        <i class="fa fa-plus"></i> 
     											                </button>
+                                                            </form> --}}
+                                                            <form action="/admin/pelanggan/{{ $data->slug }}" method="POST">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-circle btn-danger" onclick="return confirm('Apakah Anda yakin?')">
+                                                                    <i class="fa fa-trash-o"></i> 
+                                                                </button>
                                                             </form>
-	    										                {{-- <a href="{{ route('admin.pelanggan.approve', $data->status) }}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored margin-right-4 btn-danger">
-		    									                    <i class="material-icons">delete</i>
-			    								                </a> --}}
                                                         </td>
                                                     </tr>
                                                     @endforeach

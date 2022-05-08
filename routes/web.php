@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::resource('/admin/pegawai/kasir', AdminKasirController::class);
     Route::get('/admin/pelanggan/pelangganSlug', [AdminPelangganController::class, 'pelangganSlug']);
     Route::resource('/admin/pelanggan', AdminPelangganController::class);
+    Route::get('/admin/pelanggan/limit/{id}', [AdminPelangganController::class, 'tambahlimit'])->name('admin.pelanggan.limit');
     Route::post('/admin/pelanggan/{id}', [AdminPelangganController::class, 'approve'])->name('admin.pelanggan.approve');
     Route::resource('/admin/produk/stok', AdminProdukStokController::class);
     Route::resource('/admin/produk/harga', AdminProdukHargaController::class);

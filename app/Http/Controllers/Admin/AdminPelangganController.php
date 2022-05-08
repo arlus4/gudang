@@ -7,6 +7,7 @@ use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class AdminPelangganController extends Controller
@@ -16,7 +17,7 @@ class AdminPelangganController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Pelanggan $status)
+    public function index()
     {
         $toko = Pelanggan::where('status', '1')->get();
         $pelanggan = Pelanggan::where('status', '0')->get();
@@ -28,11 +29,32 @@ class AdminPelangganController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show the form for editing the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Pelanggan  $pelanggan
      * @return \Illuminate\Http\Response
      */
+    public function tambahlimit($id)
+    {
+        $pelanggan = Pelanggan::where('id', $id)->first();
+        return view('admin/pelanggan/limit', [
+            'title' => 'Tambah Limit Pelanggan',
+            'pelanggan' => $pelanggan
+        ]);
+    }
+
+    public function limit(Request $request, Pelanggan $pelanggan)
+    {
+        $rules = [
+            'limit'     => 'required',
+            'status'    => 'required'
+        ];
+
+        $data = $request->validate($rules);
+        Pelanggan::where('id', $pelanggan->id)->update($data);
+        return redirect('admin/pelanggan/index')->with('success', 'Data Berhasil Di Tambahkan');
+    }
+
     public function approve($id)
     {
         $data = Pelanggan::findOrFail($id);
@@ -128,7 +150,14 @@ class AdminPelangganController extends Controller
      */
     public function destroy(Pelanggan $pelanggan)
     {
-        //
+        if ($pelanggan->photo_toko) {
+            Storage::delete($pelanggan->photo_toko);
+        }
+        if ($pelanggan->photo_ktp) {
+            Storage::delete($pelanggan->photo_ktp);
+        }
+        Pelanggan::destroy($pelanggan->id);
+        return redirect('/admin/pelanggan')->with('success', 'Data Berhasil Di Hapus');
     }
 
     // Fungsi Otomatisasi Slug
