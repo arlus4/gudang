@@ -48,7 +48,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="external">
-                            <h3><span class="bold">Notifications</span></h3>
+                            <h3>
+                                <span class="bold">Notifikasi</span>
+                            </h3>
                             <span class="notification-label purple-bgcolor">New 6</span>
                         </li>
                         <li>
@@ -57,14 +59,16 @@
                                     <a href="javascript:;">
                                         <span class="time">just now</span>
                                         <span class="details">
-                                            <span class="notification-icon circle deepPink-bgcolor"><i
-                                                    class="fa fa-check"></i></span>
-                                            Congratulations!. </span>
+                                            <span class="notification-icon circle deepPink-bgcolor">
+                                                <i class="fa fa-check"></i>
+                                            </span>
+                                            Congratulations!. 
+                                        </span>
                                     </a>
                                 </li>
                             </ul>
                             <div class="dropdown-menu-footer">
-                                <a href="javascript:void(0)"> All notifications </a>
+                                <a href="/admin/notif"> Lihat Semua Notifikasi </a>
                             </div>
                         </li>
                     </ul>

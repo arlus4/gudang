@@ -26,4 +26,16 @@ class AdminDashboardController extends Controller
         // $hutang_pabrik
         return view('admin/index', compact('pelanggan', 'kasir', 'sales', 'produk'));
     }
+
+    public function notif()
+    {
+        return view('admin/notif', [
+            'title' => "Notifikasi"
+        ]);
+    }
+
+    public function pelanggan($pelanggan)
+    {
+        // 
+    }
 }

@@ -42,6 +42,7 @@ Route::post('/admin/login', [AdminLoginController::class, 'authenticate']);
 // Route untuk Admin
 Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/notif', [AdminDashboardController::class, 'notif']);
     Route::resource('/admin/profil', AdminProfileController::class);
     Route::resource('/admin/pegawai/admin', AdminPegawaiController::class);
     Route::get('/admin/pegawai/agen/agenSlug', [AdminAgenController::class, 'agenSlug']);
