@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="slug">Slug (Otomatis)</label>
-                                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}" required>
+                                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}" readonly required>
                                     @error('slug')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Kategori Pelanggan</label>
-                                    <select class="form-select  select2">
+                                    <select class="form-select  select2" name="kategori" id="kategori" value="{{ old('kategori') }}">
                                         <option value="">Pilih Kategori Pelanggan</option>
                                         <optgroup label="Kategori Pelanggan">
                                             <option value="supplier">Supplier</option>
@@ -71,28 +71,6 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email Pelanggan</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
-                                    @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" value="{{ old('username') }}" required>
-                                    @error('username')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
-                                </div>
-                                {{-- <div class="form-group">
                                     <label for="kontak">Kontak</label>
                                     <input type="text" class="form-control @error('kontak') is-invalid @enderror" id="kontak" name="kontak" value="{{ old('kontak') }}" required>
                                     @error('kontak')
@@ -100,10 +78,10 @@
                                         {{ $message }}
                                     </div>
                                     @enderror
-                                </div> --}}
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label">Sales </label>
-                                    <select class="form-select select2">
+                                    <select class="form-select select2" name="agen_id" id="agen_id" value="{{ old('agen_id') }}">
                                         <option value="">Pilih Sales</option>
                                         <optgroup label="Sales yang tersedia">
                                         @foreach ($agen as $a)
@@ -115,6 +93,15 @@
                                         @endforeach
                                         </optgroup>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="limit">Limit Pelanggan</label>
+                                    <input type="text" class="form-control @error('limit') is-invalid @enderror" id="limit" name="limit" value="{{ old('limit') }}" required>
+                                    @error('limit')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Photo Toko</label>
@@ -143,9 +130,15 @@
                                     @enderror
                                     <textarea name="alamat" id="alamat" class="form-control-textarea" rows="5" value="{{ old('alamat') }}" required></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <div class="radio">
+                                        <input id="status" name="status" type="radio" value="1" checked="checked" >
+                                        <label for="status">Approved</label>
+                                    </div>
+                                </div>
                                 <div class="col-lg-12 p-t-20 text-center">
                                     <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-circle btn-primary">Submit</button>
-                                        {{-- <button type="button" class="btn btn-default">Cancel</button> --}}
                                 </div>
                             </form>
                         </div>

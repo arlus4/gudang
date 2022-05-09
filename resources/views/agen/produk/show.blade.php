@@ -7,7 +7,7 @@
         <div class="page-bar">
             <div class="page-title-breadcrumb">
                 <div class=" pull-left">
-                    <div class="page-title">Course Details</div>
+                    <div class="page-title">{{ $title }} {{ $produk->produk_stok->nama }}</div>
                 </div>
                 <ol class="breadcrumb page-breadcrumb pull-right">
                     <li>
@@ -19,7 +19,7 @@
                         <a class="parent-item" href="/agen/produk">List Daftar Produk</a>&nbsp;
                         <i class="fa fa-angle-right"></i>
                     </li>
-                    <li class="active">Course Details</li>
+                    <li class="active">{{ $title }} {{ $produk->produk_stok->nama }}</li>
                 </ol>
             </div>
         </div>
@@ -31,148 +31,75 @@
                         <div class="card-body no-padding height-9">
                             <div class="row">
                                 <div class="course-picture">
-                                    <img src="../assets/img/course/course1.jpg" class="img-responsive" alt=""> </div>
+                                    <img src="{{ asset('storage/'.$produk->produk_stok->photo_produk) }}" class="img-responsive" alt=""> </div>
                             </div>
                             <div class="profile-usertitle">
-                                <div class="profile-usertitle-name"> {{ $harga }} </div>
+                                <div class="profile-usertitle-name"> {{ $produk->produk_stok->nama }} </div>
+                                <span>{{ $produk->produk_stok->kode }}</span>
                             </div>
                             <!-- END SIDEBAR USER TITLE -->
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-head">
-                            <header>About Course</header>
+                            <header>Deskripsi</header>
                         </div>
                         <div class="card-body no-padding height-9">
                             <div class="profile-desc">
-                                Open after rule place He earth earth good called days unto which wherein day
-                                doesn't said day image signs
-                                fish days forth for evening whose his make his bearing years gathering good
-                                brought without.
+                                {{ $produk->produk_stok->deskripsi }}
                             </div>
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>Duration </b>
-                                    <div class="profile-desc-item pull-right">1 Year</div>
+                                    <b>Harga Supplier </b>
+                                    <div class="profile-desc-item pull-right">Rp.{{ $produk->harga_supplier }}</div>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Price </b>
-                                    <div class="profile-desc-item pull-right">$230.00</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Professor Name </b>
-                                    <div class="profile-desc-item pull-right">Abdul Saikh</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Date</b>
-                                    <div class="profile-desc-item pull-right">21st Jan 2017</div>
+                                    <b>Harga Retail </b>
+                                    <div class="profile-desc-item pull-right">Rp.{{ $produk->harga_retail }}</div>
                                 </li>
                             </ul>
-                            <div class="row list-separated profile-stat">
-                                <div class="col-md-4 col-sm-4 col-6">
-                                    <div class="uppercase profile-stat-title"> 4 </div>
-                                    <div class="uppercase profile-stat-text"> Years </div>
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-6">
-                                    <div class="uppercase profile-stat-title"> 1045 </div>
-                                    <div class="uppercase profile-stat-text"> Students </div>
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-6">
-                                    <div class="uppercase profile-stat-title"> 61 </div>
-                                    <div class="uppercase profile-stat-text"> Batches </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- END BEGIN PROFILE SIDEBAR -->
+
                 <!-- BEGIN PROFILE CONTENT -->
                 <div class="profile-content">
-                    <div class="row">
-                        <div class="card">
-                            <div class="card-topline-aqua">
-                                <header></header>
-                            </div>
-                            <div class="white-box">
-                                <!-- Nav tabs -->
-                                <!-- Tab panes -->
-                                <div class="tab-content">
-                                    <div class="tab-pane active fontawesome-demo">
-                                        <div id="biography">
-                                            <p>Open after rule place He earth earth good called days unto
-                                                which wherein day doesn't said day image
-                                                signs fish days forth for evening whose his make his bearing
-                                                years gathering good brought without. </p>
-                                            <p>Years living creepeth. Form them yielding behold greater
-                                                divided void was fowl earth in. Spirit Bring
-                                                grass they're you have shall years so morning. Grass
-                                                gathering won't heaven set greater darkness forth
-                                                abundantly he. </p>
-                                            <p>sn't hath, forth. Brought sea subdue, from divided replenish
-                                                creature after creeping abundantly fly is
-                                                cattle fill were years years may darkness blessed which land
-                                                creepeth good moving good. Life living
-                                                you're.</p>
-                                            <p>Open after rule place He earth earth good called days unto
-                                                which wherein day doesn't said day image
-                                                signs fish days forth for evening whose his make his bearing
-                                                years gathering good brought without. </p>
-                                            <p>Years living creepeth. Form them yielding behold greater
-                                                divided void was fowl earth in. Spirit Bring
-                                                grass they're you have shall years so morning. Grass
-                                                gathering won't heaven set greater darkness forth
-                                                abundantly he. </p>
-                                            <p>sn't hath, forth. Brought sea subdue, from divided replenish
-                                                creature after creeping abundantly fly is
-                                                cattle fill were years years may darkness blessed which land
-                                                creepeth good moving good. Life living
-                                                you're.</p>
-                                            <br>
-                                            <h4 class="font-bold">Course Syllabus</h4>
-                                            <hr>
-                                            <ul>
-                                                <li>Introduction to Computer and Internet.</li>
-                                                <li>Microsoft Application Tools such MS Word, MS Excel, MS
-                                                    PowerPoint.</li>
-                                                <li>Computer Organizations and Operating Systems.</li>
-                                                <li>Programming in C.</li>
-                                                <li>Object Oriented Programming Languages such as C++/Java.
-                                                </li>
-                                                <li>RDBMS and Data Management</li>
-                                                <li>Web Technologies such as creation of dynamic website.
-                                                </li>
-                                            </ul>
-                                            <br>
-                                            <h4 class="font-bold">After the completion of course the
-                                                students will be able to: </h4>
-                                            <hr>
-                                            <ul>
-                                                <li>Understand computers, its basic components and
-                                                    applications.</li>
-                                                <li>Understand and Identify the Concepts of Computer
-                                                    Hardware and software.</li>
-                                                <li>Implement Word Processing Basics.</li>
-                                                <li>Create Spread sheets and use of formulas and functions.
-                                                </li>
-                                                <li>Create and develop a presentation.</li>
-                                                <li>Understand basic concepts in Networking and
-                                                    Troubleshooting.</li>
-                                                <li>Develop the skills for effective compose of E-mails and
-                                                    its features.</li>
-                                                <li>Create and develop forms, queries and reports.</li>
-                                                <li>Understand the concepts of multimedia and its
-                                                    applications.</li>
-                                                <li>Develop the understanding of HTML.</li>
-                                                <li>Understand the concepts of Tally and its applications.
-                                                </li>
-                                                <li>Maintenance of PC.</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="card-box">
+								<div class="card-head">
+									<header>Harga Produk</header>
+								</div>
+								<div class="card-body row">
+									<div class="col-lg-6 p-t-20">
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-width">
+											<input class="mdl-textfield__input" type="text" id="text4" value="{{ $produk->produk_stok->nama }}" readonly>
+											<label class="mdl-textfield__label" for="text4">Nama Produk</label>
+										</div>
+									</div>
+                                    <div class="col-lg-6 p-t-20">
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-width">
+											<input class="mdl-textfield__input" type="text" id="text4" value="{{ $produk->produk_stok->kode }}" readonly>
+											<label class="mdl-textfield__label" for="text4">Kode Produk</label>
+										</div>
+									</div>
+                                    <div class="col-lg-6 p-t-20">
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-width">
+											<input class="mdl-textfield__input" type="text" id="text4" value="{{ $produk->produk_stok->jumlah_produk }}" readonly>
+											<label class="mdl-textfield__label" for="text4">Jumlah Stok</label>
+										</div>
+									</div>
+                                    <div class="col-lg-6 p-t-20">
+										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-width">
+											<input class="mdl-textfield__input" type="text" id="text4" value="{{ $produk->harga_terkini }}" readonly>
+											<label class="mdl-textfield__label" for="text4">Tanggal Harga Terbaru</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
                 </div>
                 <!-- END PROFILE CONTENT -->
             </div>

@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="slug">Slug (Otomatis)</label>
-                                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}" required>
+                                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}" readonly required>
                                     @error('slug')
                                     <div class="invalid-feedback">
                                         {{ $message }}

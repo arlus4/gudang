@@ -75,27 +75,26 @@
                         <header>Limit Pelanggan</header>
                     </div>
                     <div class="card-body " id="bar-parent6">
-                        <form action="#" method="POST">
+                        <form action="{{ route('admin.pelanggan.ubah', $pelanggan->slug) }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group row">
-                                <label class="col-sm-12 control-label">Limit Pelanggan</label>
-                                <div class="col-sm-12">
-                                    <input type="text" name="limit" id="limit" data-mask="Rp. 999.999.999" class="form-control @error('kode') is-invalid @enderror" required auto-focus>
-                                    @error('kode')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
+                            @method('patch')
+                            <div class="form-group">
+                                <label for="limit">Limit Pelanggan</label>
+                                <input type="text" class="form-control @error('limit') is-invalid @enderror" id="limit" name="limit" value="{{ old('limit') }}" required>
+                                @error('limit')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
                                 </div>
+                                @enderror
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group">
                                 <label>Status</label>
                                 <div class="radio">
-                                    <input id="status" name="status" type="radio" value="1" checked="checked" disabled="disabled">
+                                    <input id="status" name="status" type="radio" value="1" checked="checked" >
                                     <label for="status">Approve</label>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-circle btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-circle btn-primary">Simpan</button>
                             <a href="/admin/pelanggan" type="button" class="btn btn-circle btn-danger">Kembali</a>
                         </form>
                     </div>

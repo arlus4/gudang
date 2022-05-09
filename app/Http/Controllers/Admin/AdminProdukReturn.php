@@ -1,14 +1,37 @@
 <?php
 
-namespace App\Http\Controllers\Agen;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\ProdukStok;
-use App\Models\ProdukHarga;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ReturnProduk;
+use Illuminate\Http\Request;
 
-class AgenProdukController extends Controller
+class AdminProdukReturn extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pabrik()
+    {
+        return view('admin/produk/return/pabrik', [
+            'title' => 'Return Produk Pabrik',
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pelanggan()
+    {
+        return view('admin/produk/return/pelanggan', [
+            'title' => 'Return Produk Pelanggan',
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,11 +39,7 @@ class AgenProdukController extends Controller
      */
     public function index()
     {
-        $stok = ProdukHarga::with('produk_stok')->get();
-        return view('agen/produk/index', [
-            'title' => 'Daftar Produk',
-            'stoks' => $stok
-        ]);
+        //
     }
 
     /**
@@ -47,26 +66,21 @@ class AgenProdukController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProdukHarga  $produk
+     * @param  \App\Models\ReturnProduk  $returnProduk
      * @return \Illuminate\Http\Response
      */
-    public function show(ProdukHarga $produk)
+    public function show(ReturnProduk $returnProduk)
     {
-        // $produk = ProdukHarga::with('produk_stok')->get();
-        // dd($produk);
-        return view('agen/produk/show', [
-            'title' => "Detail Produk",
-            'produk' => $produk
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProdukHarga  $produk
+     * @param  \App\Models\ReturnProduk  $returnProduk
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProdukHarga $produk)
+    public function edit(ReturnProduk $returnProduk)
     {
         //
     }
@@ -75,10 +89,10 @@ class AgenProdukController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProdukHarga  $produk
+     * @param  \App\Models\ReturnProduk  $returnProduk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProdukHarga $produk)
+    public function update(Request $request, ReturnProduk $returnProduk)
     {
         //
     }
@@ -86,10 +100,10 @@ class AgenProdukController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProdukHarga  $produk
+     * @param  \App\Models\ReturnProduk  $returnProduk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProdukHarga $produk)
+    public function destroy(ReturnProduk $returnProduk)
     {
         //
     }

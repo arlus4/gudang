@@ -62,7 +62,7 @@
                                     </div>
                                     @enderror
                                 </div>
-                                {{-- <div class="form-group">
+                                <div class="form-group">
                                     <label for="kontak">Kontak</label>
                                     <input type="text" class="form-control @error('kontak') is-invalid @enderror" id="kontak" name="kontak" value="{{ old('kontak', $agen->kontak) }}" required>
                                     @error('kontak')
@@ -70,7 +70,7 @@
                                         {{ $message }}
                                     </div>
                                     @enderror
-                                </div> --}}
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Photo Sales</label>
                                     <input type="file" class="default @error('photo_profil') is-invalid @enderror" id="photo_profil" name="photo_profil" multiple onchange="previewImage()">

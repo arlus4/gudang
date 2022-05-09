@@ -53,11 +53,11 @@
                                                             <th>Nama</th>
                                                             <th>Sales</th>
                                                             <th>Kontak</th>
-                                                            {{-- <th>KTP</th> --}}
                                                             {{-- <th>Toko yang Dipegang</th> --}}
                                                             {{-- <th>Nota Hutang</th> --}}
                                                             {{-- <th>Jatuh Tempo</th> --}}
                                                             <th>Keterangan</th>
+                                                            <th>Limit</th>
                                                             <th>Omset</th>
                                                             <th>Status </th>
                                                             <th> Action </th>
@@ -76,22 +76,23 @@
                                                                 <a href="tel:{{ $data->kontak }}">{{ $data->kontak }}</a>
                                                             </td>
                                                             <td class="left">{{ $data->keterangan }}</td>
+                                                            <td>{{ $data->limit }}</td>
                                                             <td>{{ $data->omset }}</td>
                                                             <td>
                                                                 <span class="label label-sm label-success"> Approved </span>
                                                             </td>
                                                             <td> 
-                                                                {{-- <div class="btn-group btn-group-circle btn-group-solid">
-                                                                    <a href="/admin/pegawai/agen/{{ $data->slug }}" type="button" class="btn btn-info"><i class="fa fa-info"></i></a>
-                                                                    <a href="/admin/pegawai/agen/{{ $data->slug }}/edit" type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                                    <form action="/admin/pegawai/agen/{{ $data->slug }}" method="POST">
+                                                                <div class="btn-group btn-group-circle btn-group-solid">
+                                                                    <a href="/admin/pelanggan/{{ $data->slug }}" class="btn btn-info"><i class="fa fa-info"></i></a>
+                                                                    <a href="/admin/pelanggan/{{ $data->slug }}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                                                    <form action="/admin/pelanggan/{{ $data->slug }}" method="POST">
                                                                         @method('delete')
                                                                         @csrf
                                                                         <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
                                                                             <i class="fa fa-trash-o"></i>
                                                                         </button>
                                                                     </form>
-                                                                </div> --}}
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -135,31 +136,31 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($pelanggan as $data)
+                                                    @foreach ($pelanggan as $pelanggan)
                                                     <tr>
-                                                        <td class="mdl-data-table__cell--non-numeric">{{ $data->kode }}</td>
-                                                        <td class="mdl-data-table__cell--non-numeric">{{ $data->nama }}</td>
-                                                        <td class="mdl-data-table__cell--non-numeric">{{ $data->agens->nama }}</td>
-                                                        <td>{{ ucwords($data->kategori) }}</td>
+                                                        <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->kode }}</td>
+                                                        <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->nama }}</td>
+                                                        <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->agens->nama }}</td>
+                                                        <td>{{ ucwords($pelanggan->kategori) }}</td>
                                                         <td>
-                                                            <a href="tel:{{$data->kontak}}"> {{ $data->kontak }}</a>
+                                                            <a href="tel:{{$pelanggan->kontak}}"> {{ $pelanggan->kontak }}</a>
                                                         </td>
-                                                        <td>{{ $data->alamat }}</td>
+                                                        <td>{{ $pelanggan->alamat }}</td>
                                                         <td>
                                                             <span class="label label-sm label-warning"> Pending </span>
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('admin.pelanggan.limit', $data->id) }}" class="btn btn-circle btn-success">
+                                                            <a href="{{ route('admin.pelanggan.limit', $pelanggan->slug) }}" class="btn btn-circle btn-success">
                                                                 <i class="fa fa-plus"></i> 
                                                             </a>
-                                                            {{-- <form action="{{ route('admin.pelanggan.approve', $data->id) }}" method="POST">
+                                                            {{-- <form action="{{ route('admin.pelanggan.approve', $pelanggan->id) }}" method="POST">
                                                                 @csrf
-                                                                <input type="hidden" name="status" value="$data->id" />
+                                                                <input type="hidden" name="status" value="$pelanggan->id" />
 											                    <button type="submit" class="btn btn-circle btn-success">
 											                        <i class="fa fa-plus"></i> 
     											                </button>
                                                             </form> --}}
-                                                            <form action="/admin/pelanggan/{{ $data->slug }}" method="POST">
+                                                            <form action="/admin/pelanggan/{{ $pelanggan->slug }}" method="POST">
                                                                 @method('delete')
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-circle btn-danger" onclick="return confirm('Apakah Anda yakin?')">

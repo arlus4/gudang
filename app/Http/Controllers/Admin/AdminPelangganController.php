@@ -20,23 +20,16 @@ class AdminPelangganController extends Controller
     public function index()
     {
         $toko = Pelanggan::where('status', '1')->get();
-        $pelanggan = Pelanggan::where('status', '0')->get();
+        $pelanggans = Pelanggan::where('status', '0')->get();
         return view('admin/pelanggan/index', [
             'title' => 'Data Pelanggan',
             'toko' => $toko,
-            'pelanggan' => $pelanggan
+            'pelanggan' => $pelanggans
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pelanggan  $pelanggan
-     * @return \Illuminate\Http\Response
-     */
-    public function tambahlimit($id)
+    public function tambahlimit(Pelanggan $pelanggan)
     {
-        $pelanggan = Pelanggan::where('id', $id)->first();
         return view('admin/pelanggan/limit', [
             'title' => 'Tambah Limit Pelanggan',
             'pelanggan' => $pelanggan
@@ -45,24 +38,15 @@ class AdminPelangganController extends Controller
 
     public function limit(Request $request, Pelanggan $pelanggan)
     {
-        $rules = [
-            'limit'     => 'required',
-            'status'    => 'required'
-        ];
-
-        $data = $request->validate($rules);
-        Pelanggan::where('id', $pelanggan->id)->update($data);
-        return redirect('admin/pelanggan/index')->with('success', 'Data Berhasil Di Tambahkan');
-    }
-
-    public function approve($id)
-    {
-        $data = Pelanggan::findOrFail($id);
-        if ($data) {
-            $data->status = true;
-            $data->save();
-            return redirect()->back()->with('success', 'Data Berhasil Di Approve');
-        }
+        $this->validate($request, [
+            'limit' => 'required',
+            'status' => 'required'
+        ]);
+        $pelanggan->update([
+            'limit' => $request->limit,
+            'status' => $request->status
+        ]);
+        return redirect('admin/pelanggan')->with('success', 'Data Berhasil Di Tambahkan');
     }
 
     /**
@@ -72,9 +56,8 @@ class AdminPelangganController extends Controller
      */
     public function create()
     {
-        return view('admin/pelanggan/tambah', [
+        return view('admin/pelanggan/create', [
             'title' => 'Tambah Pelanggan',
-            // 'kasir' => $kasir,
             'agen' => Agen::all(),
         ]);
     }
@@ -87,25 +70,25 @@ class AdminPelangganController extends Controller
      */
     public function store(Request $request)
     {
-        // $data = $request->validate([
-        //     'kode'      => 'required | unique:pelanggans',
-        //     'nama'      => 'required',
-        //     'slug'      => 'required | unique:pelanggans',
-        //     'email'     => 'required | email | max:255',
-        //     'alamat'    => 'required',
-        //     'username'  => 'required | unique:pelanggans',
-        //     'password'  => 'required | min:2 | max:255',
-        //     // 'kontak'    => 'required',
-        //     'photo_toko'     => 'required | image | mimes:jpg,png,jpeg,gif,svg | max:2048',
-        //     'photo_ktp'       => 'required | image | mimes:jpg,png,jpeg,gif,svg | max:2048',
-        // ]);
+        $data = $request->validate([
+            'kode'      => 'required | unique:pelanggans',
+            'slug'      => 'required | unique:pelanggans',
+            'nama'      => 'required',
+            'kontak'    => 'required',
+            'kategori'  => 'required',
+            'agen_id'   => 'required',
+            'limit'     => 'required',
+            'photo_toko'     => 'required | image | mimes:jpg,png,jpeg,gif,svg | max:2048',
+            'photo_ktp'       => 'required | image | mimes:jpg,png,jpeg,gif,svg | max:2048',
+            'alamat'    => 'required',
+            'status'    => 'required',
+        ]);
 
-        // $data['photo_toko'] = $request->file('photo_toko')->store('profile-kasir');
-        // $data['photo_ktp'] = $request->file('photo_ktp')->store('ktp-kasir');
-        // $data['password'] = Hash::make($data['password']);
-        // $data['user_id'] = Auth::user()->id;
-        // Pelanggan::create($data);
-        // return redirect('/admin/pegawai/kasir')->with('success', 'pelanggan telah ditambah!');
+        $data['photo_toko'] = $request->file('photo_toko')->store('profile-toko');
+        $data['photo_ktp'] = $request->file('photo_ktp')->store('ktp-toko');
+        $data['user_id'] = Auth::user()->id;
+        Pelanggan::create($data);
+        return redirect('/admin/pelanggan')->with('success', 'Pelanggan telah ditambah!');
     }
 
     /**
@@ -116,7 +99,11 @@ class AdminPelangganController extends Controller
      */
     public function show(Pelanggan $pelanggan)
     {
-        //
+        // dd($pelanggan);
+        return view('admin/pelanggan/show', [
+            'title' => 'Profile Pelanggan',
+            'pelanggan' => $pelanggan
+        ]);
     }
 
     /**
@@ -127,7 +114,11 @@ class AdminPelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        //
+        return view('admin/pelanggan/edit', [
+            'title' => "Ubah Data $pelanggan->nama",
+            'pelanggan' => $pelanggan,
+            'agens' => Agen::all(),
+        ]);
     }
 
     /**
@@ -139,7 +130,40 @@ class AdminPelangganController extends Controller
      */
     public function update(Request $request, Pelanggan $pelanggan)
     {
-        //
+        $rules = [
+            'nama'      => 'required',
+            'alamat'    => 'required',
+        ];
+
+        if ($request->kode != $pelanggan->kode) {
+            $rules['kode'] = 'required|unique:pelanggans';
+        }
+
+        if ($request->slug != $pelanggan->slug) {
+            $rules['slug'] = 'required|unique:pelanggans';
+        }
+
+        $data = $request->validate($rules);
+
+        if ($request->file('photo_profil')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $data['photo_profil'] = $request->file('photo_profil')->store('profile-sales');
+        }
+
+        if ($request->file('photo_ktp')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $data['photo_ktp'] = $request->file('photo_ktp')->store('ktp-sales');
+        }
+
+        $data['user_id'] = Auth::user()->id;
+
+        Agen::where('id', $pelanggan->id)->update($data);
+
+        return redirect('/admin/pegawai/agen')->with('success', 'Data Sales Berhasil dirubah');
     }
 
     /**

@@ -70,7 +70,7 @@
                                         <td>....</td>
                                         <td>....</td>
                                         <td>Lunas/Belum</td>
-                                        <td>....</td>
+                                        <td>{{ $data->limit }}</td>
                                         <td>....</td>
                                         <td> 
                                             <div class="btn-group btn-group-circle btn-group-solid">
