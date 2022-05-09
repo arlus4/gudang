@@ -19,48 +19,30 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item {{ Request::is('agen/dashboard') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('agen/dashboard/*') ? 'active' : '' }}">
                     <a href="{{ route('agen.dashboard') }}" class="nav-link">
                     <i class="material-icons">dashboard</i>
                         <span class="title">Beranda</span>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('agen/pelanggan') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('agen/pelanggan/*') ? 'active' : '' }}">
                     <a href="/agen/pelanggan" class="nav-link">
                         <i class="material-icons">face</i>
                         <span class="title">Pelanggan</span>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('agen/produk') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('agen/produk/*') ? 'active' : '' }}">
                     <a href="/agen/produk" class="nav-link">
                         <i class="material-icons">storage</i>
                         <span class="title">Produk</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="material-icons">attach_money</i>
+                <li class="nav-item nav-item {{ Request::is('agen/transaksi/*') ? 'active' : '' }}">
+                    <a href="/agen/transaksi" class="nav-link nav-toggle">
+                        <i class="material-icons">add_shopping_cart</i>
                         <span class="title">Transaksi</span>
-                        <span class="arrow "></span>
                     </a>
-                    <ul class="sub-menu">                        
-                        <li class="nav-item">
-                            <a href="javascript:;" class="nav-link">
-                                <i class="fa fa-edit"></i> Pesanan 
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:;" class="nav-link nav-toggle">
-                                <i class="fa fa-shopping-cart"></i> Pre-Order
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:;" class="nav-link">
-                                <i class="fa fa-mail-forward"></i> Penjualan 
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
+                </li>
                 {{-- <li class="nav-item">
                     <a href="javascript:;" class="nav-link nav-toggle"> 
                         <i class="material-icons">assessment</i>

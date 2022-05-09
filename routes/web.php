@@ -11,9 +11,11 @@ use App\Http\Controllers\Admin\AdminKasirController;
 use App\Http\Controllers\Agen\AgenProfileController;
 use App\Http\Controllers\Kasir\KasirProdukController;
 use App\Http\Controllers\Admin\AdminPegawaiController;
+use App\Http\Controllers\Admin\AdminPesananController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Agen\AgenDashboardController;
 use App\Http\Controllers\Agen\AgenPelangganController;
+use App\Http\Controllers\Agen\AgenTransaksiController;
 use App\Http\Controllers\Kasir\KasirProfileController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminPelangganController;
@@ -57,6 +59,7 @@ Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::resource('/admin/produk/harga', AdminProdukHargaController::class);
     Route::get('/admin/produk/return/pabrik', [AdminProdukReturn::class, 'pabrik']);
     Route::get('/admin/produk/return/pelanggan', [AdminProdukReturn::class, 'pelanggan']);
+    Route::resource('admin/transaksi/pesanan', AdminPesananController::class);
 });
 
 // Login Sales
@@ -69,6 +72,7 @@ Route::middleware('auth:agen', 'verified', 'isagen')->group(function () {
     Route::resource('/agen/produk', AgenProdukController::class);
     Route::get('/agen/pelanggan/tokoSlug', [AgenPelangganController::class, 'tokoSlug']); //diatas resource
     Route::resource('/agen/pelanggan', AgenPelangganController::class);
+    Route::resource('/agen/transaksi', AgenTransaksiController::class);
 });
 
 // Login Kasir

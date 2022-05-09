@@ -92,21 +92,16 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ Request::is('admin/transaksi/*') ? 'active open' : '' }}">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="material-icons">add_shopping_cart</i>
                         <span class="title">Transaksi</span>
-                        <span class="arrow "></span>
+                        <span class="arrow {{ Request::is('admin/transaksi/*') ? 'open' : '' }}"></span>
                     </a>
                     <ul class="sub-menu">                        
                         <li class="nav-item">
                             <a href="/admin/transaksi/pesanan" class="nav-link">
                                 <i class="fa fa-edit"></i> Pesanan 
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/admin/transaksi/pre_order" class="nav-link">
-                                <i class="fa fa-shopping-cart"></i> Pre-Order
                             </a>
                         </li>
                         <li class="nav-item">

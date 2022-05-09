@@ -7,13 +7,14 @@
             <div class="page-bar">
                 <div class="page-title-breadcrumb">
                     <div class=" pull-left">
-                        <div class="page-title">Dashboard {{ ucwords(Auth::guard('agen')->user()->sebagai) }}!</div>
+                        <div class="page-title">Beranda {{ ucwords(Auth::guard('agen')->user()->nama) }}!</div>
                     </div>
                     <ol class="breadcrumb page-breadcrumb pull-right">
-                        <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">Home</a>&nbsp;<i
-                                class="fa fa-angle-right"></i>
+                        <li>
+                            <i class="fa fa-home"></i>&nbsp;
+                            <li class="active">Beranda</li>
                         </li>
-                        <li class="active">Dashboard</li>
+                        
                     </ol>
                 </div>
             </div>
@@ -76,7 +77,7 @@
             </div> --}}
             <!-- end widget -->
             <!-- chart start -->
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-sm-6">
                     <div class="card card-box">
                         <div class="card-head">
@@ -111,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- Chart end -->
         </div>
     </div>
