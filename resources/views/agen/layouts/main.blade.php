@@ -8,8 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Responsive Admin Template" />
-    <meta name="author" content="SmartUniversity" />
+    <meta name="description" content="Web Gudangbaja" />
+    <meta name="author" content="Gudangbaja" />
     <title>Gudang Baja | Prototype</title>
     <!-- google font -->
     <link href="../../../../../../fonts.googleapis.com/css6079.css?family=Poppins:300,400,500,600,700" rel="stylesheet" type="text/css" />
@@ -48,6 +48,7 @@
     <link href="{{ asset('assets/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- favicon -->
     <link href="{{ asset('assets/img/favicon.ico') }}" rel="shortcut icon" />
+</head>
 <!-- END HEAD -->
 
 <body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-dark dark-sidebar-color logo-dark dark-theme">

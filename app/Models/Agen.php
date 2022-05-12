@@ -21,6 +21,8 @@ class Agen extends Authenticatable
     // protected $with = ['users', 'pelanggans'];
     protected $with = ['users'];
 
+    protected $table = 'agens';
+
     /**
      * The attributes that aren't mass assignable.
      *

@@ -65,9 +65,14 @@
                                     <label class="control-label">Kategori Pelanggan</label>
                                     <select class="form-select  select2" name="kategori" id="kategori" value="{{ old('kategori', $pelanggan->kategori) }}">
                                         <option value="">Pilih Kategori Pelanggan</option>
-                                        <optgroup label="Kategori Pelanggan">
-                                            <option value="supplier">Supplier</option>
-                                            <option value="retail">Retail</option>
+                                        <optgroup label="Kategori Pelanggan Terpilih">
+                                        @if (old('kategori', $pelanggan->kategori) == $pelanggan->kategori)
+                                                <option value="$pelanggan-kategori" selected>{{ ucwords($pelanggan->kategori) }}</option>
+                                        </optgroup>
+                                        <optgroup label="Kategori Pelanggan yang Tersedia">
+                                                <option value="supplier">Supplier</option>
+                                                <option value="retail">Retail</option>
+                                            @endif
                                         </optgroup>
                                     </select>
                                 </div>

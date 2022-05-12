@@ -21,6 +21,8 @@ class Kasir extends Authenticatable
     // protected $with = ['users', 'pelanggans'];
     protected $with = ['users'];
 
+    protected $table = 'kasirs';
+
     /**
      * The attributes that aren't mass assignable.
      *

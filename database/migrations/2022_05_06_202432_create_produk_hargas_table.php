@@ -17,6 +17,7 @@ class CreateProdukHargasTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('stok_id')->reference('id')->on('produk_stoks');
+            $table->foreignId('jasa_id')->reference('id')->on('produk_jasas');
             $table->string('slug')->unique();
             $table->date('harga_terkini');
             $table->decimal('harga_dasar');

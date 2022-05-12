@@ -31,7 +31,7 @@
                         <div class="col-lg-3 col-md-6 col-12 col-sm-6">
                             <div class="blogThumb">
                                 <div class="thumb-center">
-                                    <img class="img-responsive" alt="{{ $stok->produk_stok->nama }}" src="{{ asset('storage/'.$stok->produk_stok->photo_produk) }}">
+                                    <img class="img-responsive" src="{{ asset('storage/'.$stok->produk_stok->photo_produk) }}" alt="{{ $stok->produk_stok->nama }}">
                                 </div>
                                 <div class="course-box">
                                     <h4>{{ $stok->produk_stok->nama }}</h4>

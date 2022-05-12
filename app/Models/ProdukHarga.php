@@ -10,7 +10,9 @@ class ProdukHarga extends Model
     use HasFactory;
 
     //fungsi eager loading laravel
-    protected $with = ['users', 'produk_stok'];
+    protected $with = ['users', 'produk_stok', 'produk_jasa'];
+
+    protected $table = 'produk_hargas';
 
     /**
      * The attributes that aren't mass assignable.
@@ -47,5 +49,10 @@ class ProdukHarga extends Model
     public function produk_stok()
     {
         return $this->belongsTo(ProdukStok::class, 'stok_id');
+    }
+
+    public function produk_jasa()
+    {
+        return $this->belongsTo(ProdukJasa::class, 'jasa_id');
     }
 }

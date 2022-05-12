@@ -2,17 +2,16 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <!-- BEGIN HEAD -->
-
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Gudangbaja" />
+    <meta name="description" content="Web Gudangbaja" />
     <meta name="author" content="Gudangbaja" />
     <title>Gudang Baja | Prototype</title>
     <!-- google font -->
-    <link href="{{ asset('assets/fonts.googleapis.com/css6079.css?family=Poppins:300,400,500,600,700') }}" rel="stylesheet" type="text/css" />
+    <link href="../../../../../../fonts.googleapis.com/css6079.css?family=Poppins:300,400,500,600,700" rel="stylesheet" type="text/css" />
     <!-- icons -->
     <link href="{{ asset('assets/fonts/simple-line-icons/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/fonts/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
@@ -22,20 +21,19 @@
     <link href="{{ asset('assets/plugins/summernote/summernote.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/flatpicker/css/flatpickr.min.css') }}" rel="stylesheet" />
     <!-- Material Design Lite CSS -->
-    <link href="{{ asset('assets/css/material_style.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/material/material.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/material_style.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" media="screen">
     <link href="{{ asset('assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css') }}" rel="stylesheet" media="screen">
-    <!-- Theme Styles -->
-    <link href="{{ asset('assets/css/theme/dark/theme_style.css') }}" rel="stylesheet" id="rt_style_components" type="text/css" />
-    <link href="{{ asset('assets/css/theme/dark/style.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/theme/dark/theme-color.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/css/pages/formlayout.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('assets/plugins/sweet-alert/sweetalert2.min.css') }}" rel="stylesheet">
     <!-- inbox style -->
     <link href="{{ asset('assets/css/pages/inbox.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Theme Styles -->
+    <link href="{{ asset('assets/css/theme/dark/theme_style.css') }}" rel="stylesheet" id="rt_style_components" type="text/css" />
+    <link href="{{ asset('assets/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/theme/dark/style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/theme/dark/theme-color.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('assets/css/pages/formlayout.css') }}" rel="stylesheet" type="text/css" />
     <!-- data tables -->
     <link href="{{ asset('assets/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- dropzone -->
@@ -48,26 +46,26 @@
     <link href="{{ asset('assets/plugins/select2/css/select2.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- favicon -->
-    {{-- <link href="{{ asset('admin/img/favicon.ico') }}" rel="shortcut icon" /> --}}
+    <link href="{{ asset('assets/img/favicon.ico') }}" rel="shortcut icon" />
 </head>
 <!-- END HEAD -->
 
-<body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-dark dark-sidebar-color logo-dark dark-theme">
+<body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md page-full-width header-dark dark-sidebar-color logo-dark dark-theme">
     <div class="page-wrapper">
 
-        @include('admin/layouts/header')
+        @include('agen/layouts/head')
 
         <!-- start page container -->
         <div class="page-container">
-            @include('admin/layouts/sidebar')
-            @yield('admin/index')
+            @yield('agen/transaksi/create')
         </div>
         <!-- end page container -->
 
         <!-- start footer -->
         <div class="page-footer">
-            <div class="page-footer-inner"> 2022 &copy; Theme by
-                <a href="#" target="_top" class="makerCss">Gudangbaja</a>
+            <div class="page-footer-inner"> 2017 &copy; Smart University Theme By
+                <a href="https://radixtouch.com/cdn-cgi/l/email-protection#4436212037302536302c212921042329252d286a272b29"
+                    target="_top" class="makerCss">Redstar Theme</a>
             </div>
             <div class="scroll-to-top">
                 <i class="icon-arrow-up"></i>
@@ -78,7 +76,8 @@
     </div>
 
     <!-- start js include path -->
-    <script src="{{ asset('assets/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js') }}" data-cfasync="false"></script>
+    <script data-cfasync="false" src="../../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+    </script>
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/popper/popper.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery-blockui/jquery.blockui.min.js') }}"></script>
@@ -91,7 +90,6 @@
     <script src="{{ asset('assets/plugins/bootstrap-inputmask/bootstrap-inputmask.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datepicker/datepicker-init.js') }}"></script>
-	<script src="{{ asset('assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}" charset="UTF-8"></script>
     <script src="{{ asset('assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker-init.js') }}" charset="UTF-8"></script>
     <script src="{{ asset('assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker-init.js') }}" charset="UTF-8"></script>
@@ -105,11 +103,9 @@
 	<script src="{{ asset('assets/js/pages/material-select/getmdl-select.js') }}"></script>
 	<script src="{{ asset('assets/plugins/flatpicker/js/flatpicker.min.js') }}"></script>
 	<script src="{{ asset('assets/js/pages/date-time/date-time.init.js') }}"></script>
-    <script src="{{ asset('assets/plugins/material/material.min.js') }}"></script>
     <!--apex chart-->
     <script src="{{ asset('assets/plugins/apexcharts/apexcharts.min.js') }}"></script>
-	<!-- Page Specific JS File -->
-	<script src="{{ asset('assets/js/pages/chart/apex/apexcharts.data.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/chart/chartjs/home-data.js') }}"></script>
     <!-- summernote -->
     <script src="{{ asset('assets/plugins/summernote/summernote.js') }}"></script>
     <script src="{{ asset('assets/js/pages/summernote/summernote-data.js') }}"></script>
@@ -128,6 +124,5 @@
     <script src="{{ asset('assets/js/pages/select2/select2-init.js') }}"></script>
     <!-- end js include path -->
 </body>
-
 
 </html>

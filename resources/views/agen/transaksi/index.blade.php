@@ -20,65 +20,68 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="tabbable-line">
-                    <ul class="nav customtab nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a href="#data" class="nav-link active" data-bs-toggle="tab">Data Pesanan</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active fontawesome-demo" id="data">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="card-box">
-                                        <div class="card-head">
-                                            <header>Tabel {{ $title }} </header>
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="card-body ">
+                        <div class="mdl-tabs mdl-js-tabs">
+                            <div class="mdl-tabs__tab-bar tab-left-side">
+                                <a href="#data" class="mdl-tabs__tab tabs_three is-active">Tabel {{ $title }}</a>
+                            </div>
+                            <div class="mdl-tabs__panel is-active p-t-20" id="data">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <div class="btn-group">
+                                            <a href="/agen/transaksi/create" id="addRow" class="btn btn-info"> Tambah Pesanan Baru 
+                                                <i class="fa fa-plus"></i>
+                                            </a>
                                         </div>
-                                        <div class="card-body ">
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-6 col-6">
-                                                    <div class="btn-group">
-                                                        <a href="/agen/transaksi/create" id="addRow" class="btn btn-info"> Tambah Pesanan Baru 
-                                                            <i class="fa fa-plus"></i>
+                                        <tbody>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Address</th>
+                                                <th>Quantity</th>
+                                                <th>Tax</th>
+                                                <th>Discount</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                            {{-- @foreach ($pelanggans as $data)
+                                            <tr class="odd gradeX">
+                                                <td class="patient-img">
+                                                    <img src="{{ asset('storage/'.$data->photo_toko) }}" alt="Photo Profil {{ $data->nama }}">
+                                                </td>
+                                                <td>{{ $data->kode }}</td>
+                                                <td>{{ $data->nama }}</td>
+                                                <td>{{ $data->alamat }}</td>
+                                                <td>
+                                                    <a href="tel:{{ $data->kontak }}">{{ $data->kontak }}</a>
+                                                </td>
+                                                <td>{{ ucwords($data->kategori) }}</td>
+                                                <td>....</td>
+                                                <td>....</td>
+                                                <td>Lunas/Belum</td>
+                                                <td>{{ $data->limit }}</td>
+                                                <td>....</td>
+                                                <td> 
+                                                    <div class="btn-group btn-group-circle btn-group-solid">
+                                                        <a href="/agen/pelanggan/{{ $data->slug }}" class="btn btn-info">
+                                                            <i class="fa fa-info"></i>
                                                         </a>
+                                                        <a href="/agen/pelanggan/{{ $data->slug }}/edit" class="btn btn-warning">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                        <form action="/agen/pelanggan/{{ $data->slug }}" method="POST">
+                                                            @method('delete')
+                                                            @csrf
+                                                            <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </button>
+                                                        </form>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <table class="mdl-data-table ml-table-striped mdl-js-data-table mdl-data-table--selectable is-upgraded">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="mdl-data-table__cell--non-numeric">Name</th>
-                                                        <th class="mdl-data-table__cell--non-numeric">Address</th>
-                                                        <th>Quantity</th>
-                                                        <th>Tax</th>
-                                                        <th>Discount</th>
-                                                        <th>Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-                                                        <td class="mdl-data-table__cell--non-numeric">Gandhi road, Ahmedabad
-                                                        </td>
-                                                        <td>25</td>
-                                                        <td>$1.00</td>
-                                                        <td>$0.90</td>
-                                                        <td>
-											                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab margin-right-10 btn-success">
-											                    <i class="material-icons">add</i>
-											                </button>
-											                <button
-											                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored margin-right-4 btn-danger">
-											                    <i class="material-icons">delete</i>
-											                </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach --}}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

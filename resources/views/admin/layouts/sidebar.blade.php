@@ -180,7 +180,7 @@
                         </li>
                     </ul>
                 </li> --}}
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="material-icons">business</i>
                         <span class="title">Manajemen Cabang</span>
@@ -198,7 +198,7 @@
                             </a>
                         </li>
                     </ul>
-                </li> --}}
+                </li>
                 {{-- <li class="nav-item">
                     <a href="javascript:;" class="nav-link">
                         <i class="material-icons">build</i>

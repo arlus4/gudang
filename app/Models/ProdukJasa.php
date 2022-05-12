@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Notifications\Notifiable;
 
-class Penjualan extends Model
+class ProdukJasa extends Model
 {
     use Sluggable;
     use HasFactory;
     use Notifiable;
 
     //fungsi eager loading laravel
-    protected $with = ['users', 'kasirs', 'agens', 'pelanggans', 'penjualan_detail', 'tempos'];
+    protected $with = ['kasirs', 'users', 'produk_hargas'];
 
-    protected $table = 'penjualans';
+    protected $table = 'produk_jasas';
 
     /**
      * The attributes that aren't mass assignable.
@@ -40,14 +40,9 @@ class Penjualan extends Model
     {
         return [
             'slug' => [
-                'source' => 'invoice'
+                'source' => 'kode'
             ]
         ];
-    }
-
-    public function users()
-    {
-        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function kasirs()
@@ -55,23 +50,13 @@ class Penjualan extends Model
         return $this->belongsTo(Kasir::class, 'kasir_id');
     }
 
-    public function agens()
+    public function users()
     {
-        return $this->belongsTo(Agen::class, 'agen_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function pelanggans()
+    public function produk_hargas()
     {
-        return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
-    }
-
-    public function penjualan_detail()
-    {
-        return $this->hasMany(PenjualanDetail::class);
-    }
-
-    public function tempos()
-    {
-        return $this->hasMany(Tempo::class);
+        return $this->belongsTo(ProdukHarga::class, 'jasa_id');
     }
 }

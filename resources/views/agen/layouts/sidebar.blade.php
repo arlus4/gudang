@@ -19,25 +19,25 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item {{ Request::is('agen/dashboard/*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('agen/dashboard*') ? 'active' : '' }}">
                     <a href="{{ route('agen.dashboard') }}" class="nav-link">
                     <i class="material-icons">dashboard</i>
                         <span class="title">Beranda</span>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('agen/pelanggan/*') ? 'active' : '' }}">
-                    <a href="/agen/pelanggan" class="nav-link">
+                <li class="nav-item {{ Request::is('agen/pelanggan*') ? 'active' : '' }}">
+                    <a href="/agen/pelanggan" class="nav-link nav-toggle">
                         <i class="material-icons">face</i>
                         <span class="title">Pelanggan</span>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is('agen/produk/*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('agen/produk*') ? 'active' : '' }}">
                     <a href="/agen/produk" class="nav-link">
                         <i class="material-icons">storage</i>
                         <span class="title">Produk</span>
                     </a>
                 </li>
-                <li class="nav-item nav-item {{ Request::is('agen/transaksi/*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('agen/transaksi*') ? 'active' : '' }}">
                     <a href="/agen/transaksi" class="nav-link nav-toggle">
                         <i class="material-icons">add_shopping_cart</i>
                         <span class="title">Transaksi</span>

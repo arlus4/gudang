@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Notifications\Notifiable;
 
-class Penjualan extends Model
+class Tempo extends Model
 {
     use Sluggable;
     use HasFactory;
     use Notifiable;
 
     //fungsi eager loading laravel
-    protected $with = ['users', 'kasirs', 'agens', 'pelanggans', 'penjualan_detail', 'tempos'];
+    protected $with = ['pelanggans', 'agens'];
 
-    protected $table = 'penjualans';
+    protected $table = 'tempos';
 
     /**
      * The attributes that aren't mass assignable.
@@ -45,33 +45,13 @@ class Penjualan extends Model
         ];
     }
 
-    public function users()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function kasirs()
-    {
-        return $this->belongsTo(Kasir::class, 'kasir_id');
-    }
-
-    public function agens()
-    {
-        return $this->belongsTo(Agen::class, 'agen_id');
-    }
-
     public function pelanggans()
     {
         return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
     }
 
-    public function penjualan_detail()
+    public function agens()
     {
-        return $this->hasMany(PenjualanDetail::class);
-    }
-
-    public function tempos()
-    {
-        return $this->hasMany(Tempo::class);
+        return $this->belongsTo(Agen::class, 'agen_id');
     }
 }
