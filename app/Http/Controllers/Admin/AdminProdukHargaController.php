@@ -62,7 +62,6 @@ class AdminProdukHargaController extends Controller
             'harga_retail' => 'required',
             'margin_harga_retail' => 'required',
         ]);
-        $data['user_id'] = Auth::user()->id;
         ProdukHarga::create($data);
         return redirect('/admin/produk/harga')->with('success', 'Harga telah diupdate!');
     }

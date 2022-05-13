@@ -36,7 +36,7 @@ use App\Http\Controllers\Admin\AdminProdukHargaController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 // Login Admin
 Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login');
@@ -73,6 +73,11 @@ Route::middleware('auth:agen', 'verified', 'isagen')->group(function () {
     Route::get('/agen/pelanggan/tokoSlug', [AgenPelangganController::class, 'tokoSlug']); //diatas resource
     Route::resource('/agen/pelanggan', AgenPelangganController::class);
     Route::resource('/agen/transaksi', AgenTransaksiController::class);
+    Route::post('/agen/transaksi/create/addproduct/{id}', [AgenTransaksiController::class, 'addProduct']);
+    Route::post('/agen/transaksi/create/removeproduct/{id}', [AgenTransaksiController::class, 'removeProduct']);
+    Route::post('/agen/transaksi/create/clear', [AgenTransaksiController::class, 'clear']);
+    Route::post('/agen/transaksi/create/tambah/{id}', [AgenTransaksiController::class, 'tambah']);
+    Route::post('/agen/transaksi/create/kurangi/{id}', [AgenTransaksiController::class, 'kurangi']);
 });
 
 // Login Kasir

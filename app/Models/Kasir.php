@@ -18,8 +18,7 @@ class Kasir extends Authenticatable
     use TwoFactorAuthenticatable;
 
     //fungsi eager loading laravel
-    // protected $with = ['users', 'pelanggans'];
-    protected $with = ['users'];
+    protected $with = ['users']; //hanya untuk BelongsTo
 
     protected $table = 'kasirs';
 
@@ -92,5 +91,10 @@ class Kasir extends Authenticatable
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function pelanggans()
+    {
+        return $this->hasMany(Pelanggan::class, 'kasir_id');
     }
 }

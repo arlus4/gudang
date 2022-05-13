@@ -32,18 +32,7 @@ class AgenTransaksiController extends Controller
      */
     public function create()
     {
-        $stoks = ProdukHarga::all();
-        $pelanggans = Pelanggan::where('status', '1')->get();
-        // dd($pelanggans);
-        return view('agen/transaksi/create', [
-            'title' => "Buat Pesanan",
-            'stoks' => $stoks,
-            'pelanggans' => $pelanggans,
-        ]);
-    }
-    public function orders()
-    {
-        //cart item
+        //pajak
         if (request()->tax) {
             $tax = "+10%";
         } else {
@@ -58,32 +47,30 @@ class AgenTransaksiController extends Controller
             'order' => 1
         ));
 
-        \Cart::session(Auth::guard('agen')->user()->id)->condition($condition);
-
-        $items = \Cart::session(Auth::guard('agen')->user()->id)->getContent();
+        \Cart::session(Auth::guard('agen')->user())->condition($condition);
+        $produks = \Cart::session(Auth::guard('agen')->user())->getcontent();
 
         if (\Cart::isEmpty()) {
             $cart_data = [];
         } else {
-            foreach ($items as $row) {
+            foreach ($produks as $produk) {
                 $cart[] = [
-                    'rowId' => $row->id,
-                    'name' => $row->name,
-                    'qty' => $row->quantity,
-                    'pricesingle' => $row->price,
-                    'price' => $row->getPriceSum(),
-                    'created_at' => $row->attributes['created_at'],
+                    'produkId' => $produk->id,
+                    'name' => $produk->name,
+                    'jumlah_produk' => $produk->quantity,
+                    'harga_supplier' => $produk->price,
+                    'subtotal' => $produk->getPriceSum(), // fungsi dari Cart
+                    'created_at' => $produk->attributes['created_at'],
                 ];
             }
-
             $cart_data = collect($cart)->sortBy('created_at');
         }
 
         //total
-        $sub_total = \Cart::session(Auth::guard('agen')->user()->id)->getSubTotal();
-        $total = \Cart::session(Auth::guard('agen')->user()->id)->getTotal();
+        $sub_total = \Cart::session(Auth::guard('agen')->user())->getSubTotal();
+        $total = \Cart::session(Auth::guard('agen')->user())->getTotal();
 
-        $new_condition = \Cart::session(Auth::guard('agen')->user()->id)->getCondition('pajak');
+        $new_condition = \Cart::session(Auth::guard('agen')->user())->getCondition('pajak');
         $pajak = $new_condition->getCalculatedValue($sub_total);
 
         $data_total = [
@@ -91,17 +78,107 @@ class AgenTransaksiController extends Controller
             'total' => $total,
             'tax' => $pajak
         ];
+        // dd($cart_data);
 
-        //kembangin biar no reload make ajax
-        //saran bagi yg mau kembangin bisa pake jquery atau .js native untuk manggil ajax jangan lupa product, cart item dan total dipisah
-        //btw saya lg mager bikin beginian.. jadi sayas serahkan sama kalian ya (yang penting konsep dan fungsi aplikasi dah kelar 100%)
-
-        //kembangin jadi SPA make react.js atau vue.js (tapi bagusnya backend sama frontend dipisah | backend cuma sebagai penyedia token sama restfull api aja)
-        //kalau make SPA kayaknya agak sulit deh krn ini package default nyimpan cartnya disession, tapi kalau gak salah didokumentasinya
-        //bilang kalau ini package bisa store datanya di database 
-        return view('pos.index', compact('products', 'cart_data', 'data_total'));
+        $stoks = ProdukHarga::all();
+        $pelanggans = Pelanggan::where('status', '1')->get();
+        return view('agen/transaksi/create', [
+            'title' => "Buat Pesanan",
+            'stoks' => $stoks,
+            'pelanggans' => $pelanggans,
+            'cart_datas' => $cart_data,
+            'data_totals' => $data_total,
+        ]);
     }
 
+
+    public function addProduct($id)
+    {
+        $produks = ProdukHarga::find($id);
+        // dd($produks);
+
+        $cart = \Cart::session(Auth::guard('agen')->user())->getcontent();
+        $cek_item = $cart->whereIn('id', $id);
+
+        // dd($cek_item);
+
+        if ($cek_item->isNotEmpty()) {
+            if ($produks->jumlah_produk == $cek_item[$id]->quantity) {
+                return redirect()->back()->with('error', 'jumlah produk kurang');
+            } else {
+                \Cart::session(Auth::guard('agen')->user())->update($id, array(
+                    'quantity' => 1
+                ));
+            }
+        } else {
+            \Cart::session(Auth::guard('agen')->user())->add(array(
+                'id' => $id,
+                'name'  => $produks->produk_stok->nama,
+                'price' => $produks->harga_supplier,
+                'quantity' => 1,
+                'attributes' => array(
+                    'created_at' => date('Y-m-d H:i:s'),
+                )
+            ));
+        }
+        return redirect()->back();
+    }
+
+    public function removeProduct($id)
+    {
+        \Cart::session(Auth::guard('agen')->user())->remove($id);
+        return redirect()->back();
+    }
+
+    public function tambah($id)
+    {
+        $produks = ProdukHarga::find($id);
+
+        $cart = \Cart::session(Auth::guard('agen')->user())->getcontent();
+        $cek_item = $cart->whereIn('id', $id);
+        if ($produks->jumlah_produk == $cek_item[$id]->quantity) {
+            return redirect()->back()->with('error', 'Jumlah Produk kurang!');
+        } else {
+            \Cart::session(Auth::guard('agen')->user())->update($id, array(
+                'quantity' => array(
+                    'relative' => true,
+                    'value' => 1,
+                )
+            ));
+            return redirect()->back();
+        }
+    }
+
+    public function kurangi($id)
+    {
+        $produks = ProdukHarga::find($id);
+
+        $cart = \Cart::session(Auth::guard('agen')->user())->getcontent();
+        $cek_item = $cart->whereIn('id', $id);
+
+        if ($cek_item[$id]->quantity == 1) {
+            \Cart::session(Auth::guard('agen')->user())->remove($id);
+        } else {
+            \Cart::session(Auth::guard('agen')->user())->update($id, array(
+                'quantity' => array(
+                    'relative' => true,
+                    'value' => -1
+                )
+            ));
+        }
+        return redirect()->back();
+    }
+
+    public function bayar()
+    {
+        // 
+    }
+
+    public function clear()
+    {
+        \Cart::session(Auth::guard('agen')->user())->clear();
+        return redirect()->back();
+    }
     /**
      * Store a newly created resource in storage.
      *

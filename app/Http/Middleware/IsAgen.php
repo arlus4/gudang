@@ -26,6 +26,6 @@ class IsAgen
         if (Auth::guard($guard)->check()) {
             return $next($request);
         }
-        return $next($request);
+        return redirect()->route('login.agen');
     }
 }

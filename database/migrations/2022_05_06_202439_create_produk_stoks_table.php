@@ -20,7 +20,7 @@ class CreateProdukStoksTable extends Migration
             $table->string('slug')->unique();
             $table->string('nama');
             $table->text('deskripsi');
-            $table->string('jumlah_produk');
+            $table->integer('jumlah_produk');
             $table->string('photo_produk', 2048)->nullable();
             $table->timestamps();
         });

@@ -15,8 +15,6 @@ class CreatePenjualansTable extends Migration
     {
         Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable();
-            $table->foreignId('kasir_id')->nullable();
             $table->foreignId('tempo_id')->nullable();
             $table->foreignId('agen_id');
             $table->foreignId('pelanggan_id');

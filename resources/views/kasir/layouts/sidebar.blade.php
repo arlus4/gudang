@@ -49,13 +49,13 @@
                         </li>
                     </ul>
                 </li>
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="#" class="nav-link nav-toggle">
                         <i class="material-icons">face</i>
                         <span class="title">Pelanggan</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="material-icons">attach_money</i>
                         <span class="title">Transaksi</span>
@@ -79,8 +79,8 @@
                         </li>
 
                     </ul>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a href="javascript:;" class="nav-link nav-toggle"> 
                         <i class="material-icons">assessment</i>
                         <span class="title">Laporan</span> 

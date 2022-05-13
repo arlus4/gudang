@@ -27,7 +27,7 @@
             <div class="col-md-12">
                 <div class="row">
                     {{-- Panel Produk --}}
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <div class="card">
                             <div class="card-head">
                                 <header>Tabel List Produk</header>
@@ -61,9 +61,12 @@
                                                 <td>{{ $harga->harga_supplier }}</td>
                                                 <td>{{ $harga->produk_stok->jumlah_produk }}</td>
                                                 <td>
-                                                    <button	class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored margin-right-10">
-												        <i class="material-icons">add</i>
-											        </button>
+                                                    <form action="{{ url('/agen/transaksi/create/addproduct', $harga->id) }}" method="post">
+                                                        @csrf
+                                                        <button	type="submit" mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored margin-right-10">
+												            <i class="material-icons">add</i>
+											            </button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -75,7 +78,7 @@
                     </div>
 
                     {{-- Panel Pesanan --}}
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="card card-box">
                             <div class="card-head">
                                 <header>Keranjang</header>
@@ -101,47 +104,90 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                            $no=1
+                                            @endphp
+                                            @forelse($cart_datas as $index=>$item)
                                             <tr>
                                                 <td>
-                                                    <a href="javascript:void(0)" class="text-inverse" title="Delete" data-bs-toggle="tooltip">
+                                                    <form action="/agen/transaksi/create/clear" method="post">
+                                                    @csrf
+                                                    <a onclick="this.closest('form').submit();return false;" class="text-inverse" title="Delete" data-bs-toggle="tooltip">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
+                                                    </form>
                                                 </td>
-                                                <td>1</td>
-                                                <td>Mark</td>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{Str::words($item['name'],3)}} <br>
+                                                    Rp. {{ number_format($item['harga_supplier'],2,',','.') }}
+                                                </td>
+                                                <td class="font-weight-bold">
+                                                    <form action="{{url('/agen/transaksi/create/kurangi', $item['produkId'])}}" method="POST" style='display:inline;'>
+                                                        @csrf
+                                                        <button class="btn btn-sm btn-info" style="display: inline;padding:0.4rem 0.6rem!important">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </form>
+                                                    <a style="display: inline">{{$item['jumlah_produk']}}</a>
+                                                    <form action="{{url('/agen/transaksi/create/tambah', $item['produkId'])}}" method="POST" style='display:inline;'>
+                                                        @csrf
+                                                        <button class="btn btn-sm btn-primary" style="display: inline;padding:0.4rem 0.6rem!important">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                <td class="text-right">
+                                                    Rp. {{ number_format($item['subtotal'],2,',','.') }}
+                                                </td>
                                                 <td>
-                                                    <div class="input-group spinner">
-                                                        <input type="text" class="form-control" value="1">
-                                                        <div class="input-group-btn-vertical">
-                                                            <button class="btn btn-default" type="button" data-dir="up">
-                                                                <i class="fa fa-caret-up"></i>
-                                                            </button>
-                                                            <button class="btn btn-default" type="button"
-                                                                data-dir="dwn">
-                                                                <i class="fa fa-caret-down"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
                                                 </td>
-                                                <td>@mdo</td>
                                             </tr>
+                                            @empty
+                                            <tr>
+                                                <td colspan="5" class="text-center">Belum Ada Transaksi</td>
+                                            </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
 									<ul class="list-group list-group-unbordered">
 										<li class="list-group-item">
-											<b>Sub Total</b> <a class="pull-right">1,200</a>
+											<b>Sub Total</b> 
+                                            <a class="pull-right">
+                                                Rp. {{ number_format($data_totals['sub_total'],2,',','.') }}
+                                            </a>
 										</li>
+										{{-- <li class="list-group-item">
+											<b>PPN 10%</b> 
+                                            <a class="pull-right">750</a>
+                                            <b>
+                                                <form action="{{ url('/transcation') }}" method="get">
+                                                    PPN 10%
+                                                    <input type="checkbox" {{ $data_totals['tax'] > 0 ? "checked" : ""}} name="tax" value="true" onclick="this.form.submit()">
+                                                </form>
+                                            </b>
+                                            <a class="pull-right">Rp.
+                                                {{ number_format($data_totals['tax'],2,',','.') }}</a>
+										</li> --}}
 										<li class="list-group-item">
-											<b>PPN 10%</b> <a class="pull-right">750</a>
-										</li>
-										<li class="list-group-item">
-											<b>Total</b> <a class="pull-right">11,172</a>
+											<b>Total</b> 
+                                            <a class="pull-right">
+                                                Rp. {{ number_format($data_totals['total'],2,',','.') }}
+                                            </a>
 										</li>										
                                     </ul>
                                 </div>
                                 <div class="profile-userbuttons">
-                                    <button type="button" class="btn btn-circle btn-success">Submit</button>
-                                    <button type="button" class="btn btn-circle btn-danger">Clear</button>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <button type="button" class="btn btn-circle btn-success">Submit</button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <form action="/agen/transaksi/create/clear" method="POST">
+                                                @csrf
+                                                <button class="btn btn-circle btn-danger" onclick="return confirm('Apakah anda yakin ingin meng-clear cart ?');" type="submit">Clear</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

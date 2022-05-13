@@ -15,8 +15,8 @@ class CreatePelanggansTable extends Migration
     {
         Schema::create('pelanggans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('agen_id');
+            $table->foreignId('kasir_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('agen_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('kode')->unique();
             $table->string('slug')->unique();
             $table->string('nama');

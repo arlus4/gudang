@@ -18,7 +18,6 @@ class Agen extends Authenticatable
     use TwoFactorAuthenticatable;
 
     //fungsi eager loading laravel
-    // protected $with = ['users', 'pelanggans'];
     protected $with = ['users'];
 
     protected $table = 'agens';

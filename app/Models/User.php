@@ -70,6 +70,7 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -92,15 +93,5 @@ class User extends Authenticatable
     public function kasirs()
     {
         return $this->hasMany(Kasir::class);
-    }
-
-    public function pelanggans()
-    {
-        return $this->hasMany(Pelanggan::class);
-    }
-
-    public function produk_hargas()
-    {
-        return $this->hasMany(ProdukHarga::class);
     }
 }

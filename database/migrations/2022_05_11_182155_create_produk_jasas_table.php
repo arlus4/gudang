@@ -16,7 +16,6 @@ class CreateProdukJasasTable extends Migration
         Schema::create('produk_jasas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kasir_id');
-            $table->foreignId('user_id');
             $table->string('kode')->unique();
             $table->string('slug')->unique();
             $table->string('nama');

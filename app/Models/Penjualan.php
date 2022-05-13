@@ -14,7 +14,7 @@ class Penjualan extends Model
     use Notifiable;
 
     //fungsi eager loading laravel
-    protected $with = ['users', 'kasirs', 'agens', 'pelanggans', 'penjualan_detail', 'tempos'];
+    protected $with = ['agens', 'pelanggans']; //hanya untuk BelongsTo
 
     protected $table = 'penjualans';
 
@@ -43,16 +43,6 @@ class Penjualan extends Model
                 'source' => 'invoice'
             ]
         ];
-    }
-
-    public function users()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function kasirs()
-    {
-        return $this->belongsTo(Kasir::class, 'kasir_id');
     }
 
     public function agens()

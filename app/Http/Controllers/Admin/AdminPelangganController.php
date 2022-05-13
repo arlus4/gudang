@@ -86,7 +86,6 @@ class AdminPelangganController extends Controller
 
         $data['photo_toko'] = $request->file('photo_toko')->store('profile-toko');
         $data['photo_ktp'] = $request->file('photo_ktp')->store('ktp-toko');
-        $data['user_id'] = Auth::user()->id;
         Pelanggan::create($data);
         return redirect('/admin/pelanggan')->with('success', 'Pelanggan telah ditambah!');
     }

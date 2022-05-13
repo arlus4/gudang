@@ -14,7 +14,7 @@ class PenjualanDetail extends Model
     use Notifiable;
 
     //fungsi eager loading laravel
-    protected $with = ['penjualans', 'produk_stok', 'produk_harga', 'produk_jasa'];
+    protected $with = ['penjualans']; //hanya untuk BelongsTo
 
     protected $table = 'penjualan_details';
 

@@ -14,7 +14,7 @@ class Pelanggan extends Model
     use Notifiable;
 
     //fungsi eager loading laravel
-    protected $with = ['users', 'agens'];
+    protected $with = ['kasirs', 'agens'];
 
     protected $table = 'pelanggans';
 
@@ -45,9 +45,9 @@ class Pelanggan extends Model
         ];
     }
 
-    public function users()
+    public function kasirs()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Kasir::class, 'kasir_id');
     }
 
     public function agens()

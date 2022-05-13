@@ -14,7 +14,7 @@ class ProdukJasa extends Model
     use Notifiable;
 
     //fungsi eager loading laravel
-    protected $with = ['kasirs', 'users', 'produk_hargas'];
+    protected $with = ['kasirs', 'produk_hargas'];
 
     protected $table = 'produk_jasas';
 
@@ -48,11 +48,6 @@ class ProdukJasa extends Model
     public function kasirs()
     {
         return $this->belongsTo(Kasir::class, 'kasir_id');
-    }
-
-    public function users()
-    {
-        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function produk_hargas()
