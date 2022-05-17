@@ -81,15 +81,7 @@
                     <div class="col-md-5">
                         <div class="card card-box">
                             <div class="card-head">
-                                <header>Keranjang</header>
-                                <div class="col-lg-6 col-md-4">
-                                    <select class="form-select">
-                                        <option value="">Pilih Pelanggan</option>
-                                        @foreach ($pelanggans as $pelanggan)
-                                            <option value="{{ $pelanggan->id }}" selected>{{ $pelanggan->nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <header>Pesanan</header>
                             </div>
                             <div class="card-body " id="bar-parent">
                                 <div class="table-scrollable">
@@ -122,19 +114,25 @@
                                                     Rp. {{ number_format($item['harga_supplier'],2,',','.') }}
                                                 </td>
                                                 <td class="font-weight-bold">
-                                                    <form action="{{url('/agen/transaksi/create/kurangi', $item['produkId'])}}" method="POST" style='display:inline;'>
+                                                    {{-- <form action="{{url('/agen/transaksi/create/kurangi', $item['produkId'])}}" method="POST" style='display:inline;'>
                                                         @csrf
                                                         <button class="btn btn-sm btn-info" style="display: inline;padding:0.4rem 0.6rem!important">
                                                             <i class="fa fa-minus"></i>
                                                         </button>
-                                                    </form>
-                                                    <a style="display: inline">{{$item['jumlah_produk']}}</a>
-                                                    <form action="{{url('/agen/transaksi/create/tambah', $item['produkId'])}}" method="POST" style='display:inline;'>
+                                                    </form> --}}
+                                                    <div class="input-group input-group-sm">
+                                                        <input type="text" class="form-control" name="jumlah_produk" id="jumlah_produk" value="{{$item['jumlah_produk']}}">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-info btn-flat">Go!</button>
+                                                        </span>
+                                                    </div>
+                                                    {{-- <a style="display: inline">{{$item['jumlah_produk']}}</a> --}}
+                                                    {{-- <form action="{{url('/agen/transaksi/create/tambah', $item['produkId'])}}" method="POST" style='display:inline;'>
                                                         @csrf
                                                         <button class="btn btn-sm btn-primary" style="display: inline;padding:0.4rem 0.6rem!important">
                                                             <i class="fa fa-plus"></i>
                                                         </button>
-                                                    </form>
+                                                    </form> --}}
                                                 </td>
                                                 <td class="text-right">
                                                     Rp. {{ number_format($item['subtotal'],2,',','.') }}
@@ -179,15 +177,142 @@
                                 <div class="profile-userbuttons">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <button type="button" class="btn btn-circle btn-success">Submit</button>
+                                            <button type="button" class="btn btn-circle btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Submit </button>
                                         </div>
                                         <div class="col-sm-6">
                                             <form action="/agen/transaksi/create/clear" method="POST">
                                                 @csrf
-                                                <button class="btn btn-circle btn-danger" onclick="return confirm('Apakah anda yakin ingin meng-clear cart ?');" type="submit">Clear</button>
+                                                <button class="btn btn-circle btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus semua daftar Pesanan ?');" type="submit">Clear</button>
                                             </form>
                                         </div>
                                     </div>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Pembayaran</h5>
+                                                    
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-sm table-borderless">
+                                                        <tr>
+                                                            <th width="60%">Sub Total</th>
+                                                            <th width="40%" class="text-right">Rp.
+                                                                {{ number_format($data_totals['sub_total'],2,',','.') }} </th>
+                                                        </tr>
+                                                        @if($data_totals['tax'] > 0)
+                                                        <tr>
+                                                            <th>PPN 10%</th>
+                                                            <th class="text-right">Rp.
+                                                                {{ number_format($data_totals['tax'],2,',','.') }}</th>
+                                                        </tr>
+                                                        @endif
+                                                    </table>
+                                                    <form action="/agen/transaksi/create/bayar" method="POST">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12 col-md-4">
+                                                            <label>Pilih Pelanggan</label>
+                                                            <select class="form-select" name="pelanggan_id" id="pelanggan_id" required>
+                                                                <option selected disabled>Pilih Pelanggan</option>
+                                                                @foreach ($pelanggans as $pelanggan)
+                                                                    @if (old('$pelanggan_id') == $pelanggan->id)
+                                                                        <option value="{{ $pelanggan->id }}" selected>{{ $pelanggan->nama }}</option>
+                                                                    @else
+                                                                        <option value="{{ $pelanggan->id }}">{{ $pelanggan->nama }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12 col-md-4">
+                                                            <label>Kategori Pembayaran</label>
+                                                            <select class="form-select" name="kategori" id="kategori" onchange="changeKategori()" required>
+                                                                <option selected disabled>Kategori Pembayaran</option>
+                                                                <option value="cash">Cash</option>
+                                                                <option value="tempo">Tempo</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div id="cash">
+                                                        <div class="form-group">
+                                                            <label for="oke">Input Nominal</label>
+                                                            <input id="oke" class="form-control" type="number" name="bayar" autofocus required/>
+                                                        </div>
+                                                        <h3 class="font-weight-bold">Total:</h3>
+                                                        <h1 class="font-weight-bold mb-5">Rp. {{ number_format($data_totals['total'],2,',','.') }}</h1>
+                                                        <input id="totalHidden" type="hidden" name="totalHidden" value="{{$data_totals['total']}}" />
+                                        
+                                                        <h3 class="font-weight-bold">Bayar:</h3>
+                                                        <h1 class="font-weight-bold mb-5" id="pembayaran"></h1>
+                                        
+                                                        <h3 class="font-weight-bold text-primary">Angsulan:</h3>
+                                                        <h1 class="font-weight-bold text-primary" id="kembalian"></h1>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" id="saveButton" class="btn btn-primary" disabled onClick="openWindowReload(this)">Save changes</button>
+                                                </div>
+                                                    </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="modal fade right" id="fullHeightModalRight" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    
+                                        <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+                                        <div class="modal-dialog modal-full-height modal-right" role="document">
+                                    
+                                        <!-- Sorry campur2 bahasa indonesia sama inggris krn kebiasaan make b.inggris eh ternyata buat aplikasi buat indonesia jadi gini deh  -->
+                                            <div class="modal-content">
+                                                <div class="modal-header indigo">
+                                                    <h6 class="modal-title w-100 text-light" id="myModalLabel">Billing Information</h6>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-sm table-borderless">
+                                                        <tr>
+                                                            <th width="60%">Sub Total</th>
+                                                            <th width="40%" class="text-right">Rp.
+                                                                {{ number_format($data_totals['sub_total'],2,',','.') }} </th>
+                                                        </tr>
+                                                        @if($data_totals['tax'] > 0)
+                                                        <tr>
+                                                            <th>PPN 10%</th>
+                                                            <th class="text-right">Rp.
+                                                                {{ number_format($data_totals['tax'],2,',','.') }}</th>
+                                                        </tr>
+                                                        @endif
+                                                    </table>
+                                                    <form action="{{ url('/transcation/bayar') }}" method="POST">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="oke">Input Nominal</label>
+                                                        <input id="oke" class="form-control" type="number" name="bayar" autofocus />
+                                                    </div>
+                                                    <h3 class="font-weight-bold">Total:</h3>
+                                                    <h1 class="font-weight-bold mb-5">Rp. {{ number_format($data_totals['total'],2,',','.') }}</h1>
+                                                    <input id="totalHidden" type="hidden" name="totalHidden" value="{{$data_totals['total']}}" />
+                                    
+                                                    <h3 class="font-weight-bold">Bayar:</h3>
+                                                    <h1 class="font-weight-bold mb-5" id="pembayaran"></h1>
+                                    
+                                                    <h3 class="font-weight-bold text-primary">Kembalian:</h3>
+                                                    <h1 class="font-weight-bold text-primary" id="kembalian"></h1>
+                                                </div>
+                                                
+                                                <div class="modal-footer justify-content-center">
+                                                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" id="saveButton" disabled onClick="openWindowReload(this)">Save transcation</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -198,5 +323,60 @@
     </div>
 </div>
 <!-- end page content -->
+<script>
+    function changeKategori() {
+        var kategori = document.getElementById("kategori");
+        if (kategori.value=="tempo") {
+            document.getElementById("cash").style.visibility="hidden";
+        } else {
+            document.getElementById("cash").style.visibility="visible";
+        }
+    }
+</script>
 
+
+<script>
+    oke.oninput = function () {
+        let jumlah = parseInt(document.getElementById('totalHidden').value) ? parseInt(document.getElementById('totalHidden').value) : 0;
+        let bayar = parseInt(document.getElementById('oke').value) ? parseInt(document.getElementById('oke').value) : 0;
+        let hasil = bayar - jumlah;
+        document.getElementById("pembayaran").innerHTML = bayar ? 'Rp ' + rupiah(bayar) + ',00' : 'Rp ' + 0 +
+            ',00';
+        document.getElementById("kembalian").innerHTML = hasil ? 'Rp ' + rupiah(hasil) + ',00' : 'Rp ' + 0 +
+            ',00';
+
+        cek(bayar, jumlah);
+        const saveButton = document.getElementById("saveButton");   
+
+        if(jumlah === 0){
+            saveButton.disabled = true;
+        }
+
+    };
+
+    function cek(bayar, jumlah) {
+        const saveButton = document.getElementById("saveButton");   
+
+        if (bayar < jumlah) {
+            saveButton.disabled = true;
+        } else {
+            saveButton.disabled = false;
+        }
+    }
+
+    function rupiah(bilangan) {
+        var number_string = bilangan.toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{1,3}/gi);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        return rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+    }
+
+</script>
 @endsection

@@ -15,16 +15,13 @@ class CreatePenjualanDetailsTable extends Migration
     {
         Schema::create('penjualan_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('penjualan_id');
-            $table->foreignId('harga_id')->reference('id')->on('produk_hargas');
-            $table->foreignId('stok_id')->reference('id')->on('produk_stoks');
-            $table->foreignId('jasa_id')->reference('id')->on('produk_jasas');
+            $table->foreignId('penjualan_id')->reference('id')->on('penjualans');
             $table->string('invoice');
             $table->string('slug');
-            $table->string('kode_produk');
-            $table->string('nama_produk');
-            $table->string('jumlah_produk');
-            $table->string('harga_produk');
+            $table->string('kode_produk')->nullable();
+            $table->string('nama_produk')->nullable();
+            $table->string('jumlah_produk')->nullable();
+            $table->string('harga_produk')->nullable();
             $table->timestamps();
         });
     }

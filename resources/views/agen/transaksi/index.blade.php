@@ -36,40 +36,60 @@
                                             </a>
                                         </div>
                                         <tbody>
+                                            @php
+                                            $no=1
+                                            @endphp
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Address</th>
-                                                <th>Quantity</th>
-                                                <th>Tax</th>
-                                                <th>Discount</th>
+                                                <th>#</th>
+                                                <th>Invoice</th>
+                                                <th>Nama Pelanggan</th>
+                                                <th>Pembayaran</th>
+                                                <th>Status</th>
+                                                <th>Total</th>
                                                 <th>Aksi</th>
                                             </tr>
-                                            {{-- @foreach ($pelanggans as $data)
-                                            <tr class="odd gradeX">
-                                                <td class="patient-img">
-                                                    <img src="{{ asset('storage/'.$data->photo_toko) }}" alt="Photo Profil {{ $data->nama }}">
-                                                </td>
-                                                <td>{{ $data->kode }}</td>
-                                                <td>{{ $data->nama }}</td>
-                                                <td>{{ $data->alamat }}</td>
+                                            @foreach ($transaksis as $transaksi)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $transaksi->invoice }}</td>
+                                                <td>{{ $transaksi->pelanggans->nama }}</td>
+                                                <td>Kategori masih belum</td>
+                                                <td>Belum</td>
+                                                <td>{{ $transaksi->total_harga }}</td>
                                                 <td>
-                                                    <a href="tel:{{ $data->kontak }}">{{ $data->kontak }}</a>
+                                                    <a href="/agen/transaksi/show/{{ $transaksi->slug }}" class="btn btn-circle btn-info">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
                                                 </td>
-                                                <td>{{ ucwords($data->kategori) }}</td>
+                                            </tr>
+                                            @endforeach
+                                            {{-- @foreach ($pesanans as $pesanan)
+                                            <tr class="odd gradeX">
+                                                <td>{{ no++ }}</td>
+                                                <td class="patient-img">
+                                                    <img src="{{ asset('storage/'.$pesanan->photo_toko) }}" alt="Photo Profil {{ $pesanan->nama }}">
+                                                </td>
+                                                <td>{{ $pesanan->kode }}</td>
+                                                <td>{{ $pesanan->nama }}</td>
+                                                <td>{{ $pesanan->alamat }}</td>
+                                                <td>
+                                                    <a href="tel:{{ $pesanan->kontak }}">{{ $pesanan->kontak }}</a>
+                                                </td>
+                                                <td>{{ ucwords($pesanan->kategori) }}</td>
                                                 <td>....</td>
                                                 <td>....</td>
                                                 <td>Lunas/Belum</td>
-                                                <td>{{ $data->limit }}</td>
+                                                <td>{{ $pesanan->limit }}</td>
                                                 <td>....</td>
                                                 <td> 
                                                     <div class="btn-group btn-group-circle btn-group-solid">
-                                                        <a href="/agen/pelanggan/{{ $data->slug }}" class="btn btn-info">
+                                                        <a href="/agen/pelanggan/{{ $pesanan->slug }}" class="btn btn-info">
                                                             <i class="fa fa-info"></i>
                                                         </a>
-                                                        <a href="/agen/pelanggan/{{ $data->slug }}/edit" class="btn btn-warning">
+                                                        <a href="/agen/pelanggan/{{ $pesanan->slug }}/edit" class="btn btn-warning">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
-                                                        <form action="/agen/pelanggan/{{ $data->slug }}" method="POST">
+                                                        <form action="/agen/pelanggan/{{ $pesanan->slug }}" method="POST">
                                                             @method('delete')
                                                             @csrf
                                                             <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">

@@ -21,8 +21,8 @@ class AgenPelangganController extends Controller
     {
         // $toko = Pelanggan::with(['agens', 'users'])->get();
         // dd($toko);
-        $pelanggans = Pelanggan::where('status', '1')->get();
-        $tokos = Pelanggan::where('status', '0')->get();
+        $pelanggans = Pelanggan::where('agen_id', Auth::guard('agen')->user()->id)->where('status', '1')->get();
+        $tokos = Pelanggan::where('agen_id', Auth::guard('agen')->user()->id)->where('status', '0')->get();
         return view('agen/pelanggan/index', [
             'title' => 'Daftar Pelanggan',
             'pelanggans' => $pelanggans,

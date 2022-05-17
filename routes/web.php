@@ -78,6 +78,8 @@ Route::middleware('auth:agen', 'verified', 'isagen')->group(function () {
     Route::post('/agen/transaksi/create/clear', [AgenTransaksiController::class, 'clear']);
     Route::post('/agen/transaksi/create/tambah/{id}', [AgenTransaksiController::class, 'tambah']);
     Route::post('/agen/transaksi/create/kurangi/{id}', [AgenTransaksiController::class, 'kurangi']);
+    Route::post('/agen/transaksi/create/bayar', [AgenTransaksiController::class, 'bayar']);
+    Route::get('/agen/transaksi/show/{transaksi:slug}', [AgenTransaksiController::class, 'show'])->name('agen.lihat.transaksi');
 });
 
 // Login Kasir
