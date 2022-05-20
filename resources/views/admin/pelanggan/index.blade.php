@@ -71,7 +71,7 @@
                                                     <div class="btn-group btn-group-circle btn-group-solid">
                                                         <a href="/admin/pelanggan/{{ $data->slug }}" class="btn btn-info"><i class="fa fa-info"></i></a>
                                                         <a href="/admin/pelanggan/{{ $data->slug }}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                        <form action="/admin/pelanggan/{{ $data->slug }}" method="POST">
+                                                        <form action="/admin/pelanggan/{{ $data->slug }}" method="POST" class="d-inline">
                                                             @method('delete')
                                                             @csrf
                                                             <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
@@ -110,7 +110,7 @@
                                             <tr>
                                                 <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->kode }}</td>
                                                 <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->nama }}</td>
-                                                <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->agens->nama }}</td>
+                                                {{-- <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->agens->nama }}</td> --}}
                                                 <td>{{ ucwords($pelanggan->kategori) }}</td>
                                                 <td>
                                                     <a href="tel:{{$pelanggan->kontak}}"> {{ $pelanggan->kontak }}</a>
@@ -123,14 +123,7 @@
                                                     <a href="{{ route('admin.pelanggan.limit', $pelanggan->slug) }}" class="btn btn-circle btn-success">
                                                         <i class="fa fa-plus"></i> 
                                                     </a>
-                                                    {{-- <form action="{{ route('admin.pelanggan.approve', $pelanggan->id) }}" method="POST">
-                                                        @csrf
-                                                        <input type="hidden" name="status" value="$pelanggan->id" />
-                                                        <button type="submit" class="btn btn-circle btn-success">
-                                                            <i class="fa fa-plus"></i> 
-                                                        </button>
-                                                    </form> --}}
-                                                    <form action="/admin/pelanggan/{{ $pelanggan->slug }}" method="POST">
+                                                    <form action="/admin/pelanggan/{{ $pelanggan->slug }}" method="POST" class="d-inline">
                                                         @method('delete')
                                                         @csrf
                                                         <button type="submit" class="btn btn-circle btn-danger" onclick="return confirm('Apakah Anda yakin?')">

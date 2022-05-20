@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('agen/pelanggan*') ? 'active' : '' }}">
-                    <a href="/agen/pelanggan" class="nav-link nav-toggle">
+                    <a href="/agen/pelanggan" class="nav-link">
                         <i class="material-icons">face</i>
                         <span class="title">Pelanggan</span>
                     </a>
@@ -38,9 +38,21 @@
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('agen/transaksi*') ? 'active' : '' }}">
-                    <a href="/agen/transaksi" class="nav-link nav-toggle">
+                    <a href="/agen/transaksi" class="nav-link">
                         <i class="material-icons">add_shopping_cart</i>
                         <span class="title">Transaksi</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::is('agen/penjualan*') ? 'active' : '' }}">
+                    <a href="/agen/penjualan" class="nav-link">
+                        <i class="material-icons">done_all</i>
+                        <span class="title">Penjualan</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="material-icons">attach_money</i>
+                        <span class="title">Pembayaran</span>
                     </a>
                 </li>
                 {{-- <li class="nav-item">

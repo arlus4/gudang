@@ -185,85 +185,95 @@ class AgenTransaksiController extends Controller
     {
         $pelanggan_id = request()->pelanggan_id;
         // dd($pelanggans);
+        $kategori_pembayaran = request()->kategori;
+        // dd($kategori_pembayaran);
         $cart_total = \Cart::session(Auth::guard('agen')->user())->getTotal();
+        // dd($cart_total);
         $bayar = request()->bayar;
-        $kembalian = (int)$bayar - (int)$cart_total;
+        // dd($bayar);
+        // $kembalian = (int)$bayar - (int)$cart_total;
 
-        if ($kembalian >= 0) {
-            DB::beginTransaction();
+        // if ($kategori_pembayaran == request()->kategori['tempo']) {
+        //     dd($kategori_pembayaran);
+        // }
 
-            try {
-                $all_cart = \Cart::session(Auth::guard('agen')->user())->getContent();
-                // dd($all_cart);
-                $filterCart = $all_cart->map(function ($produk) {
-                    return [
-                        'id' => $produk->id,
-                        'name' => $produk->name,
-                        'price' => $produk->price,
-                        'quantity' => $produk->quantity,
-                        'kode_produk' => $produk->attributes->kode_produk
-                    ];
-                });
-                // dd($filterCart);
 
-                foreach ($filterCart as $cart) {
-                    // dd($cart);
-                    $stoks = ProdukStok::find($cart['id']);
-                    if ($stoks->jumlah_produk == 0) {
-                        return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
-                    }
-                    History::create([
-                        'produk_id' => $cart['id'],
-                        'agen_id' => Auth::guard('agen')->user()->id,
-                        'jumlah_produk' => $stoks->jumlah_produk,
-                        'ubah_produk' => -$cart['quantity'], // "-" simbol identifikasi untuk mengurangi stok
-                        'tipe' => 'decrease from transaction'
-                    ]);
-                    $stoks->decrement('jumlah_produk', $cart['quantity']);
-                    // $cek = History::all();
-                    // dd($cek);
+        // if ($kembalian >= 0) {
+        DB::beginTransaction();
+
+        try {
+            $all_cart = \Cart::session(Auth::guard('agen')->user())->getContent();
+            // dd($all_cart);
+            $filterCart = $all_cart->map(function ($produk) {
+                return [
+                    'id' => $produk->id,
+                    'name' => $produk->name,
+                    'price' => $produk->price,
+                    'quantity' => $produk->quantity,
+                    'kode_produk' => $produk->attributes->kode_produk
+                ];
+            });
+            // dd($filterCart);
+
+            foreach ($filterCart as $cart) {
+                // dd($cart);
+                $stoks = ProdukStok::find($cart['id']);
+                if ($stoks->jumlah_produk == 0) {
+                    return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
                 }
-
-                $id = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'INV-', 'field' => 'invoice']);
-                $slug = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'inv-', 'field' => 'invoice']);
-                // $pelanggans = Pelanggan::find($id);
-                // dd($pelanggans);
-                Penjualan::create([
+                History::create([
+                    'produk_id' => $cart['id'],
                     'agen_id' => Auth::guard('agen')->user()->id,
+                    'jumlah_produk' => $stoks->jumlah_produk,
+                    'ubah_produk' => -$cart['quantity'], // "-" simbol identifikasi untuk mengurangi stok
+                    'tipe' => 'decrease from transaction'
+                ]);
+                $stoks->decrement('jumlah_produk', $cart['quantity']);
+                // $cek = History::all();
+                // dd($cek);
+            }
+
+            $id = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'INV-', 'field' => 'invoice']);
+            $slug = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'inv-', 'field' => 'invoice']);
+            // $pelanggans = Pelanggan::find($id);
+            // dd($pelanggans);
+            Penjualan::create([
+                'agen_id' => Auth::guard('agen')->user()->id,
+                'invoice' => $id,
+                'slug' => $slug,
+                'tanggal_pesan' => date("Y-m-d H:i:s", strtotime('now')),
+                'pelanggan_id' => $pelanggan_id,
+                'total_harga' => $cart_total,
+                'kategori_pembayaran' => $kategori_pembayaran,
+                'pembayaran' => $bayar,
+            ]);
+            // $cek = Penjualan::all();
+            // dd($cek);
+
+            $penjualan = Penjualan::latest()->first();
+            foreach ($filterCart as $cart) {
+                // dd($penjualan);
+                PenjualanDetail::create([
+                    'penjualan_id' => $penjualan->id,
                     'invoice' => $id,
                     'slug' => $slug,
-                    'tanggal_pesan' => date("Y-m-d H:i:s", strtotime('now')),
-                    'pelanggan_id' => $pelanggan_id,
-                    'total_harga' => $cart_total,
-                    'pembayaran' => request()->bayar,
+                    'kode_produk' => $cart['kode_produk'],
+                    'nama_produk' => $cart['name'],
+                    'jumlah_produk' => $cart['quantity'],
+                    'harga_produk' => $cart['price'],
                 ]);
-                $cek = Penjualan::all();
-                dd($cek);
-
-                foreach ($filterCart as $cart) {
-                    // $penjualan = Penjualan::find($cart['id']);
-                    // dd($penjualan);
-                    PenjualanDetail::create([
-                        'penjualan_id' => $cart['id'],
-                        'invoice' => $id,
-                        'slug' => $slug,
-                        'kode_produk' => $cart['kode_produk'],
-                        'nama_produk' => $cart['name'],
-                        'jumlah_produk' => $cart['quantity'],
-                        'harga_produk' => $cart['price'],
-                    ]);
-                }
-                // $cek = PenjualanDetail::all();
-                // dd($cek);
-
-                \Cart::session(Auth::guard('agen')->user())->clear();
-                DB::commit();
-                return redirect()->back()->with('success', 'Transaksi Berhasi Tunggu Konfirmasi dari Admin');
-            } catch (\Exception $e) {
-                DB::rollback();
-                return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
             }
+            // $cek = PenjualanDetail::all();
+            // dd($cek);
+
+            \Cart::session(Auth::guard('agen')->user())->clear();
+            DB::commit();
+            return redirect()->back()->with('success', 'Transaksi Berhasi Tunggu Konfirmasi dari Admin');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
         }
+        // }
         return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
     }
 
@@ -273,7 +283,6 @@ class AgenTransaksiController extends Controller
         return redirect()->back();
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -282,11 +291,10 @@ class AgenTransaksiController extends Controller
      */
     public function show(Penjualan $transaksi)
     {
-        dd($transaksi);
-        $detail = PenjualanDetail::all();
-        // dd($detail);
+        // dd($transaksi);
+        $detail = PenjualanDetail::where('penjualan_id', $transaksi->id)->get();
         return view('agen/transaksi/show', [
-            'title' => 'Invoice Belum menampilkan per-id',
+            'title' => 'Invoice',
             'details' => $detail,
             'transaksi' => $transaksi
         ]);

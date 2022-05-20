@@ -43,14 +43,14 @@
                                                 <th>Kontak</th>
                                                 <th>Kategori</th>
                                                 <th>Nota</th>
-                                                <th>Jatuh Tempo</th>
+                                                <th>Status</th>
                                                 <th>Keterangan</th>
                                                 <th>Limit</th>
                                                 <th>Total Pembelian</th>
-                                                <th>Aksi</th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                             @foreach ($pelanggans as $data)
-                                            <tr class="odd gradeX">
+                                            <tr>
                                                 <td class="patient-img">
                                                     <img src="{{ asset('storage/'.$data->photo_toko) }}" alt="Photo Profil {{ $data->nama }}">
                                                 </td>
@@ -67,17 +67,18 @@
                                                 <td>{{ $data->limit }}</td>
                                                 <td>....</td>
                                                 <td> 
-                                                    <div class="btn-group btn-group-circle btn-group-solid">
-                                                        <a href="/agen/pelanggan/{{ $data->slug }}" class="btn btn-info">
-                                                            <i class="fa fa-info"></i>
+                                                    <div class="d-inline">
+
+                                                        <a href="/agen/pelanggan/{{ $data->slug }}" class="btn btn-circle btn-info btn-sm">
+                                                            <i class="fa fa-eye"></i>
                                                         </a>
-                                                        <a href="/agen/pelanggan/{{ $data->slug }}/edit" class="btn btn-warning">
+                                                        <a href="/agen/pelanggan/{{ $data->slug }}/edit" class="btn btn-circle btn-warning btn-sm">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
                                                         <form action="/agen/pelanggan/{{ $data->slug }}" method="POST">
                                                             @method('delete')
                                                             @csrf
-                                                            <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
+                                                            <button type="submit" class="btn btn-circle btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin?')">
                                                                 <i class="fa fa-trash-o"></i>
                                                             </button>
                                                         </form>
@@ -126,7 +127,7 @@
                                                     <a href="/agen/pelanggan/{{ $toko->slug }}/edit" class="btn btn-circle btn-warning">
                                                         <i class="fa fa-edit"></i> 
                                                     </a>
-                                                    <form action="/agen/pelanggan/{{ $toko->slug }}" method="POST">
+                                                    <form action="/agen/pelanggan/{{ $toko->slug }}" method="POST" class="d-inline">
                                                         @method('delete')
                                                         @csrf
                                                         <button type="submit" class="btn btn-circle btn-danger" onclick="return confirm('Apakah Anda yakin?')">

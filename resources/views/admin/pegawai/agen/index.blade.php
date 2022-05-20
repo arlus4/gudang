@@ -65,10 +65,10 @@
                                                             {{-- <th>KTP</th> --}}
                                                             {{-- <th>Toko yang Dipegang</th> --}}
                                                             {{-- <th>Nota Hutang</th> --}}
-                                                            {{-- <th>Jatuh Tempo</th> --}}
                                                             <th>Keterangan</th>
                                                             <th>Omset</th>
-                                                            {{-- <th>Sebagai </th> --}}
+                                                            <th>Reward</th>
+                                                            <th>Input Reward</th>
                                                             <th> Action </th>
                                                         </tr>
                                                     </thead>
@@ -85,11 +85,15 @@
                                                             </td>
                                                             <td class="left">{{ $s->keterangan }}</td>
                                                             <td>{{ $s->omset }}</td>
+                                                            <td> ... </td>
+                                                            <td>
+                                                                <a href="#" type="button" class="btn btn-success"><i class="fa fa-info"></i></a>
+                                                            </td>
                                                             <td> 
                                                                 <div class="btn-group btn-group-circle btn-group-solid">
                                                                     <a href="/admin/pegawai/agen/{{ $s->slug }}" type="button" class="btn btn-info"><i class="fa fa-info"></i></a>
                                                                     <a href="/admin/pegawai/agen/{{ $s->slug }}/edit" type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                                    <form action="/admin/pegawai/agen/{{ $s->slug }}" method="POST">
+                                                                    <form class="d-inline" action="/admin/pegawai/agen/{{ $s->slug }}" method="POST">
                                                                         @method('delete')
                                                                         @csrf
                                                                         <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">

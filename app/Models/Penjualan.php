@@ -57,7 +57,7 @@ class Penjualan extends Model
 
     public function penjualan_detail()
     {
-        return $this->hasMany(PenjualanDetail::class, 'penjualan_id');
+        return $this->hasMany(PenjualanDetail::class, 'id', 'penjualan_id');
     }
 
     public function tempos()

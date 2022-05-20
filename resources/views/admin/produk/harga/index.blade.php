@@ -76,7 +76,7 @@
                                                                 <div class="btn-group btn-group-circle btn-group-solid">
                                                                     {{-- <a href="/admin/produk/harga/{{ $stok->produk_stok->slug }}" type="button" class="btn btn-info"><i class="fa fa-info"></i></a> --}}
                                                                     <a href="/admin/produk/harga/{{ $stok->produk_stok->slug }}/edit" type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                                    <form action="#" method="POST">
+                                                                    <form class="d-inline" action="#" method="POST">
                                                                         @method('delete')
                                                                         @csrf
                                                                         <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">

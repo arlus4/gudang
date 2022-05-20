@@ -64,7 +64,7 @@
                             </div>
                             <div class="value white">
                                 <p class="sbold addr-font-h1" data-counter="counterup">{{ $kasir }}</p>
-                                <a href="/admin/pegawai/kasir"><p><strong>KASIR</strong></p></a>
+                                <a href="/admin/pegawai/kasir"><p><strong>Margin Penjualan</strong></p></a>
                             </div>
                         </div>
                     </div>

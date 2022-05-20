@@ -98,7 +98,6 @@ class AdminPelangganController extends Controller
      */
     public function show(Pelanggan $pelanggan)
     {
-        // dd($pelanggan);
         return view('admin/pelanggan/show', [
             'title' => 'Profile Pelanggan',
             'pelanggan' => $pelanggan

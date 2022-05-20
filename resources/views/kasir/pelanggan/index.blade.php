@@ -1,5 +1,5 @@
-@extends('pegawai/kasir/layouts/main')
-@section('pegawai/kasir/index')
+@extends('kasir/layouts/main')
+@section('kasir/index')
 
 <!-- start page content -->
 <div class="page-content-wrapper">
@@ -12,7 +12,7 @@
                 <ol class="breadcrumb page-breadcrumb pull-right">
                     <li>
                         <i class="fa fa-home"></i>&nbsp;
-                        <a class="parent-item" href="{{ route('pegawai.dashboard') }}">Home</a>&nbsp;
+                        <a class="parent-item" href="/kasir/dashboard">Beranda</a>&nbsp;
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li class="active">{{ $title }}</li>
@@ -20,71 +20,65 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="card">
+            <div class="col-sm-12">
+                <div class="card-box">
                     <div class="card-head">
                         <header>Tabel {{ $title }}</header>
-                        <div class="tools">
-                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
-                            <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
-                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
-                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6 col-6">
-                                <div class="btn-group">
-                                    <a href="{{ route('pelanggan.create') }}" id="addRow" class="btn btn-info">
-                                        Pelanggan Baru <i class="fa fa-plus"></i>
-                                    </a>
+                    <div class="card-body ">
+                        <div class="mdl-tabs mdl-js-tabs">
+                            <div class="mdl-tabs__tab-bar tab-left-side">
+                                <a href="#data" class="mdl-tabs__tab tabs_three is-active">Data Pelanggan</a>
+                            </div>
+                            <div class="mdl-tabs__panel is-active p-t-20" id="data">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <div class="btn-group">
+                                            <a href="{{ route('pelanggan.create') }}" id="addRow" class="btn btn-info"> Tambah Pelanggan Baru 
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                        <br>
+                                        <tbody>
+                                            <tr>
+                                                <th>Kode</th>
+                                                <th>Nama</th>
+                                                <th>Kategori</th>
+                                                <th>Kontak</th>
+                                                <th>Alamat</th>
+                                                {{-- <th>Status</th> --}}
+                                                <th>Aksi</th>
+                                            </tr>
+                                            @foreach ($pelanggans as $pelanggan)
+                                            <tr>
+                                                <td>{{ $pelanggan->kode }}</td>
+                                                <td>{{ $pelanggan->nama }}</td>
+                                                <td>{{ ucwords($pelanggan->kategori) }}</td>
+                                                <td>
+                                                    <a href="tel:{{$pelanggan->kontak}}"> {{ $pelanggan->kontak }}</a>
+                                                </td>
+                                                <td>{{ $pelanggan->alamat }}</td>
+                                                {{-- <td>
+                                                    <span class="label label-sm label-warning"> Pending </span>
+                                                </td> --}}
+                                                <td> &nbsp;
+                                                    {{-- <a href="/agen/pelanggan/{{ $pelanggan->slug }}/edit" class="btn btn-circle btn-warning">
+                                                        <i class="fa fa-edit"></i> 
+                                                    </a>
+                                                    <form action="/agen/pelanggan/{{ $pelanggan->slug }}" method="POST" class="d-inline">
+                                                        @method('delete')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-circle btn-danger" onclick="return confirm('Apakah Anda yakin?')">
+                                                            <i class="fa fa-trash-o"></i> 
+                                                        </button>
+                                                    </form> --}}
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </div>
-                        <div class="table-scrollable">
-                            <table id="example1" class="display" style="width:100%;">
-                                <thead>
-                                    <tr>
-                                        <th>Kode</th>
-                                        <th>Nama</th>
-                                        <th>Alamat</th>
-                                        <th>Kontak</th>
-                                        <th>Status</th>
-                                        <th>Nota</th>
-                                        <th>Jatuh Tempo</th>
-                                        <th>Keterangan</th>
-                                        <th>Limit</th>
-                                        <th>Total Pembelian</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>...</td>
-                                        <td>...</td>
-                                        <td>...</td>
-                                        <td>....</td>
-                                        <td>Suppliers/Retail</td>
-                                        <td>....</td>
-                                        <td>....</td>
-                                        <td>Lunas/Belum</td>
-                                        <td>....</td>
-                                        <td>....</td>
-                                        <td> 
-                                            <div class="btn-group btn-group-circle btn-group-solid">
-                                                <a href="#" type="button" class="btn btn-info"><i class="fa fa-info"></i></a>
-                                                <a href="#" type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                <form action="#" method="POST">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
-                                                        <i class="fa fa-trash-o"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>

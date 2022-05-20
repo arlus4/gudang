@@ -15,11 +15,10 @@ class CreatePenjualansTable extends Migration
     {
         Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('agen_id');
-            $table->foreignId('pelanggan_id');
-            $table->foreignId('tempo_id')->nullable();
             $table->string('invoice');
             $table->string('slug');
+            $table->foreignId('agen_id');
+            $table->foreignId('pelanggan_id');
             $table->date('tanggal_pesan')->nullable();
             $table->string('total_harga');
             $table->string('pembayaran')->nullable();

@@ -20,65 +20,104 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="tabbable-line">
-                    <ul class="nav customtab nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a href="#data" class="nav-link active" data-bs-toggle="tab">Data Pesanan</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active fontawesome-demo" id="data">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="card-box">
-                                        <div class="card-head">
-                                            <header>Tabel {{ $title }} </header>
-                                        </div>
-                                        <div class="card-body ">
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-6 col-6">
-                                                    <div class="btn-group">
-                                                        <a href="#" id="addRow" class="btn btn-info"> Tambah Pesanan Baru 
-                                                            <i class="fa fa-plus"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <table class="mdl-data-table ml-table-striped mdl-js-data-table mdl-data-table--selectable is-upgraded">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="mdl-data-table__cell--non-numeric">Name</th>
-                                                        <th class="mdl-data-table__cell--non-numeric">Address</th>
-                                                        <th>Quantity</th>
-                                                        <th>Tax</th>
-                                                        <th>Discount</th>
-                                                        <th>Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-                                                        <td class="mdl-data-table__cell--non-numeric">Gandhi road, Ahmedabad
-                                                        </td>
-                                                        <td>25</td>
-                                                        <td>$1.00</td>
-                                                        <td>$0.90</td>
-                                                        <td>
-											                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab margin-right-10 btn-success">
-											                    <i class="material-icons">add</i>
-											                </button>
-											                <button
-											                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored margin-right-4 btn-danger">
-											                    <i class="material-icons">delete</i>
-											                </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="card-body ">
+                        <div class="mdl-tabs mdl-js-tabs">
+                            <div class="mdl-tabs__tab-bar tab-left-side">
+                                <a href="#masuk" class="mdl-tabs__tab tabs_three is-active">{{ $title }} Baru</a>
+                                <a href="#data" class="mdl-tabs__tab tabs_three">Data Pesanan</a>
+                            </div>
+                            <div class="mdl-tabs__panel is-active p-t-20" id="masuk">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            @php
+                                            $no=1
+                                            @endphp
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Invoice</th>
+                                                <th>Nama Pelanggan</th>
+                                                <th>Pembayaran</th>
+                                                <th>Nama Sales</th>
+                                                <th>Status</th>
+                                                <th>Total</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                            @foreach ($pesanans as $pesanan)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $pesanan->invoice }}</td>
+                                                <td>{{ $pesanan->pelanggans->nama }}</td>
+                                                <td>{{ ucwords($pesanan->kategori_pembayaran) }}</td>
+                                                <td>{{ $pesanan->agens->nama }}</td>
+                                                <td>
+                                                    <span class="label label-sm label-warning"> Pending </span>
+                                                </td>
+                                                <td>{{ $pesanan->total_harga }}</td>
+                                                <td>
+                                                    <form action="{{ route('admin.transaksi.approve', $pesanan->slug) }}" method="post" enctype="multipart/form" class="d-inline">
+                                                        @csrf
+                                                        @method('patch')
+                                                        <button type="submit" class="btn btn-circle btn-success btn-sm">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                    </form>
+                                                    <a href="{{ route('pesanan.show', $pesanan->slug) }}" class="btn btn-circle btn-info btn-sm">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <form action="{{ route('pesanan.destroy', $pesanan->slug) }}" method="post" enctype="multipart/form" class="d-inline">
+                                                        @method('delete')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-circle btn-danger btn-sm">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="mdl-tabs__panel p-t-20" id="data">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            @php
+                                            $no=1
+                                            @endphp
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Invoice</th>
+                                                <th>Nama Pelanggan</th>
+                                                <th>Pembayaran</th>
+                                                <th>Nama Sales</th>
+                                                <th>Status</th>
+                                                <th>Total</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                            @foreach ($penjualans as $penjualan)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $penjualan->invoice }}</td>
+                                                <td>{{ $penjualan->pelanggans->nama }}</td>
+                                                <td>{{ ucwords($penjualan->kategori_pembayaran) }}</td>
+                                                <td>{{ $penjualan->agens->nama }}</td>
+                                                <td>
+                                                    <span class="label label-sm label-success"> Approved </span>
+                                                </td>
+                                                <td>{{ $penjualan->total_harga }}</td>
+                                                <td>
+                                                    <a href="{{ route('pesanan.show', $penjualan->slug) }}" class="btn btn-circle btn-info">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

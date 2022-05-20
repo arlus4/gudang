@@ -29,7 +29,7 @@
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="material-icons">storage</i>
                         <span class="title">Produk</span>
-                        <span class="arrow "></span>
+                        <span class="arrow {{ Request::is('kasir/produk/*') ? 'active open' : '' }}"></span>
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item">
@@ -50,18 +50,18 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link nav-toggle">
+                    <a href="/kasir/pelanggan" class="nav-link">
                         <i class="material-icons">face</i>
                         <span class="title">Pelanggan</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
+                <li class="nav-item {{ Request::is('kasir/transaksi*') ? 'active' : '' }}">
+                    <a href="/kasir/transaksi" class="nav-link nav-toggle">
                         <i class="material-icons">attach_money</i>
                         <span class="title">Transaksi</span>
-                        <span class="arrow "></span>
+                        {{-- <span class="arrow "></span> --}}
                     </a>
-                    <ul class="sub-menu">                        
+                    {{-- <ul class="sub-menu">                        
                         <li class="nav-item">
                             <a href="/pesanan" class="nav-link">
                                 <i class="fa fa-edit"></i> Pesanan 
@@ -77,9 +77,14 @@
                                 <i class="fa fa-mail-reply"></i> Pembelian
                             </a>
                         </li>
-
-                    </ul>
-                </li> --}}
+                    </ul> --}}
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="material-icons">add_shopping_cart</i>
+                        <span class="title">Pesanan</span>
+                    </a>
+                </li>
                 {{-- <li class="nav-item">
                     <a href="javascript:;" class="nav-link nav-toggle"> 
                         <i class="material-icons">assessment</i>

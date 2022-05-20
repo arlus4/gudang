@@ -80,7 +80,7 @@
                                                             <div class="btn-group btn-group-circle btn-group-solid">
                                                                 <a href="/admin/pegawai/kasir/{{ $k->slug }}" type="button" class="btn btn-info"><i class="fa fa-info"></i></a>
                                                                 <a href="/admin/pegawai/kasir/{{ $k->slug }}/edit" type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                                <form action="/admin/pegawai/kasir/{{ $k->slug }}" method="POST">
+                                                                <form class="d-inline" action="/admin/pegawai/kasir/{{ $k->slug }}" method="POST">
                                                                     @method('delete')
                                                                     @csrf
                                                                     <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
