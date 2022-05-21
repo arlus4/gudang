@@ -94,7 +94,7 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <div class="btn-group">
-                                            <a href="{{ route('pelanggan.create') }}" id="addRow" class="btn btn-info"> Tambah Pelanggan Baru 
+                                            <a href="/agen/pelanggan/create" id="addRow" class="btn btn-info"> Tambah Pelanggan Baru 
                                                 <i class="fa fa-plus"></i>
                                             </a>
                                         </div>

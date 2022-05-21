@@ -25,17 +25,12 @@
                     <div class="card-body ">
                         <div class="mdl-tabs mdl-js-tabs">
                             <div class="mdl-tabs__tab-bar tab-left-side">
-                                <a href="#data" class="mdl-tabs__tab tabs_three is-active">Tabel {{ $title }}</a>
-                                {{-- <a href="#terima" class="mdl-tabs__tab tabs_three">{{ $title }} Diterima</a> --}}
+                                <a href="#data" class="mdl-tabs__tab tabs_three is-active">{{ $title }} Tempo</a>
+                                <a href="#cash" class="mdl-tabs__tab tabs_three">{{ $title }} Cash</a>
                             </div>
                             <div class="mdl-tabs__panel is-active p-t-20" id="data">
                                 <div class="table-responsive">
                                     <table class="table">
-                                        <div class="btn-group">
-                                            <a href="/agen/transaksi/create" id="addRow" class="btn btn-info"> Tambah Pesanan Baru 
-                                                <i class="fa fa-plus"></i>
-                                            </a>
-                                        </div>
                                         <tbody>
                                             @php
                                             $no=1
@@ -48,7 +43,7 @@
                                                 <th>Pembayaran</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
-                                                <th>&nbsp;</th>
+                                                <th>Update</th>
                                             </tr>
                                             @foreach ($transaksis as $transaksi)
                                             <tr>
@@ -57,11 +52,11 @@
                                                 <td>{{ $transaksi->tanggal_pesan }}</td>
                                                 <td>{{ $transaksi->pelanggans->nama }}</td>
                                                 <td>{{ ucwords($transaksi->kategori_pembayaran) }}</td>
-                                                <td>Pending</td>
+                                                <td>Belum</td>
                                                 <td>{{ $transaksi->total_harga }}</td>
                                                 <td>
-                                                    <a href="/agen/transaksi/{{ $transaksi->slug }}" class="btn btn-circle btn-info">
-                                                        <i class="fa fa-eye"></i>
+                                                    <a href="/agen/transaksi/{{ $transaksi->slug }}" class="btn btn-circle btn-warning">
+                                                        <i class="fa fa-send"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -70,7 +65,7 @@
                                     </table>
                                 </div>
                             </div>
-                            {{-- <div class="mdl-tabs__panel p-t-20" id="terima">
+                            <div class="mdl-tabs__panel p-t-20" id="cash">
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tbody>
@@ -80,23 +75,25 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Invoice</th>
+                                                <th>Tanggal Pesanan</th>
                                                 <th>Nama Pelanggan</th>
                                                 <th>Pembayaran</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
-                                                <th>Aksi</th>
+                                                <th>Update</th>
                                             </tr>
-                                            @foreach ($transaksis as $transaksi)
+                                            @foreach ($pembayarans as $pembayaran)
                                             <tr>
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $transaksi->invoice }}</td>
-                                                <td>{{ $transaksi->pelanggans->nama }}</td>
-                                                <td>{{ ucwords($transaksi->kategori_pembayaran) }}</td>
+                                                <td>{{ $pembayaran->invoice }}</td>
+                                                <td>{{ $pembayaran->tanggal_pesan }}</td>
+                                                <td>{{ $pembayaran->pelanggans->nama }}</td>
+                                                <td>{{ ucwords($pembayaran->kategori_pembayaran) }}</td>
                                                 <td>Belum</td>
-                                                <td>{{ $transaksi->total_harga }}</td>
+                                                <td>{{ $pembayaran->total_harga }}</td>
                                                 <td>
-                                                    <a href="/agen/transaksi/{{ $transaksi->slug }}" class="btn btn-circle btn-info">
-                                                        <i class="fa fa-eye"></i>
+                                                    <a href="/agen/pembayaran/{{ $pembayaran->slug }}" class="btn btn-circle btn-warning">
+                                                        <i class="fa fa-send"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -104,7 +101,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>

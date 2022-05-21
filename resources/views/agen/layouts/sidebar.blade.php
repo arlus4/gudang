@@ -50,7 +50,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/agen/pembayaran" class="nav-link">
                         <i class="material-icons">attach_money</i>
                         <span class="title">Pembayaran</span>
                     </a>

@@ -25,7 +25,7 @@ class AgenTransaksiController extends Controller
      */
     public function index()
     {
-        $transaksi = Penjualan::all();
+        $transaksi = Penjualan::where('approve', false)->get();
         // dd($transaksi);
         return view('agen/transaksi/index', [
             'title' => "Daftar Pesanan",
