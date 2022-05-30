@@ -144,8 +144,10 @@ class AgenTransaksiController extends Controller
 
     public function tambah($id)
     {
+        // $jumlah_produk = \Cart::session(Auth::guard('agen')->user())->get($id)->quantity;
+        $jumlah_produk = request()->jumlah_produk;
+        // dd($jumlah_produk);
         $stoks = ProdukStok::find($id);
-
         $cart = \Cart::session(Auth::guard('agen')->user())->getcontent();
         $cek_item = $cart->whereIn('id', $id);
         if ($stoks->jumlah_produk == $cek_item[$id]->quantity) {
@@ -154,7 +156,7 @@ class AgenTransaksiController extends Controller
             \Cart::session(Auth::guard('agen')->user())->update($id, array(
                 'quantity' => array(
                     'relative' => true,
-                    'value' => 1,
+                    'value' => $jumlah_produk,
                 )
             ));
             return redirect()->back();

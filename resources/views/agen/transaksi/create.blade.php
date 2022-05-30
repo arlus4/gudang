@@ -121,10 +121,11 @@
                                                         </button>
                                                     </form> --}}
                                                     <div class="input-group input-group-sm">
-                                                        <input type="text" class="form-control" name="jumlah_produk" id="jumlah_produk" value="{{$item['jumlah_produk']}}">
-                                                        <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-info btn-flat">Go!</button>
-                                                        </span>
+                                                        <form action="{{ url('/agen/transaksi/create/tambah', $item['produkId']) }}" class="d-inline" method="POST">
+                                                            <input type="text" class="form-control" name="jumlah_produk" id="jumlah_produk" value="{{$item['jumlah_produk']}}">
+                                                            @csrf
+                                                            <button class="btn btn-info">Go!</button>
+                                                        </form>
                                                     </div>
                                                     {{-- <a style="display: inline">{{$item['jumlah_produk']}}</a> --}}
                                                     {{-- <form action="{{url('/agen/transaksi/create/tambah', $item['produkId'])}}" method="POST" style='display:inline;'>

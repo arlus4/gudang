@@ -57,7 +57,9 @@
                                                 <td>{{ $transaksi->tanggal_pesan }}</td>
                                                 <td>{{ $transaksi->pelanggans->nama }}</td>
                                                 <td>{{ ucwords($transaksi->kategori_pembayaran) }}</td>
-                                                <td>Pending</td>
+                                                <td>
+                                                    <span class="label label-sm label-warning"> Pending </span>
+                                                </td>
                                                 <td>{{ $transaksi->total_harga }}</td>
                                                 <td>
                                                     <a href="/agen/transaksi/{{ $transaksi->slug }}" class="btn btn-circle btn-info">

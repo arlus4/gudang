@@ -15,6 +15,7 @@ class CreateTemposTable extends Migration
     {
         Schema::create('tempos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('penjualan_id')->reference('id')->on('penjualans');
             $table->foreignId('pelanggan_id');
             $table->foreignId('agen_id');
             $table->string('invoice');

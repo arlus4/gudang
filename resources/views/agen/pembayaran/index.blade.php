@@ -52,10 +52,12 @@
                                                 <td>{{ $transaksi->tanggal_pesan }}</td>
                                                 <td>{{ $transaksi->pelanggans->nama }}</td>
                                                 <td>{{ ucwords($transaksi->kategori_pembayaran) }}</td>
-                                                <td>Belum</td>
+                                                <td>
+                                                    <span class="label label-sm label-success"> Approved</span>
+                                                </td>
                                                 <td>{{ $transaksi->total_harga }}</td>
                                                 <td>
-                                                    <a href="/agen/transaksi/{{ $transaksi->slug }}" class="btn btn-circle btn-warning">
+                                                    <a href="{{ url('/agen/pembayaran', $transaksi->slug) }}" class="btn btn-circle btn-warning">
                                                         <i class="fa fa-send"></i>
                                                     </a>
                                                 </td>
@@ -80,7 +82,7 @@
                                                 <th>Pembayaran</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
-                                                <th>Update</th>
+                                                <th>Invoice</th>
                                             </tr>
                                             @foreach ($pembayarans as $pembayaran)
                                             <tr>
@@ -89,11 +91,13 @@
                                                 <td>{{ $pembayaran->tanggal_pesan }}</td>
                                                 <td>{{ $pembayaran->pelanggans->nama }}</td>
                                                 <td>{{ ucwords($pembayaran->kategori_pembayaran) }}</td>
-                                                <td>Belum</td>
+                                                <td>
+                                                    <span class="label label-sm label-success"> Approved </span>
+                                                </td>
                                                 <td>{{ $pembayaran->total_harga }}</td>
                                                 <td>
-                                                    <a href="/agen/pembayaran/{{ $pembayaran->slug }}" class="btn btn-circle btn-warning">
-                                                        <i class="fa fa-send"></i>
+                                                    <a href="/agen/pembayaran/{{ $pembayaran->slug }}" class="btn btn-circle btn-success">
+                                                        <i class="fa fa-eye"></i>
                                                     </a>
                                                 </td>
                                             </tr>

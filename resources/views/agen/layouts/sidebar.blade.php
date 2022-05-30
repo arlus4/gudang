@@ -43,16 +43,16 @@
                         <span class="title">Transaksi</span>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::is('agen/pembayaran*') ? 'active' : '' }}">
+                    <a href="/agen/pembayaran" class="nav-link">
+                        <i class="material-icons">attach_money</i>
+                        <span class="title">Pembayaran</span>
+                    </a>
+                </li>
                 <li class="nav-item {{ Request::is('agen/penjualan*') ? 'active' : '' }}">
                     <a href="/agen/penjualan" class="nav-link">
                         <i class="material-icons">done_all</i>
                         <span class="title">Penjualan</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/agen/pembayaran" class="nav-link">
-                        <i class="material-icons">attach_money</i>
-                        <span class="title">Pembayaran</span>
                     </a>
                 </li>
                 {{-- <li class="nav-item">

@@ -46,28 +46,28 @@ Route::get('/', function () {
 Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'authenticate']);
 // Route untuk Admin
-// Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
-//     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-//     Route::get('/admin/notif', [AdminDashboardController::class, 'notif']);
-//     Route::resource('/admin/profil', AdminProfileController::class);
-//     Route::resource('/admin/pegawai/admin', AdminPegawaiController::class);
-//     Route::get('/admin/pegawai/agen/agenSlug', [AdminAgenController::class, 'agenSlug']);
-//     Route::resource('/admin/pegawai/agen', AdminAgenController::class);
-//     Route::get('/admin/pegawai/kasir/kasirSlug', [AdminKasirController::class, 'kasirSlug']);
-//     Route::resource('/admin/pegawai/kasir', AdminKasirController::class);
-//     Route::get('/admin/pelanggan/pelangganSlug', [AdminPelangganController::class, 'pelangganSlug']);
-//     Route::resource('/admin/pelanggan', AdminPelangganController::class);
-//     Route::get('/admin/pelanggan/limit/{pelanggan:slug}', [AdminPelangganController::class, 'tambahlimit'])->name('admin.pelanggan.limit');
-//     Route::patch('/admin/pelanggan/limit/{pelanggan:slug}', [AdminPelangganController::class, 'limit'])->name('admin.pelanggan.ubah');
-//     Route::resource('/admin/produk/stok', AdminProdukStokController::class);
-//     Route::resource('/admin/produk/harga', AdminProdukHargaController::class);
-//     Route::get('/admin/produk/return/pabrik', [AdminProdukReturn::class, 'pabrik']);
-//     Route::get('/admin/produk/return/pelanggan', [AdminProdukReturn::class, 'pelanggan']);
-//     Route::resource('admin/transaksi/pesanan', AdminPesananController::class);
-//     Route::patch('/admin/transaksi/approve/{pesanan:slug}', [AdminPesananController::class, 'approve'])->name('admin.transaksi.approve');
-// });
+Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/notif', [AdminDashboardController::class, 'notif']);
+    Route::resource('/admin/profil', AdminProfileController::class);
+    Route::resource('/admin/pegawai/admin', AdminPegawaiController::class);
+    Route::get('/admin/pegawai/agen/agenSlug', [AdminAgenController::class, 'agenSlug']);
+    Route::resource('/admin/pegawai/agen', AdminAgenController::class);
+    Route::get('/admin/pegawai/kasir/kasirSlug', [AdminKasirController::class, 'kasirSlug']);
+    Route::resource('/admin/pegawai/kasir', AdminKasirController::class);
+    Route::get('/admin/pelanggan/pelangganSlug', [AdminPelangganController::class, 'pelangganSlug']);
+    Route::resource('/admin/pelanggan', AdminPelangganController::class);
+    Route::get('/admin/pelanggan/limit/{pelanggan:slug}', [AdminPelangganController::class, 'tambahlimit'])->name('admin.pelanggan.limit');
+    Route::patch('/admin/pelanggan/limit/{pelanggan:slug}', [AdminPelangganController::class, 'limit'])->name('admin.pelanggan.ubah');
+    Route::resource('/admin/produk/stok', AdminProdukStokController::class);
+    Route::resource('/admin/produk/harga', AdminProdukHargaController::class);
+    Route::get('/admin/produk/return/pabrik', [AdminProdukReturn::class, 'pabrik']);
+    Route::get('/admin/produk/return/pelanggan', [AdminProdukReturn::class, 'pelanggan']);
+    Route::resource('admin/transaksi/pesanan', AdminPesananController::class);
+    Route::patch('/admin/transaksi/approve/{pesanan:slug}', [AdminPesananController::class, 'approve'])->name('admin.transaksi.approve');
+});
 
-// Login Sales
+// Login Sale s
 Route::get('/agen/login', [AgenLoginController::class, 'index'])->name('login.agen');
 Route::post('/agen/login', [AgenLoginController::class, 'authenticate']);
 // Route untuk Sales
@@ -82,10 +82,10 @@ Route::middleware('auth:agen', 'verified', 'isagen')->group(function () {
     Route::post('/agen/transaksi/create/removeproduct/{id}', [AgenTransaksiController::class, 'removeProduct']);
     Route::post('/agen/transaksi/create/clear', [AgenTransaksiController::class, 'clear']);
     Route::post('/agen/transaksi/create/tambah/{id}', [AgenTransaksiController::class, 'tambah']);
-    Route::post('/agen/transaksi/create/kurangi/{id}', [AgenTransaksiController::class, 'kurangi']);
     Route::post('/agen/transaksi/create/bayar', [AgenTransaksiController::class, 'bayar']);
-    Route::get('/agen/penjualan', [AgenPenjualanController::class, 'index']);
     Route::get('/agen/pembayaran', [AgenPembayaranController::class, 'index']);
+    Route::get('/agen/pembayaran/{penjualan:slug}', [AgenPembayaranController::class, 'bayar']);
+    Route::get('/agen/penjualan', [AgenPenjualanController::class, 'index']);
 });
 
 // Login Kasir
