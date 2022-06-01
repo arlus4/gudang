@@ -15,13 +15,15 @@ class CreateTemposTable extends Migration
     {
         Schema::create('tempos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('penjualan_id')->reference('id')->on('penjualans');
-            $table->foreignId('pelanggan_id');
-            $table->foreignId('agen_id');
+            $table->foreignId('pembayaran_id')->reference('id')->on('pembayarans');
             $table->string('invoice');
             $table->string('slug');
             $table->date('tanggal_bayar');
+            $table->string('total_harga');
             $table->string('jumlah_bayar');
+            $table->string('sisa_bayar')->nullable();
+            $table->date('tanggal_jatuh_tempo')->nullable();
+            $table->boolean('approve')->default(false);
             $table->timestamps();
         });
     }

@@ -123,6 +123,7 @@ class AdminProdukHargaController extends Controller
      */
     public function destroy(ProdukHarga $harga)
     {
-        //
+        ProdukHarga::destroy($harga->id);
+        return redirect('/admin/produk/harga')->with('success', 'Produk telah dihapus!');
     }
 }

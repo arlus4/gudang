@@ -59,7 +59,9 @@ Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::resource('/admin/pelanggan', AdminPelangganController::class);
     Route::get('/admin/pelanggan/limit/{pelanggan:slug}', [AdminPelangganController::class, 'tambahlimit'])->name('admin.pelanggan.limit');
     Route::patch('/admin/pelanggan/limit/{pelanggan:slug}', [AdminPelangganController::class, 'limit'])->name('admin.pelanggan.ubah');
-    Route::resource('/admin/produk/stok', AdminProdukStokController::class);
+    Route::get('/admin/produk/stok', [AdminProdukStokController::class, 'index']);
+    Route::get('/admin/produk/stok/{stok:slug}', [AdminProdukStokController::class, 'harga'])->name('admin.produk.tambah.harga');
+    Route::patch('/admin/produk/stok/{stok:slug}', [AdminProdukStokController::class, 'update_harga'])->name('admin.produk.update.harga');
     Route::resource('/admin/produk/harga', AdminProdukHargaController::class);
     Route::get('/admin/produk/return/pabrik', [AdminProdukReturn::class, 'pabrik']);
     Route::get('/admin/produk/return/pelanggan', [AdminProdukReturn::class, 'pelanggan']);
@@ -67,7 +69,7 @@ Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::patch('/admin/transaksi/approve/{pesanan:slug}', [AdminPesananController::class, 'approve'])->name('admin.transaksi.approve');
 });
 
-// Login Sale s
+// Login Sales
 Route::get('/agen/login', [AgenLoginController::class, 'index'])->name('login.agen');
 Route::post('/agen/login', [AgenLoginController::class, 'authenticate']);
 // Route untuk Sales

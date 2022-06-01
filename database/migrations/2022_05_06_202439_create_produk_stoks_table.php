@@ -21,6 +21,7 @@ class CreateProdukStoksTable extends Migration
             $table->string('nama');
             $table->text('deskripsi');
             $table->integer('jumlah_produk');
+            $table->decimal('harga_awal', 10, 2)->nullable();
             $table->string('photo_produk', 2048)->nullable();
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class Penjualan extends Model
     use Notifiable;
 
     //fungsi eager loading laravel
-    protected $with = ['agens', 'pelanggans']; //hanya untuk BelongsTo
+    protected $with = ['agens', 'pelanggans', 'kasirs']; //hanya untuk BelongsTo
 
     protected $table = 'penjualans';
 
@@ -50,18 +50,13 @@ class Penjualan extends Model
         return $this->belongsTo(Agen::class, 'agen_id');
     }
 
+    public function kasirs()
+    {
+        return $this->belongsTo(Kasir::class, 'kasir_id');
+    }
+
     public function pelanggans()
     {
         return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
-    }
-
-    public function penjualan_detail()
-    {
-        return $this->hasMany(PenjualanDetail::class, 'id', 'penjualan_id');
-    }
-
-    public function tempos()
-    {
-        return $this->hasMany(Tempo::class);
     }
 }

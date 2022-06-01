@@ -17,12 +17,13 @@ class CreateProdukHargasTable extends Migration
             $table->id();
             $table->foreignId('stok_id')->reference('id')->on('produk_stoks')->nullable();
             $table->foreignId('jasa_id')->reference('id')->on('produk_jasas')->nullable();
-            $table->string('slug')->unique();
-            $table->date('harga_terkini');
-            $table->decimal('harga_dasar');
-            $table->decimal('harga_supplier');
-            $table->decimal('harga_retail');
+            $table->string('kode');
+            $table->string('slug');
+            $table->decimal('harga_dasar', 10, 2);
+            $table->date('tanggal_harga_terkini');
+            $table->decimal('harga_supplier', 10, 2);
             $table->string('margin_harga_supplier');
+            $table->decimal('harga_retail', 10, 2);
             $table->string('margin_harga_retail');
             $table->timestamps();
         });

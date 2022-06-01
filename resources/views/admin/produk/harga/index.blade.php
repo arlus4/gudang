@@ -68,21 +68,25 @@
                                                         <tr class="odd gradeX">
                                                             <td>{{ $stok->produk_stok->kode }}</td>
                                                             <td>{{ $stok->produk_stok->nama }}</td>
-                                                            <td>{{ $stok->harga_terkini }}</td>
+                                                            <td>{{ $stok->harga_terkini->format('d-m-Y') }}</td>
                                                             <td>{{ $stok->harga_dasar }}</td>
                                                             <td>{{ $stok->harga_retail }}</td>
                                                             <td>{{ $stok->harga_supplier }}</td>
                                                             <td> 
-                                                                <div class="btn-group btn-group-circle btn-group-solid">
-                                                                    {{-- <a href="/admin/produk/harga/{{ $stok->produk_stok->slug }}" type="button" class="btn btn-info"><i class="fa fa-info"></i></a> --}}
-                                                                    <a href="/admin/produk/harga/{{ $stok->produk_stok->slug }}/edit" type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                                    <form class="d-inline" action="#" method="POST">
+                                                                <div class="col-md-12">
+                                                                    <a href="/admin/produk/harga/{{ $stok->produk_stok->slug }}" class="btn btn-circle btn-info btn-sm m-b-10">
+                                                                        <i class="fa fa-send"></i>
+                                                                    </a>
+                                                                    <form class="d-inline" action="/admin/produk/harga/{{ $stok->slug }}" method="POST">
                                                                         @method('delete')
                                                                         @csrf
-                                                                        <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
+                                                                        <button type="submit" class="btn btn-circle btn-danger btn-sm m-b-10" onclick="return confirm('Apakah Anda yakin?')">
                                                                             <i class="fa fa-trash-o"></i>
                                                                         </button>
                                                                     </form>
+                                                                    <a href="/admin/produk/harga/{{ $stok->produk_stok->slug }}/edit" class="btn btn-circle btn-warning btn-sm m-b-10">
+                                                                        <i class="fa fa-pencil"></i>
+                                                                    </a>
                                                                 </div>
                                                             </td>
                                                         </tr>

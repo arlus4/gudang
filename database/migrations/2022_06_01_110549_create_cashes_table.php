@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePembayaransTable extends Migration
+class CreateCashesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreatePembayaransTable extends Migration
      */
     public function up()
     {
-        Schema::create('pembayarans', function (Blueprint $table) {
+        Schema::create('cashes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('penjualan_id')->reference('id')->on('penjualans');
-            $table->foreignId('agen_id')->reference('id')->on('agens')->nullable();
+            $table->foreignId('pembayaran_id')->reference('id')->on('pembayarans');
             $table->string('invoice');
             $table->string('slug');
+            $table->date('tanggal_bayar');
             $table->string('total_harga');
-            $table->enum('kategori_pembayaran', ['cash', 'tempo'])->nullable();
+            $table->string('jumlah_bayar');
+            $table->boolean('approve')->default(false);
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreatePembayaransTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pembayarans');
+        Schema::dropIfExists('cashes');
     }
 }

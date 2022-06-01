@@ -16,6 +16,8 @@ class CreatePenjualanDetailsTable extends Migration
         Schema::create('penjualan_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('penjualan_id')->reference('id')->on('penjualans');
+            $table->foreignId('stok_id')->reference('id')->on('produk_stoks');
+            $table->foreignId('harga_id')->reference('id')->on('produk_hargas');
             $table->string('invoice');
             $table->string('slug');
             $table->string('kode_produk')->nullable();

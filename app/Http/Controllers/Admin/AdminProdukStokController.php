@@ -23,68 +23,35 @@ class AdminProdukStokController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProdukStok  $produkStok
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProdukStok $produkStok)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProdukStok  $produkStok
+     * @param  \App\Models\ProdukStok  $stok
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProdukStok $produkStok)
+    public function harga(ProdukStok $stok)
     {
-        //
+        // dd($stok);
+        return view('admin/produk/stok/harga', [
+            'title' => "Harga $stok->nama",
+            'stok' => $stok
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProdukStok  $produkStok
+     * @param  \App\Models\ProdukStok  $stok
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProdukStok $produkStok)
+    public function update_harga(Request $request, ProdukStok $stok)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ProdukStok  $produkStok
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ProdukStok $produkStok)
-    {
-        //
+        $this->validate($request, [
+            'harga_awal' => 'required'
+        ]);
+        $stok->update([
+            'harga_awal' => $request->harga_awal
+        ]);
+        return redirect('admin/produk/stok')->with('success', 'Harga Berhasil Di Tambahkan');
     }
 }

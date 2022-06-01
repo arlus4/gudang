@@ -55,7 +55,6 @@ class AdminPesananController extends Controller
     public function show(Penjualan $pesanan)
     {
         $detail = PenjualanDetail::where('penjualan_id', $pesanan->id)->get();
-        // dd($detail);
         return view('admin/transaksi/pesanan/show', [
             'title' => 'Invoice',
             'details' => $detail,

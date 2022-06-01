@@ -14,7 +14,7 @@ class Tempo extends Model
     use Notifiable;
 
     //fungsi eager loading laravel
-    protected $with = ['pelanggans', 'agens'];
+    protected $with = ['pembayarans'];
 
     protected $table = 'tempos';
 
@@ -45,13 +45,8 @@ class Tempo extends Model
         ];
     }
 
-    public function pelanggans()
+    public function pembayarans()
     {
-        return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
-    }
-
-    public function agens()
-    {
-        return $this->belongsTo(Agen::class, 'agen_id');
+        return $this->belongsTo(Pembayaran::class, 'pembayaran_id');
     }
 }

@@ -4,24 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Notifications\Notifiable;
 
-class ProdukHarga extends Model
+class Cash extends Model
 {
     use HasFactory;
+    use Sluggable;
+    use Notifiable;
 
     //fungsi eager loading laravel
-    protected $with = ['produk_stok', 'produk_jasa'];
+    protected $with = ['pembayarans'];
 
-    protected $table = 'produk_hargas';
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'harga_terkini' => 'date',
-    ];
+    protected $table = 'cashes';
 
     /**
      * The attributes that aren't mass assignable.
@@ -45,18 +40,13 @@ class ProdukHarga extends Model
     {
         return [
             'slug' => [
-                'source' => 'nama'
+                'source' => 'invoice'
             ]
         ];
     }
 
-    public function produk_stok()
+    public function pembayarans()
     {
-        return $this->belongsTo(ProdukStok::class, 'stok_id');
-    }
-
-    public function produk_jasa()
-    {
-        return $this->belongsTo(ProdukJasa::class, 'jasa_id');
+        return $this->belongsTo(Pembayaran::class, 'pembayaran_id');
     }
 }

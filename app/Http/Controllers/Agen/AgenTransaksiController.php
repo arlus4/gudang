@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Agen;
 
+use App\Models\Tempo;
 use App\Models\History;
 use App\Models\Pelanggan;
 use App\Models\Penjualan;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\PenjualanDetail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Pembayaran;
 use Darryldecode\Cart\CartCondition;
 use Illuminate\Support\Facades\Auth;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -103,6 +105,7 @@ class AgenTransaksiController extends Controller
     public function addProduct($id)
     {
         $produks = ProdukHarga::find($id);
+        // dd($produks);
         $stoks = ProdukStok::find($id);
         // dd($stoks);
         // $pelanggans = Pelanggan::all();
@@ -127,7 +130,6 @@ class AgenTransaksiController extends Controller
                 'price' => $produks->harga_supplier,
                 'quantity' => 1,
                 'attributes' => array(
-                    // 'pelanggan_id' => $pelanggans->id,
                     'kode_produk' => $stoks->kode,
                     'created_at' => date('Y-m-d H:i:s'),
                 )
@@ -195,87 +197,162 @@ class AgenTransaksiController extends Controller
         // dd($bayar);
         // $kembalian = (int)$bayar - (int)$cart_total;
 
-        // if ($kategori_pembayaran == request()->kategori['tempo']) {
-        //     dd($kategori_pembayaran);
-        // }
+        if ($kategori_pembayaran == 'tempo') {
+            // dd($kategori_pembayaran);
+            DB::beginTransaction();
 
+            try {
+                $all_cart = \Cart::session(Auth::guard('agen')->user())->getContent();
+                // dd($all_cart);
+                $filterCart = $all_cart->map(function ($produk) {
+                    return [
+                        'id' => $produk->id,
+                        'name' => $produk->name,
+                        'price' => $produk->price,
+                        'quantity' => $produk->quantity,
+                        'kode_produk' => $produk->attributes->kode_produk
+                    ];
+                });
+                // dd($filterCart);
 
-        // if ($kembalian >= 0) {
-        DB::beginTransaction();
-
-        try {
-            $all_cart = \Cart::session(Auth::guard('agen')->user())->getContent();
-            // dd($all_cart);
-            $filterCart = $all_cart->map(function ($produk) {
-                return [
-                    'id' => $produk->id,
-                    'name' => $produk->name,
-                    'price' => $produk->price,
-                    'quantity' => $produk->quantity,
-                    'kode_produk' => $produk->attributes->kode_produk
-                ];
-            });
-            // dd($filterCart);
-
-            foreach ($filterCart as $cart) {
-                // dd($cart);
-                $stoks = ProdukStok::find($cart['id']);
-                if ($stoks->jumlah_produk == 0) {
-                    return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
+                foreach ($filterCart as $cart) {
+                    // dd($cart);
+                    $stoks = ProdukStok::find($cart['id']);
+                    if ($stoks->jumlah_produk == 0) {
+                        return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
+                    }
+                    History::create([
+                        'produk_id' => $cart['id'],
+                        'agen_id' => Auth::guard('agen')->user()->id,
+                        'jumlah_produk' => $stoks->jumlah_produk,
+                        'ubah_produk' => -$cart['quantity'], // "-" simbol identifikasi untuk mengurangi stok
+                        'tipe' => 'decrease from transaction'
+                    ]);
+                    $stoks->decrement('jumlah_produk', $cart['quantity']);
                 }
-                History::create([
-                    'produk_id' => $cart['id'],
+
+                $id = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'INV-', 'field' => 'invoice']);
+                $slug = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'inv-', 'field' => 'invoice']);
+
+                Penjualan::create([
                     'agen_id' => Auth::guard('agen')->user()->id,
-                    'jumlah_produk' => $stoks->jumlah_produk,
-                    'ubah_produk' => -$cart['quantity'], // "-" simbol identifikasi untuk mengurangi stok
-                    'tipe' => 'decrease from transaction'
-                ]);
-                $stoks->decrement('jumlah_produk', $cart['quantity']);
-                // $cek = History::all();
-                // dd($cek);
-            }
-
-            $id = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'INV-', 'field' => 'invoice']);
-            $slug = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'inv-', 'field' => 'invoice']);
-            // $pelanggans = Pelanggan::find($id);
-            // dd($pelanggans);
-            Penjualan::create([
-                'agen_id' => Auth::guard('agen')->user()->id,
-                'invoice' => $id,
-                'slug' => $slug,
-                'tanggal_pesan' => date("Y-m-d H:i:s", strtotime('now')),
-                'pelanggan_id' => $pelanggan_id,
-                'total_harga' => $cart_total,
-                'kategori_pembayaran' => $kategori_pembayaran,
-                'pembayaran' => $bayar,
-            ]);
-            // $cek = Penjualan::all();
-            // dd($cek);
-
-            $penjualan = Penjualan::latest()->first();
-            foreach ($filterCart as $cart) {
-                // dd($penjualan);
-                PenjualanDetail::create([
-                    'penjualan_id' => $penjualan->id,
+                    'pelanggan_id' => $pelanggan_id,
                     'invoice' => $id,
                     'slug' => $slug,
-                    'kode_produk' => $cart['kode_produk'],
-                    'nama_produk' => $cart['name'],
-                    'jumlah_produk' => $cart['quantity'],
-                    'harga_produk' => $cart['price'],
+                    'tanggal_pesan' => date("Y-m-d H:i:s", strtotime('now')),
+                    'total_harga' => $cart_total,
+                    'kategori_pembayaran' => $kategori_pembayaran
                 ]);
-            }
-            // $cek = PenjualanDetail::all();
-            // dd($cek);
 
-            \Cart::session(Auth::guard('agen')->user())->clear();
-            DB::commit();
-            return redirect()->back()->with('success', 'Transaksi Berhasi Tunggu Konfirmasi dari Admin');
-        } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
+                $penjualan = Penjualan::latest()->first();
+                foreach ($filterCart as $cart) {
+                    // dd($penjualan);
+                    PenjualanDetail::create([
+                        'penjualan_id' => $penjualan->id,
+                        'invoice' => $id,
+                        'slug' => $slug,
+                        'kode_produk' => $cart['kode_produk'],
+                        'nama_produk' => $cart['name'],
+                        'jumlah_produk' => $cart['quantity'],
+                        'harga_produk' => $cart['price'],
+                    ]);
+                }
+                Tempo::create([
+                    'penjualan_id' => $penjualan->id,
+                    'agen_id' => Auth::guard('agen')->user()->id,
+                    'pelanggan_id' => $pelanggan_id,
+                    'invoice' => $id,
+                    'slug' => $slug,
+                ]);
+                // $cek = Tempo::all();
+                // dd($cek);
+
+                \Cart::session(Auth::guard('agen')->user())->clear();
+                DB::commit();
+                return redirect()->back()->with('success', 'Transaksi Berhasi Tunggu Konfirmasi dari Admin');
+            } catch (\Exception $e) {
+                DB::rollback();
+                return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
+            }
+        } else {
+            DB::beginTransaction();
+
+            try {
+                $all_cart = \Cart::session(Auth::guard('agen')->user())->getContent();
+                // dd($all_cart);
+                $filterCart = $all_cart->map(function ($produk) {
+                    return [
+                        'id' => $produk->id,
+                        'name' => $produk->name,
+                        'price' => $produk->price,
+                        'quantity' => $produk->quantity,
+                        'kode_produk' => $produk->attributes->kode_produk
+                    ];
+                });
+                // dd($filterCart);
+
+                foreach ($filterCart as $cart) {
+                    // dd($cart);
+                    $stoks = ProdukStok::find($cart['id']);
+                    if ($stoks->jumlah_produk == 0) {
+                        return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
+                    }
+                    History::create([
+                        'produk_id' => $cart['id'],
+                        'agen_id' => Auth::guard('agen')->user()->id,
+                        'jumlah_produk' => $stoks->jumlah_produk,
+                        'ubah_produk' => -$cart['quantity'], // "-" simbol identifikasi untuk mengurangi stok
+                        'tipe' => 'decrease from transaction'
+                    ]);
+                    $stoks->decrement('jumlah_produk', $cart['quantity']);
+                }
+
+                $id = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'INV-', 'field' => 'invoice']);
+                $slug = IdGenerator::generate(['table' => 'penjualans', 'length' => 10, 'prefix' => 'inv-', 'field' => 'invoice']);
+
+                Penjualan::create([
+                    'agen_id' => Auth::guard('agen')->user()->id,
+                    'pelanggan_id' => $pelanggan_id,
+                    'invoice' => $id,
+                    'slug' => $slug,
+                    'tanggal_pesan' => date("Y-m-d H:i:s", strtotime('now')),
+                    'total_harga' => $cart_total,
+                    'kategori_pembayaran' => $kategori_pembayaran,
+                    'pembayaran' => $bayar,
+                ]);
+
+                $penjualan = Penjualan::latest()->first();
+                foreach ($filterCart as $cart) {
+                    // dd($penjualan);
+                    PenjualanDetail::create([
+                        'penjualan_id' => $penjualan->id,
+                        'invoice' => $id,
+                        'slug' => $slug,
+                        'kode_produk' => $cart['kode_produk'],
+                        'nama_produk' => $cart['name'],
+                        'jumlah_produk' => $cart['quantity'],
+                        'harga_produk' => $cart['price'],
+                    ]);
+                }
+                Pembayaran::create([
+                    'penjualan_id' => $penjualan->id,
+                    'agen_id' => Auth::guard('agen')->user()->id,
+                    'pelanggan_id' => $pelanggan_id,
+                    'invoice' => $id,
+                    'slug' => $slug,
+                    'tanggal_bayar' => date("Y-m-d H:i:s", strtotime('now')),
+                    'total_bayar' => $bayar,
+                    'kategori_pembayaran' => $kategori_pembayaran,
+                ]);
+
+                \Cart::session(Auth::guard('agen')->user())->clear();
+                DB::commit();
+                return redirect()->back()->with('success', 'Transaksi Berhasi Tunggu Konfirmasi dari Admin');
+            } catch (\Exception $e) {
+                DB::rollback();
+                return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
+            }
         }
-        // }
         return redirect()->back()->with('errorTransaksi', 'jumlah pembayaran gak valid');
     }
 
