@@ -1,5 +1,5 @@
-@extends('agen/layouts/main')
-@section('agen/index')
+@extends('admin/layouts/main')
+@section('admin/index')
 
 <!-- start page content -->
 <div class="page-content-wrapper">
@@ -12,7 +12,7 @@
                 <ol class="breadcrumb page-breadcrumb pull-right">
                     <li>
                         <i class="fa fa-home"></i>&nbsp;
-                        <a class="parent-item" href="/agen/dashboard">Beranda</a>&nbsp;
+                        <a class="parent-item" href="/admin/dashboard">Beranda</a>&nbsp;
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li class="active">{{ $title }}</li>
@@ -21,15 +21,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-head">
-                        <header>Tabel {{ $title }}</header>
-                        <div class="tools">
-                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
-                            <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
-                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
-                        </div>
-                    </div>
+                <div class="card-box">
                     <div class="card-body ">
                         <div class="table-responsive">
                             <table id="example1" class="display" style="width:100%;">
@@ -37,38 +29,47 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Invoice</th>
-                                        <th>Tanggal Pesanan</th>
-                                        {{-- <th>Nama Pelanggan</th> --}}
+                                        <th>Pelanggan</th>
                                         <th>Pembayaran</th>
-                                        <th>Status</th>
+                                        <th>Penerima</th>
+                                        <th>Tanggal Bayar</th>
+                                        <th>Jumlah Bayar</th>
                                         <th>Total</th>
-                                        <th>Update</th>
+                                        <th>Status</th>
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php
                                     $no=1
                                     @endphp
-                                    @foreach ($tempos as $tempo)
+                                    @foreach ($datas as $data)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $tempo->invoice }}</td>
-                                        <td>{{ $tempo->tanggal_penjualan }}</td>
-                                        {{-- <td>{{ $tempo->pelanggans->nama }}</td> --}}
-                                        <td>{{ ucwords($tempo->kategori_pembayaran) }}</td>
+                                        <td>{{ $data->invoice }}</td>
+                                        <td>{{ $data->pembayarans->penjualans->pelanggans->nama }}</td>
+                                        <td>{{ ucwords($data->pembayarans->kategori_pembayaran) }}</td>
+                                        <td>{{ $data->pembayarans->agens->nama }}</td>
+                                        <td>{{ $data->tanggal_bayar }}</td>
+                                        <td> @currency($data->jumlah_bayar) </td>
+                                        <td> @currency($data->total_harga ) </td>
                                         <td>
-                                            <span class="label label-sm label-warning"> Pending</span>
+                                            <span class="label label-sm label-warning"> Pending </span>
                                         </td>
-                                        <td>{{ $tempo->total_harga }}</td>
                                         <td>
-                                            <a href="/agen/pembayaran/{{ $tempo->slug }}/edit" class="btn btn-circle btn-warning">
-                                                <i class="fa fa-send"></i>
-                                            </a>
+                                            <form action="{{ route('admin.transaksi.pembayaran', $data->slug) }}" method="post" enctype="multipart/form" class="d-inline">
+                                                @csrf
+                                                @method('patch')
+                                                <button type="submit" class="btn btn-circle btn-success btn-sm">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
                         </div>
                     </div>
                 </div>

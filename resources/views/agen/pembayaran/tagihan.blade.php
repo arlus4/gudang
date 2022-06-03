@@ -27,31 +27,30 @@
             <div class="col-md-12 col-sm-12">
                 <div class="card card-box">
                     <div class="card-head">
-                        <header>Form {{ $title }}</header>
+                        <header>Form Pembayaran</header>
                     </div>
                     <div class="card-body" id="bar-parent">
                         <div class="row">
-                            <form method="POST" action="#" enctype="multipart/form-data">
+                            <form method="POST" action="/agen/pembayaran/{{ $pembayaran->slug }}" enctype="multipart/form-data">
+                                @method('put')
                                 @csrf
                                 <div class="form-group">
-                                    <label for="nama">Jumlah Tunggakan</label>
-                                    <input type="text" class="form-control" value="Rp. {{ $pembayaran->total_harga }}" readonly>
-                                </div>
-                                <div class="col-lg-12 p-t-20">
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                                        <input class="mdl-textfield__input @error('tanggal_lahir') is-invalid @enderror" type="text" id="date" name="tanggal_lahir">
-                                        @error('tanggal_lahir')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                        <label class="mdl-textfield__label">Tanggal Pembayaran</label>
-                                    </div>
+                                    <label>Jumlah Tunggakan</label>
+                                    <input type="text" class="form-control" value="Rp. {{ $pembayaran->sisa_bayar }}" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label for="nama">Jumlah yang dibayarkan</label>
-                                    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" required>
-                                    @error('nama')
+                                    <label for="jumlah_bayar">Jumlah yang dibayarkan</label>
+                                    <input type="text" class="form-control @error('jumlah_bayar') is-invalid @enderror" id="jumlah_bayar" name="jumlah_bayar" value="{{ old('jumlah_bayar') }}" required>
+                                    @error('jumlah_bayar')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="sisa_bayar">Sisa Pembayaran</label>
+                                    <input type="text" class="form-control @error('sisa_bayar') is-invalid @enderror" id="sisa_bayar" name="sisa_bayar" value="{{ old('sisa_bayar') }}" required>
+                                    @error('sisa_bayar')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

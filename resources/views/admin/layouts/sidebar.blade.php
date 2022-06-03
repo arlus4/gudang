@@ -105,15 +105,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/admin/transaksi/pembelian" class="nav-link">
-                                <i class="fa fa-mail-reply"></i> Pembelian
+                            <a href="/admin/transaksi/pembayaran" class="nav-link">
+                                <i class="fa fa-money"></i> Pembayaran
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="/admin/transaksi/penjualan" class="nav-link">
                                 <i class="fa fa-mail-forward"></i> Penjualan
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
                 {{-- <li class="nav-item">

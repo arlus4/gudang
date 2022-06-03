@@ -19,9 +19,9 @@ class CreateTemposTable extends Migration
             $table->string('invoice');
             $table->string('slug');
             $table->string('total_harga');
+            $table->string('sisa_bayar');
             $table->date('tanggal_bayar')->nullable();
             $table->string('jumlah_bayar')->nullable();
-            $table->string('sisa_bayar')->nullable();
             $table->date('tanggal_jatuh_tempo')->nullable();
             $table->boolean('approve')->default(false);
             $table->timestamps();

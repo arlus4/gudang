@@ -46,7 +46,7 @@
                 <li class="nav-item {{ Request::is('agen/pembayaran*') ? 'active' : '' }}">
                     <a href="/agen/pembayaran" class="nav-link">
                         <i class="material-icons">attach_money</i>
-                        <span class="title">Pembayaran</span>
+                        <span class="title">Tagihan</span>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('agen/penjualan*') ? 'active' : '' }}">

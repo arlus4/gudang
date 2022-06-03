@@ -266,6 +266,7 @@ class AgenTransaksiController extends Controller
                     'invoice' => $id,
                     'slug' => $slug,
                     'total_harga' => $cart_total,
+                    'sisa_bayar' => $cart_total
                 ]);
 
                 \Cart::session(Auth::guard('agen')->user())->clear();

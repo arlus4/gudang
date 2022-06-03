@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Agen;
 
+use App\Models\Tempo;
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,29 +10,100 @@ use Illuminate\Support\Facades\Auth;
 
 class AgenPembayaranController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $transaksi = Penjualan::where('agen_id', Auth::guard('agen')->user()->id)->get();
-        // ->where('kategori_pembayaran', 'tempo')
-        // ->where('approve', 1)->get();
-        // dd($transaksi);
-        $pembayaran = Penjualan::where('agen_id', Auth::guard('agen')->user()->id)->get();
-        // ->where('kategori_pembayaran', 'cash')
-        // ->where('approve', 1)->get();
+        // $pembayaran = Penjualan::where('agen_id', Auth::guard('agen')->user()->id)
+        //     ->where('kategori_pembayaran', 'tempo')->get();
+        $tempos = Tempo::where('approve', 1)->where('sisa_bayar', '<=', 0)->get();
+        // $tempo = $tempos->concat($pembayaran);
         return view('agen/pembayaran/index', [
-            'title' => 'Pembayaran',
-            'transaksis' => $transaksi,
-            'pembayarans' => $pembayaran
+            'title' => 'Daftar Tagihan',
+            'tempos' => $tempos
         ]);
     }
 
-    public function bayar(Penjualan $pembayaran)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $pembayaran = Penjualan::where('agen_id', Auth::guard('agen')->user()->id)->where('kategori_pembayaran', 'tempo')->first();
-        // dd($pembayaran);
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Tempo  $pembayaran
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Tempo $pembayaran)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Tempo  $pembayaran
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Tempo $pembayaran)
+    {
         return view('agen/pembayaran/tagihan', [
-            'title' => 'Pembayaran',
+            'title' => "Pembayaran $pembayaran->invoice",
             'pembayaran' => $pembayaran
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Tempo  $pembayaran
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Tempo $pembayaran)
+    {
+        // dd($request->all());
+        $this->validate($request, [
+            'jumlah_bayar' => 'required',
+            'sisa_bayar' => 'required',
+        ]);
+        $pembayaran->update([
+            'tanggal_bayar' => date("Y-m-d H:i:s", strtotime('now')),
+            'jumlah_bayar' => $request->jumlah_bayar,
+            'sisa_bayar' => $request->sisa_bayar,
+            'approve' => 0
+        ]);
+        return redirect('/agen/pembayaran')->with('success', 'Pembayaran Berhasil Dikonfirmasi');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Tempo  $pembayaran
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Tempo $pembayaran)
+    {
+        //
     }
 }
