@@ -51,11 +51,11 @@
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
                                     <b>Harga Supplier </b>
-                                    <div class="profile-desc-item pull-right">Rp.{{ $produk->harga_supplier }}</div>
+                                    <div class="profile-desc-item pull-right">@currency($produk->harga_supplier)</div>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Harga Retail </b>
-                                    <div class="profile-desc-item pull-right">Rp.{{ $produk->harga_retail }}</div>
+                                    <div class="profile-desc-item pull-right">@currency($produk->harga_retail)</div>
                                 </li>
                             </ul>
                         </div>

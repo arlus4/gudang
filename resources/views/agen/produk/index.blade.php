@@ -40,12 +40,12 @@
                                     </div>
                                     <p>
                                         <span>
-                                            <i class="ti-alarm-clock"></i> Harga Supplier: {{ $stok->harga_supplier }}
+                                            <i class="ti-alarm-clock"></i> Harga Supplier: @currency($stok->harga_supplier)
                                         </span>
                                     </p>
                                     <p>
                                         <span>
-                                            <i class="ti-user"></i> Harga Retail: {{ $stok->harga_retail }}
+                                            <i class="ti-user"></i> Harga Retail: @currency($stok->harga_retail)
                                         </span>
                                     </p>
                                     <p>

@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ProdukHarga extends Model
+class BarangKeluar extends Model
 {
     use Sluggable;
     use HasFactory;
 
     //fungsi eager loading laravel
-    protected $with = ['produk_stok', 'produk_jasa'];
+    protected $with = ['kasirs'];
 
     protected $table = 'produk_hargas';
 
@@ -22,7 +22,7 @@ class ProdukHarga extends Model
      * @var array
      */
     protected $casts = [
-        'tanggal_harga_terkini' => 'date',
+        'tanggal_keluar' => 'date',
     ];
 
     /**
@@ -52,13 +52,8 @@ class ProdukHarga extends Model
         ];
     }
 
-    public function produk_stok()
+    public function kasirs()
     {
-        return $this->belongsTo(ProdukStok::class, 'stok_id');
-    }
-
-    public function produk_jasa()
-    {
-        return $this->belongsTo(ProdukJasa::class, 'jasa_id');
+        return $this->belongsTo(Kasir::class, 'kasir_id');
     }
 }

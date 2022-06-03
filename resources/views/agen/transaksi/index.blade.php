@@ -54,7 +54,7 @@
                                             <tr>
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $transaksi->invoice }}</td>
-                                                <td>{{ $transaksi->tanggal_pesan }}</td>
+                                                <td>{{ $transaksi->tanggal_penjualan }}</td>
                                                 <td>{{ $transaksi->pelanggans->nama }}</td>
                                                 <td>{{ ucwords($transaksi->kategori_pembayaran) }}</td>
                                                 <td>

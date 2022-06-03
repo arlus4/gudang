@@ -44,7 +44,7 @@
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6 col-6">
                                                     <div class="btn-group">
-                                                        <a href="/admin/produk/harga/create" id="addRow1" class="btn btn-info">
+                                                        <a href="/admin/produk/harga/create" id="addRow1" class="btn btn-circle btn-info">
                                                             Tambah Harga Barang Baru <i class="fa fa-external-link"></i>
                                                         </a>
                                                     </div>
@@ -68,10 +68,10 @@
                                                         <tr class="odd gradeX">
                                                             <td>{{ $stok->produk_stok->kode }}</td>
                                                             <td>{{ $stok->produk_stok->nama }}</td>
-                                                            <td>{{ $stok->harga_terkini->format('d-m-Y') }}</td>
-                                                            <td>{{ $stok->harga_dasar }}</td>
-                                                            <td>{{ $stok->harga_retail }}</td>
-                                                            <td>{{ $stok->harga_supplier }}</td>
+                                                            <td>{{ $stok->tanggal_harga_terkini->format('d-m-Y') }}</td>
+                                                            <td>@currency($stok->harga_dasar)</td>
+                                                            <td>@currency($stok->harga_retail)</td>
+                                                            <td>@currency($stok->harga_supplier)</td>
                                                             <td> 
                                                                 <div class="col-md-12">
                                                                     <a href="/admin/produk/harga/{{ $stok->produk_stok->slug }}" class="btn btn-circle btn-info btn-sm m-b-10">

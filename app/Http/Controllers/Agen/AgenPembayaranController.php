@@ -11,13 +11,13 @@ class AgenPembayaranController extends Controller
 {
     public function index()
     {
-        $transaksi = Penjualan::where('agen_id', Auth::guard('agen')->user()->id)
-            ->where('kategori_pembayaran', 'tempo')
-            ->where('approve', 1)->get();
+        $transaksi = Penjualan::where('agen_id', Auth::guard('agen')->user()->id)->get();
+        // ->where('kategori_pembayaran', 'tempo')
+        // ->where('approve', 1)->get();
         // dd($transaksi);
-        $pembayaran = Penjualan::where('agen_id', Auth::guard('agen')->user()->id)
-            ->where('kategori_pembayaran', 'cash')
-            ->where('approve', 1)->get();
+        $pembayaran = Penjualan::where('agen_id', Auth::guard('agen')->user()->id)->get();
+        // ->where('kategori_pembayaran', 'cash')
+        // ->where('approve', 1)->get();
         return view('agen/pembayaran/index', [
             'title' => 'Pembayaran',
             'transaksis' => $transaksi,

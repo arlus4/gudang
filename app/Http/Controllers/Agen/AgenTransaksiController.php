@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\PenjualanDetail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Cash;
 use App\Models\Pembayaran;
 use Darryldecode\Cart\CartCondition;
 use Illuminate\Support\Facades\Auth;
@@ -146,9 +147,7 @@ class AgenTransaksiController extends Controller
 
     public function tambah($id)
     {
-        // $jumlah_produk = \Cart::session(Auth::guard('agen')->user())->get($id)->quantity;
         $jumlah_produk = request()->jumlah_produk;
-        // dd($jumlah_produk);
         $stoks = ProdukStok::find($id);
         $cart = \Cart::session(Auth::guard('agen')->user())->getcontent();
         $cek_item = $cart->whereIn('id', $id);
@@ -156,45 +155,38 @@ class AgenTransaksiController extends Controller
             return redirect()->back()->with('error', 'Jumlah Produk kurang!');
         } else {
             \Cart::session(Auth::guard('agen')->user())->update($id, array(
-                'quantity' => array(
-                    'relative' => true,
-                    'value' => $jumlah_produk,
-                )
+                'quantity' => $jumlah_produk
             ));
             return redirect()->back();
         }
     }
 
-    public function kurangi($id)
-    {
-        $produks = ProdukHarga::find($id);
+    // public function kurangi($id)
+    // {
+    //     $jumlah_produk = request()->jumlah_produk;
+    //     $stoks = ProdukStok::find($id);
+    //     $cart = \Cart::session(Auth::guard('agen')->user())->getcontent();
+    //     $cek_item = $cart->whereIn('id', $id);
 
-        $cart = \Cart::session(Auth::guard('agen')->user())->getcontent();
-        $cek_item = $cart->whereIn('id', $id);
-
-        if ($cek_item[$id]->quantity == 1) {
-            \Cart::session(Auth::guard('agen')->user())->remove($id);
-        } else {
-            \Cart::session(Auth::guard('agen')->user())->update($id, array(
-                'quantity' => array(
-                    'relative' => true,
-                    'value' => -1
-                )
-            ));
-        }
-        return redirect()->back();
-    }
+    //     if ($cek_item[$id]->quantity == 1) {
+    //         \Cart::session(Auth::guard('agen')->user())->remove($id);
+    //     } else {
+    //         \Cart::session(Auth::guard('agen')->user())->update($id, array(
+    //             'quantity' => array(
+    //                 'relative' => true,
+    //                 'value' => -$jumlah_produk
+    //             )
+    //         ));
+    //     }
+    //     return redirect()->back();
+    // }
 
     public function bayar()
     {
         $pelanggan_id = request()->pelanggan_id;
-        // dd($pelanggans);
         $kategori_pembayaran = request()->kategori;
-        // dd($kategori_pembayaran);
         $cart_total = \Cart::session(Auth::guard('agen')->user())->getTotal();
-        // dd($cart_total);
         $bayar = request()->bayar;
-        // dd($bayar);
         // $kembalian = (int)$bayar - (int)$cart_total;
 
         if ($kategori_pembayaran == 'tempo') {
@@ -239,16 +231,17 @@ class AgenTransaksiController extends Controller
                     'pelanggan_id' => $pelanggan_id,
                     'invoice' => $id,
                     'slug' => $slug,
-                    'tanggal_pesan' => date("Y-m-d H:i:s", strtotime('now')),
+                    'tanggal_penjualan' => date("Y-m-d H:i:s", strtotime('now')),
                     'total_harga' => $cart_total,
                     'kategori_pembayaran' => $kategori_pembayaran
                 ]);
 
                 $penjualan = Penjualan::latest()->first();
                 foreach ($filterCart as $cart) {
-                    // dd($penjualan);
                     PenjualanDetail::create([
                         'penjualan_id' => $penjualan->id,
+                        'stok_id' => $cart['id'],
+                        'harga_id' => $cart['id'],
                         'invoice' => $id,
                         'slug' => $slug,
                         'kode_produk' => $cart['kode_produk'],
@@ -257,15 +250,23 @@ class AgenTransaksiController extends Controller
                         'harga_produk' => $cart['price'],
                     ]);
                 }
-                Tempo::create([
+
+                Pembayaran::create([
                     'penjualan_id' => $penjualan->id,
                     'agen_id' => Auth::guard('agen')->user()->id,
-                    'pelanggan_id' => $pelanggan_id,
                     'invoice' => $id,
                     'slug' => $slug,
+                    'total_harga' => $cart_total,
+                    'kategori_pembayaran' => $kategori_pembayaran,
                 ]);
-                // $cek = Tempo::all();
-                // dd($cek);
+                $pembayaran = Pembayaran::latest()->first();
+
+                Tempo::create([
+                    'pembayaran_id' => $pembayaran->id,
+                    'invoice' => $id,
+                    'slug' => $slug,
+                    'total_harga' => $cart_total,
+                ]);
 
                 \Cart::session(Auth::guard('agen')->user())->clear();
                 DB::commit();
@@ -281,6 +282,7 @@ class AgenTransaksiController extends Controller
                 $all_cart = \Cart::session(Auth::guard('agen')->user())->getContent();
                 // dd($all_cart);
                 $filterCart = $all_cart->map(function ($produk) {
+                    // dd($produk);
                     return [
                         'id' => $produk->id,
                         'name' => $produk->name,
@@ -315,17 +317,20 @@ class AgenTransaksiController extends Controller
                     'pelanggan_id' => $pelanggan_id,
                     'invoice' => $id,
                     'slug' => $slug,
-                    'tanggal_pesan' => date("Y-m-d H:i:s", strtotime('now')),
+                    'tanggal_penjualan' => date("Y-m-d H:i:s", strtotime('now')),
                     'total_harga' => $cart_total,
                     'kategori_pembayaran' => $kategori_pembayaran,
                     'pembayaran' => $bayar,
                 ]);
 
                 $penjualan = Penjualan::latest()->first();
+                // dd($penjualan);
                 foreach ($filterCart as $cart) {
-                    // dd($penjualan);
+                    // dd($cart);
                     PenjualanDetail::create([
                         'penjualan_id' => $penjualan->id,
+                        'stok_id' => $cart['id'],
+                        'harga_id' => $cart['id'],
                         'invoice' => $id,
                         'slug' => $slug,
                         'kode_produk' => $cart['kode_produk'],
@@ -334,15 +339,24 @@ class AgenTransaksiController extends Controller
                         'harga_produk' => $cart['price'],
                     ]);
                 }
+
                 Pembayaran::create([
                     'penjualan_id' => $penjualan->id,
                     'agen_id' => Auth::guard('agen')->user()->id,
-                    'pelanggan_id' => $pelanggan_id,
+                    'invoice' => $id,
+                    'slug' => $slug,
+                    'total_harga' => $cart_total,
+                    'kategori_pembayaran' => $kategori_pembayaran,
+                ]);
+                $pembayaran = Pembayaran::latest()->first();
+
+                Cash::create([
+                    'pembayaran_id' => $pembayaran->id,
                     'invoice' => $id,
                     'slug' => $slug,
                     'tanggal_bayar' => date("Y-m-d H:i:s", strtotime('now')),
-                    'total_bayar' => $bayar,
-                    'kategori_pembayaran' => $kategori_pembayaran,
+                    'total_harga' => $cart_total,
+                    'jumlah_bayar' => $bayar,
                 ]);
 
                 \Cart::session(Auth::guard('agen')->user())->clear();

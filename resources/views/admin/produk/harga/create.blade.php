@@ -32,39 +32,33 @@
                             <form method="POST" action="/admin/produk/harga" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label class="control-label" for="stok_id">Daftar Kode Produk </label>
+                                    <label class="control-label" for="stok_id">Daftar Produk </label>
                                     <select class="form-select select2" name="stok_id" id="stok_id">
                                         <option value="">Pilih Kode Produk</option>
                                         <optgroup label="Kode Produk yang tersedia">
                                         @foreach ($stok as $s)
                                             @if (old('stok') == $s->id)
-                                                <option value="{{ $s->id }}" selected>{{ $s->kode }}</option>
+                                                <option value="{{ $s->id }}" selected>{{ $s->kode }} {{ $s->nama }}</option>
                                             @else
-                                                <option value="{{ $s->id }}">{{ $s->kode }}</option>
+                                                <option value="{{ $s->id }}">{{ $s->kode }} {{ $s->nama }}</option>
                                             @endif
                                         @endforeach
                                         </optgroup>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label" for="slug">Daftar Nama Produk </label>
-                                    <select class="form-select select2" name="slug" id="slug">
-                                        <option value="">Pilih Nama Produk</option>
-                                        <optgroup label="Nama Produk yang tersedia">
-                                        @foreach ($stok as $s)
-                                            @if (old('stok') == $s->slug)
-                                                <option value="{{ $s->slug }}" selected>{{ $s->nama }}</option>
-                                            @else
-                                                <option value="{{ $s->slug }}">{{ $s->nama }}</option>
-                                            @endif
-                                        @endforeach
-                                        </optgroup>
-                                    </select>
+                                    <label for="slug">Slug</label>
+                                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{ old('slug') }}" required>
+                                    @error('slug')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="col-lg-12 p-t-20">
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-                                        <input class="mdl-textfield__input @error('harga_terkini') is-invalid @enderror" type="text" id="date" name="harga_terkini">
-                                        @error('harga_terkini')
+                                        <input class="mdl-textfield__input @error('tanggal_harga_terkini') is-invalid @enderror" type="text" id="date" name="tanggal_harga_terkini">
+                                        @error('tanggal_harga_terkini')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -142,5 +136,69 @@
     </div>
 </div>
 <!-- end page content -->
+{{-- <script>
+    $(function () {
+           $('#stok_id').autocomplete({
+               source:function(request,response){
+                
+                   $.getJSON('?term='+request.term,function(data){
+                        var array = $.map(data,function(row){
+                            return {
+                                // value:row.stok_id,
+                                // label:row.nama,
+                                // name:row.name,
+                                slug:row.slug,
+                            }
+                        })
 
+                        response($.ui.autocomplete.filter(array,request.term));
+                   })
+               },
+               minLength:1,
+               delay:500,
+               select:function(event,ui){
+                //    $('#stok_id').val(ui.item.stok_id)
+                //    $('#buy_rate').val(ui.item.buy_rate)
+                   $('#slug').val(ui.item.slug)
+               }
+           })
+    })
+</script> --}}
+
+{{-- <script class="text/javascript">
+    $document.ready(function() {
+       $('#stok_id').on('change', function(){
+            $('#slug').val($(this).val());
+       }); 
+    });
+</script> --}}
+
+{{-- <script>
+    const kode = document.querySelector('#kode');
+    const slug = document.querySelector('#slug');
+
+    kode.addEventListener('change', function(){
+        fetch('/admin/produk/harga/produkSlug?kode=' + kode.value)
+        .then(response => response.json())
+        .then(data => slug.value = data.slug)
+    });
+</script> --}}
+{{-- <script>
+    $('#stok_id').change(function(){
+        var id = $(this).val();
+        var url = '{{ route("admin.produk.produkSlug", ":id") }}' ;
+        url = url.replace(':id', id);
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            success: function(response){
+                if(response != null){
+                $('#slug').val(response.slug);
+                }
+            }
+        });
+    });
+</script> --}}
 @endsection

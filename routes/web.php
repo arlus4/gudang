@@ -62,6 +62,7 @@ Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::get('/admin/produk/stok', [AdminProdukStokController::class, 'index']);
     Route::get('/admin/produk/stok/{stok:slug}', [AdminProdukStokController::class, 'harga'])->name('admin.produk.tambah.harga');
     Route::patch('/admin/produk/stok/{stok:slug}', [AdminProdukStokController::class, 'update_harga'])->name('admin.produk.update.harga');
+    Route::get('/admin/produk/harga/produkSlug', [AdminProdukHargaController::class, 'produkSlug'])->name('admin.produk.produkSlug');
     Route::resource('/admin/produk/harga', AdminProdukHargaController::class);
     Route::get('/admin/produk/return/pabrik', [AdminProdukReturn::class, 'pabrik']);
     Route::get('/admin/produk/return/pelanggan', [AdminProdukReturn::class, 'pelanggan']);
@@ -84,6 +85,7 @@ Route::middleware('auth:agen', 'verified', 'isagen')->group(function () {
     Route::post('/agen/transaksi/create/removeproduct/{id}', [AgenTransaksiController::class, 'removeProduct']);
     Route::post('/agen/transaksi/create/clear', [AgenTransaksiController::class, 'clear']);
     Route::post('/agen/transaksi/create/tambah/{id}', [AgenTransaksiController::class, 'tambah']);
+    // Route::post('/agen/transaksi/create/kurangi/{id}', [AgenTransaksiController::class, 'kurangi']);
     Route::post('/agen/transaksi/create/bayar', [AgenTransaksiController::class, 'bayar']);
     Route::get('/agen/pembayaran', [AgenPembayaranController::class, 'index']);
     Route::get('/agen/pembayaran/{penjualan:slug}', [AgenPembayaranController::class, 'bayar']);

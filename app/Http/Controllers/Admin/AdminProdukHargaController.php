@@ -54,9 +54,9 @@ class AdminProdukHargaController extends Controller
     {
         $data = $request->validate([
             'stok_id' => 'required',
-            'slug' => 'required | unique:produk_hargas',
-            'harga_terkini' => 'required',
+            'slug' => 'required',
             'harga_dasar' => 'required',
+            'tanggal_harga_terkini' => 'required',
             'harga_supplier' => 'required',
             'margin_harga_supplier' => 'required',
             'harga_retail' => 'required',
@@ -64,6 +64,20 @@ class AdminProdukHargaController extends Controller
         ]);
         ProdukHarga::create($data);
         return redirect('/admin/produk/harga')->with('success', 'Harga telah diupdate!');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\ProdukHarga  $harga
+     * @return \Illuminate\Http\Response
+     */
+    public function produkSlug(Request $request)
+    {
+        if ($request->has('term')) {
+            return ProdukStok::where('nama', 'LIKE', '%' . $request->term . '%')->get();
+        }
     }
 
     /**

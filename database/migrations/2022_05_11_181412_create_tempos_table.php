@@ -18,9 +18,9 @@ class CreateTemposTable extends Migration
             $table->foreignId('pembayaran_id')->reference('id')->on('pembayarans');
             $table->string('invoice');
             $table->string('slug');
-            $table->date('tanggal_bayar');
             $table->string('total_harga');
-            $table->string('jumlah_bayar');
+            $table->date('tanggal_bayar')->nullable();
+            $table->string('jumlah_bayar')->nullable();
             $table->string('sisa_bayar')->nullable();
             $table->date('tanggal_jatuh_tempo')->nullable();
             $table->boolean('approve')->default(false);

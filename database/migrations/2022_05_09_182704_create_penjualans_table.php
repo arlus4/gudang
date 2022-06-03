@@ -22,6 +22,7 @@ class CreatePenjualansTable extends Migration
             $table->string('slug');
             $table->date('tanggal_penjualan')->nullable();
             $table->string('total_harga');
+            $table->enum('kategori_pembayaran', ['cash', 'tempo'])->nullable();
             $table->boolean('approve')->default(false);
             $table->timestamps();
         });

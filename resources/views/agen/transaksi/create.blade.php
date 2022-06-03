@@ -58,7 +58,7 @@
                                                 </td>
                                                 <td>{{ $harga->produk_stok->kode }}</td>
                                                 <td>{{ $harga->produk_stok->nama }}</td>
-                                                <td>{{ $harga->harga_supplier }}</td>
+                                                <td>@currency($harga->harga_supplier)</td>
                                                 <td>{{ $harga->produk_stok->jumlah_produk }}</td>
                                                 <td>
                                                     <form class="d-inline" action="{{ url('/agen/transaksi/create/addproduct', $harga->id) }}" method="post">
@@ -117,16 +117,61 @@
                                                     {{-- <form action="{{url('/agen/transaksi/create/kurangi', $item['produkId'])}}" method="POST" style='display:inline;'>
                                                         @csrf
                                                         <button class="btn btn-sm btn-info" style="display: inline;padding:0.4rem 0.6rem!important">
-                                                            <i class="fa fa-minus"></i>
+                                                            
                                                         </button>
                                                     </form> --}}
-                                                    <div class="input-group input-group-sm">
-                                                        <form action="{{ url('/agen/transaksi/create/tambah', $item['produkId']) }}" class="d-inline" method="POST">
-                                                            <input type="text" class="form-control" name="jumlah_produk" id="jumlah_produk" value="{{$item['jumlah_produk']}}">
+                                                    {{-- <div class="input-group input-group-sm">
+                                                        <form action="{{ url('/agen/transaksi/create/tambah', $item['produkId']) }}" method="POST">
                                                             @csrf
-                                                            <button class="btn btn-info">Go!</button>
+                                                            <input type="text" class="form-control" name="jumlah_produk" id="jumlah_produk" value="{{$item['jumlah_produk']}}">
+                                                            <button class="btn btn-info btn-md btn-block">Go!</button>
                                                         </form>
-                                                    </div>
+                                                    </div> --}}
+                                                    {{-- <div class="input-group mb-3">
+                                                        <form action="{{url('/agen/transaksi/create/kurangi', $item['produkId'])}}" method="POST" style='display:inline;'>
+                                                            @csrf
+                                                            <div class="input-group-append">
+                                                                <button type="submit" class="btn btn-outline-danger">
+                                                                    <i class="fa fa-minus"></i>
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                        <input type="text" class="form-control text-center" name="jumlah_produk" id="jumlah_produk" value="{{$item['jumlah_produk']}}">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-info">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div> --}}
+                                                    <form action="{{ url('/agen/transaksi/create/tambah', $item['produkId']) }}" method="POST">
+                                                        @csrf
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" class="form-control text-center" name="jumlah_produk" id="jumlah_produk" value="{{$item['jumlah_produk']}}">
+                                                            <div class="input-group-append">
+                                                              <button class="btn btn-outline-primary" type="submit" id="button-addon2">
+                                                                <i class="fa fa-paper-plane"></i>
+                                                              </button>
+                                                            </div>
+                                                        </div>
+                                                        <span>Gunakan (+) / (-)</span>
+                                                    </form>
+                                                    {{-- <div class="form-group">
+                                                        <div class="input-group spinner">
+                                                            <form action="{{ url('/agen/transaksi/create/kurangi', $item['produkId']) }}" class="d-inline" method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-info" data-dir="dwn">
+                                                                    <span class="fa fa-minus"></span>
+                                                                </button>
+                                                            </form>
+                                                            <input type="text" class="form-control text-center" name="jumlah_produk" id="jumlah_produk" value="{{$item['jumlah_produk']}}">
+                                                            <form action="{{ url('/agen/transaksi/create/tambah', $item['produkId']) }}" class="d-inline" method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-danger" data-dir="up">
+                                                                    <span class="fa fa-plus"></span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div> --}}
                                                     {{-- <a style="display: inline">{{$item['jumlah_produk']}}</a> --}}
                                                     {{-- <form action="{{url('/agen/transaksi/create/tambah', $item['produkId'])}}" method="POST" style='display:inline;'>
                                                         @csrf
@@ -175,6 +220,7 @@
 										</li>										
                                     </ul>
                                 </div>
+
                                 <div class="profile-userbuttons">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -187,6 +233,8 @@
                                             </form>
                                         </div>
                                     </div>
+
+                                    {{-- Panel Pembayaran --}}
                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
