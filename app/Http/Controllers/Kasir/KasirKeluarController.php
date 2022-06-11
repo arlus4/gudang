@@ -45,6 +45,7 @@ class KasirKeluarController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->validate([
             'stok_id' => 'required',
             'nama' => 'required',
@@ -54,6 +55,8 @@ class KasirKeluarController extends Controller
         ]);
         $data['kasir_id'] = Auth::guard('kasir')->user()->id;
         BarangKeluar::create($data);
+        $stoks = ProdukStok::where('id', '=', $data['stok_id'])->decrement();
+
         return redirect('/kasir/produk/keluar')->with('success', 'Produk telah ditambah!');
     }
 
