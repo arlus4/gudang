@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminAgenController;
 use App\Http\Controllers\Agen\AgenProdukController;
 use App\Http\Controllers\Admin\AdminKasirController;
 use App\Http\Controllers\Agen\AgenProfileController;
+use App\Http\Controllers\Kasir\KasirKeluarController;
 use App\Http\Controllers\Kasir\KasirProdukController;
 use App\Http\Controllers\Admin\AdminPegawaiController;
 use App\Http\Controllers\Admin\AdminPesananController;
@@ -105,6 +106,8 @@ Route::middleware('auth:kasir', 'verified', 'iskasir')->group(function () {
     Route::resource('/kasir/profil', KasirProfileController::class);
     Route::get('/kasir/produk/stok/stokSlug', [KasirProdukController::class, 'stokSlug']); //diatas resource
     Route::resource('/kasir/produk/stok', KasirProdukController::class);
+    Route::get('/kasir/produk/keluar/keluarSlug', [KasirKeluarController::class, 'keluarSlug']); //diatas resource
+    Route::resource('/kasir/produk/keluar', KasirKeluarController::class);
     Route::get('/kasir/pelanggan/pelangganSlug', [KasirPelangganController::class, 'pelangganSlug']);
     Route::resource('/kasir/pelanggan', KasirPelangganController::class);
     Route::resource('/kasir/transaksi', KasirTransaksiController::class);

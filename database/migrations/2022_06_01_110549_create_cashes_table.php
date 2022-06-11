@@ -16,6 +16,7 @@ class CreateCashesTable extends Migration
         Schema::create('cashes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pembayaran_id')->reference('id')->on('pembayarans');
+            $table->foreignId('agen_id')->reference('id')->on('agen');
             $table->string('invoice');
             $table->string('slug');
             $table->date('tanggal_bayar');

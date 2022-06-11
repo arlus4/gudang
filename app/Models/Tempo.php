@@ -25,6 +25,15 @@ class Tempo extends Model
      */
     protected $guarded = ['id', 'created_at'];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'tanggal_jatuh_tempo' => 'date',
+    ];
+
     public function getRouteKeyName()
     {
         return 'slug';

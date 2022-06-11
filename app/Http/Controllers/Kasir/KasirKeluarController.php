@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Kasir;
 
-use App\Http\Controllers\Controller;
+use App\Models\ProdukStok;
 use App\Models\BarangKeluar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
-class KasirBarangKeluarController extends Controller
+class KasirKeluarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +18,9 @@ class KasirBarangKeluarController extends Controller
      */
     public function index()
     {
-        //
+        return view('kasir/produk/keluar/index', [
+            'title' => 'Barang Keluar'
+        ]);
     }
 
     /**
@@ -25,7 +30,11 @@ class KasirBarangKeluarController extends Controller
      */
     public function create()
     {
-        //
+        $stoks = ProdukStok::all();
+        return view('kasir/produk/keluar/create', [
+            'title' => 'Tambah Barang Keluar',
+            'stoks' => $stoks
+        ]);
     }
 
     /**
@@ -36,7 +45,16 @@ class KasirBarangKeluarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'stok_id' => 'required',
+            'nama' => 'required',
+            'jumlah' => 'required',
+            'tanggal_keluar' => 'required',
+            'deskripsi' => 'required',
+        ]);
+        $data['kasir_id'] = Auth::guard('kasir')->user()->id;
+        BarangKeluar::create($data);
+        return redirect('/kasir/produk/keluar')->with('success', 'Produk telah ditambah!');
     }
 
     /**
@@ -82,5 +100,12 @@ class KasirBarangKeluarController extends Controller
     public function destroy(BarangKeluar $barangKeluar)
     {
         //
+    }
+
+    // Fungsi Otomatisasi Slug
+    public function keluarSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(ProdukStok::class, 'slug', $request->nama);
+        return response()->json(['slug' => $slug]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Agen;
 use App\Models\Tempo;
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,10 +18,7 @@ class AgenPembayaranController extends Controller
      */
     public function index()
     {
-        // $pembayaran = Penjualan::where('agen_id', Auth::guard('agen')->user()->id)
-        //     ->where('kategori_pembayaran', 'tempo')->get();
-        $tempos = Tempo::where('approve', 1)->where('sisa_bayar', '<=', 0)->get();
-        // $tempo = $tempos->concat($pembayaran);
+        $tempos = Tempo::where('lunas', 0)->where('agen_id', Auth::guard('agen')->user()->id)->get();
         return view('agen/pembayaran/index', [
             'title' => 'Daftar Tagihan',
             'tempos' => $tempos

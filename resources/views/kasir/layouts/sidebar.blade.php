@@ -38,12 +38,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/pegawai/barang_masuk" class="nav-link">
-                                <i class="fa fa-mail-reply"></i> Barang Masuk
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/pegawai/barang_keluar" class="nav-link">
+                            <a href="/kasir/produk/keluar" class="nav-link">
                                 <i class="fa fa-mail-forward"></i> Barang Keluar
                             </a>
                         </li>

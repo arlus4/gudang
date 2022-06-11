@@ -19,7 +19,7 @@ class AdminKasirController extends Controller
      */
     public function index()
     {
-        $kasir = Kasir::where('is_kasir', 'true')->get();
+        $kasir = Kasir::all();
         return view('admin/pegawai/kasir/index', [
             'title' => 'Data Kasir',
             'kasir' => $kasir,

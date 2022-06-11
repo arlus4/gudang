@@ -57,6 +57,8 @@ class Agen extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'tanggal_lahir' => 'date',
+        'mulai_bekerja' => 'date',
     ];
 
     /**
@@ -91,10 +93,5 @@ class Agen extends Authenticatable
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function pelanggans()
-    {
-        return $this->hasMany(Pelanggan::class, 'agen_id');
     }
 }

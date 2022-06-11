@@ -280,9 +280,19 @@
                                                                 <label>Kategori Pembayaran</label>
                                                                 <select class="form-select" name="kategori" id="kategori" onchange="changeKategori()" required>
                                                                     <option selected disabled>Kategori Pembayaran</option>
-                                                                    <option value="tempo">Tempo</option>
                                                                     <option value="cash">Cash</option>
+                                                                    <option value="tempo">Tempo</option>
                                                                 </select>
+                                                            </div>
+                                                        </div>
+                                                        <div id="tempo">
+                                                            <div class="form-group row">
+                                                                <div class="col-lg-12 p-t-20">
+                                                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
+                                                                        <input class="mdl-textfield__input" type="text" id="date" name="tanggal_jatuh_tempo">
+                                                                        <label class="mdl-textfield__label">Tanggal Jatuh Tempo</label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div id="cash">
@@ -296,78 +306,16 @@
                                                             
                                                             <h3 class="font-weight-bold">Bayar:</h3>
                                                             <h1 class="font-weight-bold mb-5" id="pembayaran"></h1>
-                                                            
-                                                            {{-- <h3 class="font-weight-bold text-primary">Angsulan:</h3>
-                                                            <h1 class="font-weight-bold text-primary" id="kembalian"></h1> --}}
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                                             <button type="submit" id="saveButton" class="btn btn-success" onClick="openWindowReload(this)">Submit</button>
                                                         </div>
-                                                        {{-- <div id="tempo">
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" id="saveButton" class="btn btn-primary">Submit</button>
-                                                            </div>
-                                                        </div> --}}
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="modal fade right" id="fullHeightModalRight" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    
-                                        <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
-                                        <div class="modal-dialog modal-full-height modal-right" role="document">
-                                    
-                                        <!-- Sorry campur2 bahasa indonesia sama inggris krn kebiasaan make b.inggris eh ternyata buat aplikasi buat indonesia jadi gini deh  -->
-                                            <div class="modal-content">
-                                                <div class="modal-header indigo">
-                                                    <h6 class="modal-title w-100 text-light" id="myModalLabel">Billing Information</h6>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <table class="table table-sm table-borderless">
-                                                        <tr>
-                                                            <th width="60%">Sub Total</th>
-                                                            <th width="40%" class="text-right">Rp.
-                                                                {{ number_format($data_totals['sub_total'],2,',','.') }} </th>
-                                                        </tr>
-                                                        @if($data_totals['tax'] > 0)
-                                                        <tr>
-                                                            <th>PPN 10%</th>
-                                                            <th class="text-right">Rp.
-                                                                {{ number_format($data_totals['tax'],2,',','.') }}</th>
-                                                        </tr>
-                                                        @endif
-                                                    </table>
-                                                    <form action="{{ url('/transcation/bayar') }}" method="POST">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="oke">Input Nominal</label>
-                                                        <input id="oke" class="form-control" type="number" name="bayar" autofocus />
-                                                    </div>
-                                                    <h3 class="font-weight-bold">Total:</h3>
-                                                    <h1 class="font-weight-bold mb-5">Rp. {{ number_format($data_totals['total'],2,',','.') }}</h1>
-                                                    <input id="totalHidden" type="hidden" name="totalHidden" value="{{$data_totals['total']}}" />
-                                    
-                                                    <h3 class="font-weight-bold">Bayar:</h3>
-                                                    <h1 class="font-weight-bold mb-5" id="pembayaran"></h1>
-                                    
-                                                    <h3 class="font-weight-bold text-primary">Kembalian:</h3>
-                                                    <h1 class="font-weight-bold text-primary" id="kembalian"></h1>
-                                                </div>
-                                                
-                                                <div class="modal-footer justify-content-center">
-                                                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary" id="saveButton" disabled onClick="openWindowReload(this)">Save transcation</button>
-                                                </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -383,10 +331,11 @@
         var kategori = document.getElementById("kategori");
         if (kategori.value=="tempo") {
             document.getElementById("cash").style.visibility="hidden";
+            document.getElementById("tempo").style.visibility="visible";
+        } else {
+            document.getElementById("tempo").style.visibility="hidden";
+            document.getElementById("cash").style.visibility="visible";
         }
-    //     } else {
-    //         document.getElementById("cash").style.visibility="visible";
-    //     }
 
     //     lihat($kategori);
     //     const saveButton = document.getElementById("saveButton");

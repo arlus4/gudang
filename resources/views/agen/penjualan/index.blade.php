@@ -48,9 +48,9 @@
                                             <tr>
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $transaksi->invoice }}</td>
-                                                <td>{{ $transaksi->tanggal_pesan }}</td>
-                                                <td>{{ $transaksi->pelanggans->nama }}</td>
-                                                <td>{{ ucwords($transaksi->kategori_pembayaran) }}</td>
+                                                <td>{{ $transaksi->pembayarans->penjualans->tanggal_penjualan }}</td>
+                                                <td>{{ $transaksi->pembayarans->penjualans->pelanggans->nama }}</td>
+                                                <td>{{ ucwords($transaksi->pembayarans->kategori_pembayaran) }}</td>
                                                 <td>
                                                     <span class="label label-sm label-success"> Approved</span>
                                                 </td>

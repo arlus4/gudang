@@ -16,10 +16,12 @@ class CreateBarangKeluarsTable extends Migration
         Schema::create('barang_keluars', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kasir_id')->reference('id')->on('kasirs');
+            $table->foreignId('stok_id')->reference('id')->on('produk_stoks');
             $table->string('nama');
             $table->string('slug');
             $table->string('jumlah');
             $table->date('tanggal_keluar');
+            $table->text('deskripsi');
             $table->boolean('approve')->default(false);
             $table->timestamps();
         });

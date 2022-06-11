@@ -19,7 +19,7 @@ class AdminAgenController extends Controller
      */
     public function index()
     {
-        $agen = Agen::where('is_agen', 'true')->get();
+        $agen = Agen::all();
         return view('admin/pegawai/agen/index', [
             'title' => 'Data Sales',
             'agen' => $agen,

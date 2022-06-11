@@ -29,15 +29,24 @@ class AdminPembayaranController extends Controller
 
     public function bayar(Pembayaran $pembayaran)
     {
+        $tempo = Tempo::where('pembayaran_id', $pembayaran->id)->first();
+        // dd($tempo);
         // dd($pembayaran);
         if ($pembayaran->kategori_pembayaran == 'cash') {
             Cash::where('pembayaran_id', $pembayaran->id)->update([
                 'approve' => 1
             ]);
         } else {
-            Tempo::where('pembayaran_id', $pembayaran->id)->update([
-                'approve' => 1
-            ]);
+            if ($tempo->sisa_bayar != 0) {
+                Tempo::where('pembayaran_id', $pembayaran->id)->update([
+                    'approve' => 1,
+                ]);
+            } else {
+                Tempo::where('pembayaran_id', $pembayaran->id)->update([
+                    'lunas' => 1,
+                    'approve' => 1,
+                ]);
+            }
         }
         return redirect()->back()->with('success', 'Pembayaran Berhasil Dikonfirmasi');
     }

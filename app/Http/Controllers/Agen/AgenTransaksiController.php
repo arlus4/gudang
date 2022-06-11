@@ -187,6 +187,7 @@ class AgenTransaksiController extends Controller
         $kategori_pembayaran = request()->kategori;
         $cart_total = \Cart::session(Auth::guard('agen')->user())->getTotal();
         $bayar = request()->bayar;
+        $tempo = request()->tanggal_jatuh_tempo;
         // $kembalian = (int)$bayar - (int)$cart_total;
 
         if ($kategori_pembayaran == 'tempo') {
@@ -263,10 +264,12 @@ class AgenTransaksiController extends Controller
 
                 Tempo::create([
                     'pembayaran_id' => $pembayaran->id,
+                    'agen_id' => Auth::guard('agen')->user()->id,
                     'invoice' => $id,
                     'slug' => $slug,
                     'total_harga' => $cart_total,
-                    'sisa_bayar' => $cart_total
+                    'sisa_bayar' => $cart_total,
+                    'tanggal_jatuh_tempo' => $tempo
                 ]);
 
                 \Cart::session(Auth::guard('agen')->user())->clear();
@@ -353,6 +356,7 @@ class AgenTransaksiController extends Controller
 
                 Cash::create([
                     'pembayaran_id' => $pembayaran->id,
+                    'agen_id' => Auth::guard('agen')->user()->id,
                     'invoice' => $id,
                     'slug' => $slug,
                     'tanggal_bayar' => date("Y-m-d H:i:s", strtotime('now')),

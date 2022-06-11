@@ -15,7 +15,7 @@ class CreateProdukStoksTable extends Migration
     {
         Schema::create('produk_stoks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kasir_id');
+            $table->foreignId('kasir_id')->reference('id')->on('kasirs');
             $table->string('kode')->unique();
             $table->string('slug')->unique();
             $table->string('nama');
