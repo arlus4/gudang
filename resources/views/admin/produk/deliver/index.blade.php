@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane active fontawesome-demo" id="data">
+                        <div class="tab-pane fontawesome-demo" id="data">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card card-box">

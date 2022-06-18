@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Agen;
+use App\Models\Pelanggan;
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +22,11 @@ class AdminAgenController extends Controller
     public function index()
     {
         $agen = Agen::all();
+        $omset = Pembayaran::where('agen_id', auth()->user()->id)->sum('total_harga');
         return view('admin/pegawai/agen/index', [
             'title' => 'Data Sales',
             'agen' => $agen,
+            'omset' => $omset
             // 'chart' => $chart->build()
         ]);
     }
@@ -80,10 +84,11 @@ class AdminAgenController extends Controller
      */
     public function show(Agen $agen)
     {
+        $pelanggan = Pelanggan::where('agen_id', $agen->id)->get();
         return view('admin/pegawai/agen/show', [
             'title' => "Profil Sales $agen->nama",
             'agen' => $agen,
-            // 'pelanggan' => $agen->pelanggan
+            'pelanggans' => $pelanggan
         ]);
     }
 
@@ -163,6 +168,19 @@ class AdminAgenController extends Controller
         }
         Agen::destroy($agen->id);
         return redirect('/admin/pegawai/agen');
+    }
+
+    public function reward(Agen $agen)
+    {
+        $pelanggan = Pelanggan::where('agen_id', $agen->id)->count();
+        $omset = Pembayaran::where('agen_id', $agen->id)->sum('total_harga');
+        // dd($omset);
+        return view('admin/pegawai/agen/reward', [
+            'title' => "Reward Sales $agen->nama",
+            'agen' => $agen,
+            'pelanggan' => $pelanggan,
+            'omset' => $omset
+        ]);
     }
 
     // Fungsi Otomatisasi Slug

@@ -113,15 +113,6 @@
                                         </optgroup>
                                     </select>
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label>Multiple Select</label>
-                                    <select id="multiple" class="form-control select2-multiple" multiple>
-                                        <optgroup label="Alaskan/Hawaiian Time Zone">
-                                            <option value="AK">Alaska</option>
-                                            <option value="HI">Hawaii</option>
-                                        </optgroup>
-                                    </select>
-                                </div> --}}
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Photo Sales</label>
                                     <input type="file" class="default @error('photo_profil') is-invalid @enderror" id="photo_profil" name="photo_profil" multiple onchange="previewImage()">

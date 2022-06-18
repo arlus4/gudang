@@ -38,7 +38,7 @@
                                         <div class="row">
                                             <div class="col-md-6 col-sm-6 col-6">
                                                 <div class="btn-group">
-                                                    <a href="/admin/pegawai/kasir/create" id="addRow" class="btn btn-info"> Tambah Kasir Baru 
+                                                    <a href="/admin/pegawai/kasir/create" id="addRow" class="btn btn-circle btn-info"> Tambah Kasir Baru 
                                                         <i class="fa fa-plus"></i>
                                                     </a>
                                                 </div>
@@ -57,8 +57,8 @@
                                                         {{-- <th>Toko yang Dipegang</th> --}}
                                                         {{-- <th>Nota Hutang</th> --}}
                                                         {{-- <th>Jatuh Tempo</th> --}}
-                                                        <th>Keterangan</th>
-                                                        <th>Omset</th>
+                                                        {{-- <th>Keterangan</th> --}}
+                                                        {{-- <th>Omset</th> --}}
                                                         {{-- <th>Sebagai </th> --}}
                                                         <th> Action </th>
                                                     </tr>
@@ -74,20 +74,22 @@
                                                         <td class="left">
                                                             <a href="tel:{{ $k->kontak }}">{{ $k->kontak }}</a>
                                                         </td>
-                                                        <td class="left">{{ $k->keterangan }}</td>
-                                                        <td>{{ $k->omset }}</td>
-                                                        <td> 
-                                                            <div class="btn-group btn-group-circle btn-group-solid">
-                                                                <a href="/admin/pegawai/kasir/{{ $k->slug }}" type="button" class="btn btn-info"><i class="fa fa-info"></i></a>
-                                                                <a href="/admin/pegawai/kasir/{{ $k->slug }}/edit" type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                                <form class="d-inline" action="/admin/pegawai/kasir/{{ $k->slug }}" method="POST">
-                                                                    @method('delete')
-                                                                    @csrf
-                                                                    <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
-                                                                        <i class="fa fa-trash-o"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </div>
+                                                        {{-- <td class="left">{{ $k->keterangan }}</td> --}}
+                                                        {{-- <td>{{ $k->omset }}</td> --}}
+                                                        <td>
+                                                            <a href="/admin/pegawai/kasir/{{ $k->slug }}" type="button" class="btn btn-circle btn-primary btn-md m-b-10">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a href="/admin/pegawai/kasir/{{ $k->slug }}/edit" type="button" class="btn btn-circle btn-warning btn-md m-b-10">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                            <form class="d-inline" action="/admin/pegawai/kasir/{{ $k->slug }}" method="POST">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-circle btn-danger btn-md m-b-10" onclick="return confirm('Apakah Anda yakin?')">
+                                                                    <i class="fa fa-trash-o"></i>
+                                                                </button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -99,17 +101,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <ul class="nav customtab nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a href="#data" class="nav-link active" data-bs-toggle="tab">Data Sales</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#rangking" class="nav-link" data-bs-toggle="tab">Rangking Sales</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <!-- -->
-                    </div> --}}
                 </div>
             </div>
         </div>

@@ -47,7 +47,7 @@
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6 col-6">
                                                     <div class="btn-group">
-                                                        <a href="/admin/pegawai/agen/create" id="addRow" class="btn btn-info"> Tambah Sales Baru 
+                                                        <a href="/admin/pegawai/agen/create" id="addRow" class="btn btn-circle btn-info"> Tambah Sales Baru 
                                                             <i class="fa fa-plus"></i>
                                                         </a>
                                                     </div>
@@ -60,12 +60,7 @@
                                                             <th></th>
                                                             <th>Kode</th>
                                                             <th>Nama</th>
-                                                            {{-- <th>Alamat</th> --}}
                                                             <th>Kontak</th>
-                                                            {{-- <th>KTP</th> --}}
-                                                            {{-- <th>Toko yang Dipegang</th> --}}
-                                                            {{-- <th>Nota Hutang</th> --}}
-                                                            <th>Keterangan</th>
                                                             <th>Omset</th>
                                                             <th>Reward</th>
                                                             <th>Input Reward</th>
@@ -83,24 +78,27 @@
                                                             <td class="left">
                                                                 <a href="tel:{{ $s->kontak }}">{{ $s->kontak }}</a>
                                                             </td>
-                                                            <td class="left">{{ $s->keterangan }}</td>
-                                                            <td>{{ $s->omset }}</td>
+                                                            <td>@currency($omset)</td>
                                                             <td> ... </td>
-                                                            <td>
-                                                                <a href="#" type="button" class="btn btn-success"><i class="fa fa-info"></i></a>
+                                                            <td class="center">
+                                                                <a href="/admin/pegawai/agen/{{ $s->slug }}/reward" type="button" class="btn btn-circle btn-success btn-md m-b-10">
+                                                                    <i class="fa fa-external-link"></i>
+                                                                </a>
                                                             </td>
                                                             <td> 
-                                                                <div class="btn-group btn-group-circle btn-group-solid">
-                                                                    <a href="/admin/pegawai/agen/{{ $s->slug }}" type="button" class="btn btn-info"><i class="fa fa-info"></i></a>
-                                                                    <a href="/admin/pegawai/agen/{{ $s->slug }}/edit" type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                                    <form class="d-inline" action="/admin/pegawai/agen/{{ $s->slug }}" method="POST">
-                                                                        @method('delete')
-                                                                        @csrf
-                                                                        <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
-                                                                            <i class="fa fa-trash-o"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                </div>
+                                                                <a href="/admin/pegawai/agen/{{ $s->slug }}" type="button" class="btn btn-circle btn-primary btn-sm m-b-10">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
+                                                                <a href="/admin/pegawai/agen/{{ $s->slug }}/edit" type="button" class="btn btn-circle btn-warning btn-sm m-b-10">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <form class="d-inline" action="/admin/pegawai/agen/{{ $s->slug }}" method="POST">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-circle btn-danger btn-sm m-b-10" onclick="return confirm('Apakah Anda yakin?')">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </button>
+                                                                </form>
                                                             </td>
                                                         </tr>
                                                         @endforeach

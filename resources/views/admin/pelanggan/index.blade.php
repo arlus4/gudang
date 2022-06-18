@@ -28,69 +28,13 @@
                     <div class="card-body ">
                         <div class="mdl-tabs mdl-js-tabs">
                             <div class="mdl-tabs__tab-bar tab-left-side">
-                                <a href="#data" class="mdl-tabs__tab tabs_three is-active">Data Pelanggan</a>
-                                <a href="#baru" class="mdl-tabs__tab tabs_three">Pelanggan Baru</a>
+                                <a href="#baru" class="mdl-tabs__tab tabs_three is-active">Data Pelanggan</a>
                             </div>
-                            <div class="mdl-tabs__panel is-active p-t-20" id="data">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <th>&nbsp;</th>
-                                                <th>Kode</th>
-                                                <th>Nama</th>
-                                                <th>Pegawai</th>
-                                                <th>Kontak</th>
-                                                {{-- <th>Keterangan</th> --}}
-                                                <th>Limit</th>
-                                                {{-- <th>Omset</th> --}}
-                                                <th>Status </th>
-                                                <th> Action </th>
-                                            </tr>
-                                            @foreach ($toko as $data)
-                                            <tr class="odd gradeX">
-                                                <td class="patient-img">
-                                                    <img src="{{ asset('storage/'.$data->photo_ktp) }}" alt="Photo Profil {{ $data->nama }}">
-                                                </td>
-                                                <td class="left">{{ $data->kode }}</td>
-                                                <td>{{ $data->nama }}</td>
-                                                @if($data->agens != NULL)
-                                                    <td>{{ $data->agens->nama }}</td>
-                                                @else
-                                                    <td>{{ $data->kasirs->nama }}</td>
-                                                @endif
-                                                <td class="left">
-                                                    <a href="tel:{{ $data->kontak }}">{{ $data->kontak }}</a>
-                                                </td>
-                                                <td>{{ $data->limit }}</td>
-                                                {{-- <td>{{ $data->omset }}</td> --}}
-                                                <td>
-                                                    <span class="label label-sm label-success"> Approved </span>
-                                                </td>
-                                                <td> 
-                                                    <div class="btn-group btn-group-circle btn-group-solid">
-                                                        <a href="/admin/pelanggan/{{ $data->slug }}" class="btn btn-info"><i class="fa fa-info"></i></a>
-                                                        <a href="/admin/pelanggan/{{ $data->slug }}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                        <form action="/admin/pelanggan/{{ $data->slug }}" method="POST" class="d-inline">
-                                                            @method('delete')
-                                                            @csrf
-                                                            <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
-                                                                <i class="fa fa-trash-o"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="mdl-tabs__panel p-t-20" id="baru">
+                            <div class="mdl-tabs__panel is-active p-t-20" id="baru">
                                 <div class="table-responsive">
                                     <table class="table">
                                         <div class="btn-group">
-                                            <a href="/admin/pelanggan/create" id="addRow" class="btn btn-info"> Tambah Pelanggan Baru 
+                                            <a href="/admin/pelanggan/create" id="addRow" class="btn btn-circle btn-info"> Tambah Pelanggan Baru 
                                                 <i class="fa fa-plus"></i>
                                             </a>
                                         </div>

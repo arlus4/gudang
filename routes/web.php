@@ -57,13 +57,17 @@ Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::resource('/admin/profil', AdminProfileController::class);
     Route::resource('/admin/pegawai/admin', AdminPegawaiController::class);
     Route::get('/admin/pegawai/agen/agenSlug', [AdminAgenController::class, 'agenSlug']);
+    Route::get('/admin/pegawai/agen/{agen:slug}/reward', [AdminAgenController::class, 'reward']);
     Route::resource('/admin/pegawai/agen', AdminAgenController::class);
     Route::get('/admin/pegawai/kasir/kasirSlug', [AdminKasirController::class, 'kasirSlug']);
     Route::resource('/admin/pegawai/kasir', AdminKasirController::class);
+    Route::get('/admin/pelanggan/reward/{pelanggan:slug}', [AdminPelangganController::class, 'reward']);
+    Route::get('/admin/pelanggan/supplier', [AdminPelangganController::class, 'supplier']);
+    Route::get('/admin/pelanggan/retail', [AdminPelangganController::class, 'retail']);
     Route::get('/admin/pelanggan/pelangganSlug', [AdminPelangganController::class, 'pelangganSlug']);
-    Route::resource('/admin/pelanggan', AdminPelangganController::class);
     Route::get('/admin/pelanggan/limit/{pelanggan:slug}', [AdminPelangganController::class, 'tambahlimit'])->name('admin.pelanggan.limit');
     Route::patch('/admin/pelanggan/limit/{pelanggan:slug}', [AdminPelangganController::class, 'limit'])->name('admin.pelanggan.ubah');
+    Route::resource('/admin/pelanggan', AdminPelangganController::class);
     Route::get('/admin/produk/stok', [AdminProdukStokController::class, 'index']);
     Route::get('/admin/produk/stok/{stok:slug}', [AdminProdukStokController::class, 'harga'])->name('admin.produk.tambah.harga');
     Route::patch('/admin/produk/stok/{stok:slug}', [AdminProdukStokController::class, 'update_harga'])->name('admin.produk.update.harga');

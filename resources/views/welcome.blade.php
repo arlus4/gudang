@@ -48,7 +48,7 @@
                                 </a>
                             </div>
                         @else
-                        <span class="form404-title p-b-34 p-t-27">Selamat Datang!</span>
+                        <span class="form404-title p-b-34 p-t-27">Silahkan Login!</span>
                         <br><br>
                         {{-- <div class="container-login100-form-btn">
                             <a href="{{ route('login') }}" class="login100-form-btn">
@@ -70,17 +70,20 @@
                                     <i class="fa fa-user-circle-o"></i> Pelanggan
                                 </a> --}}
                                 <a href="/agen/login" type="button" class="btn btn-circle btn-lg btn-default ">
-                                    <i class="fa fa-users"></i> Login
+                                    <i class="fa fa-user"></i> Sales
+                                </a>
+                                <a href="/kasir/login" type="button" class="btn btn-circle btn-lg btn-default ">
+                                    <i class="fa fa-desktop"></i> Kasir
                                 </a>
                             </div>
                         </div>
-                        @if (Route::has('register'))
+                        {{-- @if (Route::has('register'))
                         <div class="text-center p-t-27">
                             <a class="txt1" href="{{ route('register') }}">
                                 Register
                             </a>
                         </div>
-                        @endif
+                        @endif --}}
                         @endauth
                     </form>
                     @endif

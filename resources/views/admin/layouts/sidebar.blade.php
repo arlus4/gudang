@@ -49,11 +49,29 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{ Request::is('admin/pelanggan*') ? 'active' : '' }}">
-                    <a href="/admin/pelanggan" class="nav-link">
+                <li class="nav-item {{ Request::is('admin/pelanggan*') ? 'active open' : '' }}">
+                    <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="material-icons">person</i>
                         <span class="title">Pelanggan</span>
+                        <span class="arrow {{ Request::is('admin/pelanggan*') ? 'open' : '' }}"></span>
                     </a>
+                    <ul class="sub-menu">
+                        <li class="nav-item">
+                            <a href="/admin/pelanggan" class="nav-link">
+                                <i class="fa fa-plus"></i> Pelanggan Baru
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/pelanggan/retail" class="nav-link">
+                                <i class="fa fa-user"></i> Pelanggan Retail
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/pelanggan/supplier" class="nav-link">
+                                <i class="fa fa-users"></i> Pelanggan Supplier
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item nav-item {{ Request::is('admin/produk/*') ? 'active open' : '' }}">
                     <a href="javascript:;" class="nav-link nav-toggle">

@@ -47,38 +47,6 @@
                             <div class="profile-desc">
                                 {{ $kasir->alamat }}
                             </div>
-                            {{-- <ul class="list-group list-group-unbordered">
-                                <li class="list-group-item">
-                                    <b>Gender </b>
-                                    <div class="profile-desc-item pull-right">Female</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Operation Done </b>
-                                    <div class="profile-desc-item pull-right">30+</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Degree </b>
-                                    <div class="profile-desc-item pull-right">M.Com.</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Designation</b>
-                                    <div class="profile-desc-item pull-right">Jr. Clerk</div>
-                                </li>
-                            </ul>
-                            <div class="row list-separated profile-stat">
-                                <div class="col-md-4 col-sm-4 col-6">
-                                    <div class="uppercase profile-stat-title"> 37 </div>
-                                    <div class="uppercase profile-stat-text"> Projects </div>
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-6">
-                                    <div class="uppercase profile-stat-title"> 51 </div>
-                                    <div class="uppercase profile-stat-text"> Tasks </div>
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-6">
-                                    <div class="uppercase profile-stat-title"> 61 </div>
-                                    <div class="uppercase profile-stat-text"> Uploads </div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>

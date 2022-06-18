@@ -50,7 +50,9 @@
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
                                     <b>Kontak </b>
-                                    <div class="profile-desc-item pull-right">{{ $agen->kontak }}</div>
+                                    <div class="profile-desc-item pull-right">
+                                        <a href="tel:{{ $agen->kontak }}">{{ $agen->kontak }}</a>
+                                    </div>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Usia </b>
@@ -62,7 +64,7 @@
                                 </li>
                                 <li class="list-group-item">
                                     <b>Mulai Bekerja</b>
-                                    <div class="profile-desc-item pull-right">{{ $agen->mulai_bekerja }}</div>
+                                    <div class="profile-desc-item pull-right">{{ $agen->mulai_bekerja->format('d-m-Y') }}</div>
                                 </li>
                             </ul>
                         </div>
@@ -97,12 +99,38 @@
                         </div>
                         <div class="card">
                             <div class="card-head">
-                                <header>Toko yang Dipegang { Model Harus diperbaiki }</header>
+                                <header>Toko yang Dipegang</header>
                             </div>
                             <div class="card-body no-padding height-9">
                                 <div class="row text-center m-t-10">
                                     <div class="col-md-12">
-                                        <p>{{ $agen->pelanggan }}</p>
+                                        <div class="table-scrollable">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Kode</th>
+                                                        <th>Nama</th>
+                                                        <th>Kontak</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                    $no=1
+                                                    @endphp
+                                                    @foreach($pelanggans as $pelanggan)
+                                                    <tr>
+                                                        <td>{{ $no++ }}</td>
+                                                        <td>{{ $pelanggan->kode }}</td>
+                                                        <td>{{ $pelanggan->nama }}</td>
+                                                        <td>
+                                                            <a href="tel:{{ $pelanggan->kontak }}">{{ $pelanggan->kontak }}</a>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

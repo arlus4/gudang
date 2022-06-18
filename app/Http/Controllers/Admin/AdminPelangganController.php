@@ -19,12 +19,13 @@ class AdminPelangganController extends Controller
      */
     public function index()
     {
-        $toko = Pelanggan::where('status', '1')->get();
-        $pelanggans = Pelanggan::where('status', '0')->get();
+        $pelanggan = Pelanggan::where('status', 0)->get();
+        $tokos = Pelanggan::where('status', 0)->get();
+        // dd($pelanggan);
         return view('admin/pelanggan/index', [
             'title' => 'Data Pelanggan',
-            'toko' => $toko,
-            'pelanggan' => $pelanggans
+            'pelanggan' => $pelanggan,
+            'toko' => $tokos
         ]);
     }
 
@@ -47,6 +48,15 @@ class AdminPelangganController extends Controller
             'status' => $request->status
         ]);
         return redirect('admin/pelanggan')->with('success', 'Data Berhasil Di Tambahkan');
+    }
+
+    public function reward(Pelanggan $pelanggan)
+    {
+        // dd($pelanggan);
+        return view('admin/pelanggan/reward', [
+            'title' => 'Tambah Reward Pelanggan',
+            'pelanggan' => $pelanggan
+        ]);
     }
 
     /**
@@ -187,5 +197,23 @@ class AdminPelangganController extends Controller
     {
         $slug = SlugService::createSlug(Pelanggan::class, 'slug', $request->kode);
         return response()->json(['slug' => $slug]);
+    }
+
+    public function retail()
+    {
+        $pelanggan = Pelanggan::where([['status', 1], ['kategori', 'retail']])->get();
+        return view('admin/pelanggan/retail', [
+            'title' => 'Data Pelanggan Retail',
+            'pelanggan' => $pelanggan
+        ]);
+    }
+
+    public function supplier()
+    {
+        $pelanggan = Pelanggan::where([['status', 1], ['kategori', 'supplier']])->get();
+        return view('admin/pelanggan/supplier', [
+            'title' => 'Data Pelanggan Supplier',
+            'pelanggan' => $pelanggan
+        ]);
     }
 }
