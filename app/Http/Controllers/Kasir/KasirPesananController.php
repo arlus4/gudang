@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Kasir;
 
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
 use App\Models\PenjualanDetail;
 use App\Http\Controllers\Controller;
 
-class AdminPesananController extends Controller
+class KasirPesananController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +16,20 @@ class AdminPesananController extends Controller
      */
     public function index()
     {
-        $pesanan = Penjualan::where('approve', '0')->get();
-        $penjualan = Penjualan::where('approve', '1')->get();
-        return view('admin/transaksi/pesanan/index', [
-            'title' => "Daftar Pesanan",
-            'pesanans' => $pesanan,
-            'penjualans' => $penjualan
+        $pesanan = Penjualan::where([['kasir_id', NULL], ['approve', 1], ['accept', 0]])->get();
+        // dd($pesanan);
+        return view('kasir/produk/pesanan/index', [
+            'title' => "Pesanan Masuk",
+            'pesanans' => $pesanan
         ]);
+    }
+
+    public function accept(Penjualan $pesanan)
+    {
+        $pesanan->update([
+            'accept' => 1,
+        ]);
+        return redirect()->back()->with('success', 'Pesanan berhasil diterima');
     }
 
     /**
@@ -54,23 +61,15 @@ class AdminPesananController extends Controller
      */
     public function show(Penjualan $pesanan)
     {
-        $detail = PenjualanDetail::where('penjualan_id', $pesanan->id)->get();
         // dd($pesanan);
-        return view('admin/transaksi/pesanan/show', [
-            'title' => 'Invoice',
+        $detail = PenjualanDetail::where('penjualan_id', $pesanan->id)->get();
+        // dd($detail);
+        return view('kasir/produk/pesanan/show', [
+            'title' => "Invoice",
             'details' => $detail,
             'transaksi' => $pesanan
         ]);
     }
-
-    public function approve(Penjualan $pesanan)
-    {
-        $pesanan->update([
-            'approve' => true,
-        ]);
-        return redirect()->back();
-    }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -103,7 +102,6 @@ class AdminPesananController extends Controller
      */
     public function destroy(Penjualan $pesanan)
     {
-        Penjualan::destroy($pesanan->id);
-        return redirect()->back();
+        //
     }
 }

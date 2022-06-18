@@ -16,7 +16,8 @@ class CreateHistoriesTable extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('produk_id')->reference('id')->on('produk_hargas')->nullable();
-            $table->foreignId('agen_id');
+            $table->foreignId('kasir_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('agen_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('jumlah_produk', 10);
             $table->string('ubah_produk', 10);
             $table->string('tipe', 50);

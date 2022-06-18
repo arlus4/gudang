@@ -72,6 +72,11 @@
                                 <i class="fa fa-money"></i> Harga Produk 
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/admin/produk/deliver" class="nav-link">
+                                <i class="fa fa-external-link"></i> Deliver Produk 
+                            </a>
+                        </li>
                         <li class="nav-item {{ Request::is('admin/produk/return/*') ? 'active open' : '' }}">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="fa fa-ban"></i> Return Produk
@@ -80,12 +85,12 @@
                             <ul class="sub-menu">
                                 <li class="nav-item">
                                     <a href="/admin/produk/return/pabrik" class="nav-link">
-                                        <i class="fa fa-ban"></i> Produk ke Pabrik
+                                        <i class="fa fa-building"></i> Produk Pabrik
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/admin/produk/return/pelanggan" class="nav-link">
-                                        <i class="fa fa-ban"></i> Produk dari Pelanggan
+                                        <i class="fa fa-user"></i> Produk Pelanggan
                                     </a>
                                 </li>
                             </ul>

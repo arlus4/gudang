@@ -24,6 +24,7 @@ class CreatePenjualansTable extends Migration
             $table->string('total_harga');
             $table->enum('kategori_pembayaran', ['cash', 'tempo'])->nullable();
             $table->boolean('approve')->default(false);
+            $table->boolean('accept')->default(false);
             $table->timestamps();
         });
     }

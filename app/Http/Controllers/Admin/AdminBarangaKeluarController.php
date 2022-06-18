@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Kasir;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\ProdukStok;
+use App\Http\Controllers\Controller;
 use App\Models\BarangKeluar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-use Cviebrock\EloquentSluggable\Services\SlugService;
 
-class KasirKeluarController extends Controller
+class AdminBarangaKeluarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +15,21 @@ class KasirKeluarController extends Controller
      */
     public function index()
     {
-        $produks = BarangKeluar::where('kasir_id', Auth::user()->id)->where('approve', 0)->get();
-        return view('kasir/produk/keluar/index', [
-            'title' => 'Barang Keluar',
-            'produks' => $produks,
+        $produks = BarangKeluar::where('approve', 0)->get();
+        $deliver = BarangKeluar::where('approve', 1)->get();
+        return view('admin/produk/deliver/index', [
+            'title' => "Delivery Produk",
+            'deliv' => $deliver,
+            'delivers' => $produks
         ]);
+    }
+
+    public function approve(BarangKeluar $deliver)
+    {
+        $deliver->update([
+            'approve' => true
+        ]);
+        return redirect()->back();
     }
 
     /**
@@ -32,11 +39,7 @@ class KasirKeluarController extends Controller
      */
     public function create()
     {
-        $stoks = ProdukStok::all();
-        return view('kasir/produk/keluar/create', [
-            'title' => 'Tambah Barang Keluar',
-            'stoks' => $stoks
-        ]);
+        //
     }
 
     /**
@@ -47,17 +50,7 @@ class KasirKeluarController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'stok_id' => 'required',
-            'nama' => 'required',
-            'jumlah' => 'required',
-            'tanggal_keluar' => 'required',
-            'deskripsi' => 'required',
-        ]);
-        $data['kasir_id'] = Auth::guard('kasir')->user()->id;
-        ProdukStok::where('id', '=', $data['stok_id'])->decrement('jumlah_produk', $data['jumlah']);
-        BarangKeluar::create($data);
-        return redirect('/kasir/produk/keluar')->with('success', 'Produk telah ditambah!');
+        //
     }
 
     /**
@@ -103,12 +96,5 @@ class KasirKeluarController extends Controller
     public function destroy(BarangKeluar $barangKeluar)
     {
         //
-    }
-
-    // Fungsi Otomatisasi Slug
-    public function keluarSlug(Request $request)
-    {
-        $slug = SlugService::createSlug(BarangKeluar::class, 'slug', $request->nama);
-        return response()->json(['slug' => $slug]);
     }
 }

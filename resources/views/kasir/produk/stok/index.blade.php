@@ -72,17 +72,19 @@
                                                             <td>{{ $s->jumlah_produk }}</td>
                                                             <td>{{ $s->deskripsi }}</td>
                                                             <td> 
-                                                                <div class="btn-group btn-group-circle btn-group-solid">
-                                                                    <a href="/kasir/produk/stok/{{ $s->slug }}" type="button" class="btn btn-info"><i class="fa fa-info"></i></a>
-                                                                    <a href="/kasir/produk/stok/{{ $s->slug }}/edit" type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                                    <form action="/kasir/produk/stok/{{ $s->slug }}" method="POST" class="d-inline">
-                                                                        @method('delete')
-                                                                        @csrf
-                                                                        <button type="submit" class="btn deepPink-bgcolor" onclick="return confirm('Apakah Anda yakin?')">
-                                                                            <i class="fa fa-trash-o"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                </div>
+                                                                <a href="/kasir/produk/stok/{{ $s->slug }}" type="button" class="btn btn-circle btn-info">
+                                                                    <i class="fa fa-info"></i>
+                                                                </a>
+                                                                <a href="/kasir/produk/stok/{{ $s->slug }}/edit" type="button" class="btn btn-circle btn-warning">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <form action="/kasir/produk/stok/{{ $s->slug }}" method="POST" class="d-inline">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-circle btn-danger" onclick="return confirm('Apakah Anda yakin?')">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </button>
+                                                                </form>
                                                             </td>
                                                         </tr>
                                                         @endforeach

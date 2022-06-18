@@ -49,7 +49,11 @@
                                         <td>{{ $data->invoice }}</td>
                                         <td>{{ $data->pembayarans->penjualans->pelanggans->nama }}</td>
                                         <td>{{ ucwords($data->pembayarans->kategori_pembayaran) }}</td>
+                                        @if ($data->pembayarans->agens == NULL)
+                                        <td>{{ $data->pembayarans->penjualans->kasirs->nama }}</td>
+                                        @else
                                         <td>{{ $data->pembayarans->agens->nama }}</td>
+                                        @endif
                                         <td>{{ $data->tanggal_bayar }}</td>
                                         <td> @currency($data->jumlah_bayar) </td>
                                         <td> @currency($data->total_harga ) </td>

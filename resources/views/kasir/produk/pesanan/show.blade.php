@@ -1,5 +1,5 @@
-@extends('admin/layouts/app')
-@section('admin/pesanan/show')
+@extends('kasir/layouts/app')
+@section('kasir/transaksi/create')
 
 <!-- start page content -->
 <div class="page-content-wrapper">
@@ -12,11 +12,11 @@
                 <ol class="breadcrumb page-breadcrumb pull-right">
                     <li>
                         <i class="fa fa-home"></i>&nbsp;
-                        <a class="parent-item" href="/admin/dashboard">Beranda</a>&nbsp;
+                        <a class="parent-item" href="/kasir/dashboard">Beranda</a>&nbsp;
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a class="parent-item" href="/admin/transaksi/pesanan">Daftar Pesanan</a>&nbsp;
+                        <a class="parent-item" href="/kasir/produk/pesanan">Pesanan Masuk</a>&nbsp;
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li class="active">{{ $title }}</li>
@@ -28,11 +28,7 @@
                 <div class="white-box">
                     <h3>
                         <b>{{ $transaksi->invoice }}</b> 
-                        @if ($transaksi->agens != NULL)
                         <span class="pull-right"> {{ $transaksi->agens->nama }} ({{ $transaksi->agens->kode }})</span>
-                        @else
-                        <span class="pull-right"> {{ $transaksi->kasirs->nama }} ({{ $transaksi->kasirs->kode }})</span>
-                        @endif
                     </h3>
                     <hr>
                     <div class="row">
@@ -59,9 +55,9 @@
                                         {{ $transaksi->pelanggans->kontak }}
                                     </p>
                                     <p class="m-t-30">
+                                        <b>Pesanan</b> 
                                         <i class="fa fa-calendar"></i>
-                                        <b>Pesanan</b> <br>
-                                        {{ $transaksi->tanggal_penjualan }}
+                                        {{ $transaksi->tanggal_pesan }}
                                     </p>
                                     <p>
                                         <b>Kategori :</b> {{ ucwords($transaksi->pelanggans->kategori) }}

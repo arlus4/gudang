@@ -12,9 +12,9 @@ class BarangKeluar extends Model
     use HasFactory;
 
     //fungsi eager loading laravel
-    protected $with = ['kasirs'];
+    protected $with = ['kasirs', 'produk_stoks'];
 
-    protected $table = 'produk_hargas';
+    protected $table = 'barang_keluars';
 
     /**
      * The attributes that should be cast.
@@ -55,5 +55,10 @@ class BarangKeluar extends Model
     public function kasirs()
     {
         return $this->belongsTo(Kasir::class, 'kasir_id');
+    }
+
+    public function produk_stoks()
+    {
+        return $this->belongsTo(ProdukStok::class, 'stok_id');
     }
 }

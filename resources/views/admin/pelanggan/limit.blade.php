@@ -42,12 +42,21 @@
                                 <input type="text" value="{{ $pelanggan->nama }}" class="form-control" readonly disabled>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-12 control-label">Nama Sales</label>
-                            <div class="col-sm-12">
-                                <input type="text" value="{{ $pelanggan->agens->nama }}" class="form-control" readonly disabled>
+                        @if($pelanggan->agens != NULL)
+                            <div class="form-group row">
+                                <label class="col-sm-12 control-label">Nama Sales</label>
+                                <div class="col-sm-12">
+                                    <input type="text" value="{{ $pelanggan->agens->nama }}" class="form-control" readonly disabled>
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="form-group row">
+                                <label class="col-sm-12 control-label">Nama Kasir</label>
+                                <div class="col-sm-12">
+                                    <input type="text" value="{{ $pelanggan->kasirs->nama }}" class="form-control" readonly disabled>
+                                </div>
+                            </div>
+                        @endif
                         <div class="form-group row">
                             <label class="col-sm-12 control-label">Kontak</label>
                             <div class="col-sm-12">

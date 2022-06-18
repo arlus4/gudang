@@ -17,6 +17,7 @@ class CreatePembayaransTable extends Migration
             $table->id();
             $table->foreignId('penjualan_id')->reference('id')->on('penjualans');
             $table->foreignId('agen_id')->reference('id')->on('agens')->nullable();
+            $table->foreignId('kasir_id')->reference('id')->on('kasirs')->nullable();
             $table->string('invoice');
             $table->string('slug');
             $table->string('total_harga');

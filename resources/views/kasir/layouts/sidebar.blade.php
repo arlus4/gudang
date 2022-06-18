@@ -42,6 +42,11 @@
                                 <i class="fa fa-mail-forward"></i> Barang Keluar
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/kasir/produk/pesanan" class="nav-link">
+                                <i class="fa fa-mail-reply"></i> Barang Pesanan
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -74,10 +79,10 @@
                         </li>
                     </ul> --}}
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ Request::is('kasir/penjualan*') ? 'active' : '' }}">
+                    <a href="/kasir/penjualan" class="nav-link">
                         <i class="material-icons">add_shopping_cart</i>
-                        <span class="title">Pesanan</span>
+                        <span class="title">Penjualan</span>
                     </a>
                 </li>
                 {{-- <li class="nav-item">

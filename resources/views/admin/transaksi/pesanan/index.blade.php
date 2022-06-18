@@ -40,7 +40,7 @@
                                                 <th>Invoice</th>
                                                 <th>Nama Pelanggan</th>
                                                 <th>Pembayaran</th>
-                                                <th>Nama Sales</th>
+                                                <th>Nama Pegawai</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
                                                 <th>&nbsp;</th>
@@ -51,7 +51,11 @@
                                                 <td>{{ $pesanan->invoice }}</td>
                                                 <td>{{ $pesanan->pelanggans->nama }}</td>
                                                 <td>{{ ucwords($pesanan->kategori_pembayaran) }}</td>
+                                                @if ($pesanan->agens != NULL)
                                                 <td>{{ $pesanan->agens->nama }}</td>
+                                                @else
+                                                <td>{{ $pesanan->kasirs->nama }}</td>
+                                                @endif
                                                 <td>
                                                     <span class="label label-sm label-warning"> Pending </span>
                                                 </td>
@@ -93,7 +97,7 @@
                                                 <th>Invoice</th>
                                                 <th>Nama Pelanggan</th>
                                                 <th>Pembayaran</th>
-                                                <th>Nama Sales</th>
+                                                <th>Nama Pegawai</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
                                                 <th>&nbsp;</th>
@@ -104,7 +108,11 @@
                                                 <td>{{ $penjualan->invoice }}</td>
                                                 <td>{{ $penjualan->pelanggans->nama }}</td>
                                                 <td>{{ ucwords($penjualan->kategori_pembayaran) }}</td>
-                                                <td>{{ $penjualan->agens->nama }}</td>
+                                                @if ($penjualan->agens != NULL)
+                                                <td>({{ $penjualan->agens->kode }}) {{ $penjualan->agens->nama }}</td>
+                                                @else
+                                                <td>({{ $penjualan->kasirs->kode }}) {{ $penjualan->kasirs->nama }}</td>
+                                                @endif
                                                 <td>
                                                     <span class="label label-sm label-success"> Approved </span>
                                                 </td>

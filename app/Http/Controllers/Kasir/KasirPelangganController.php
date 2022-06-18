@@ -17,7 +17,7 @@ class KasirPelangganController extends Controller
      */
     public function index()
     {
-        $pelanggan = Pelanggan::where('kasir_id', Auth::guard('kasir')->user()->id)->where('status', '0')->get();
+        $pelanggan = Pelanggan::where('kasir_id', Auth::guard('kasir')->user()->id)->get();
         // dd($pelanggan);
         return view('kasir/pelanggan/index', [
             'title' => 'Daftar Pelanggan',

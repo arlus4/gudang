@@ -25,17 +25,11 @@
                     <div class="card-body ">
                         <div class="mdl-tabs mdl-js-tabs">
                             <div class="mdl-tabs__tab-bar tab-left-side">
-                                <a href="#data" class="mdl-tabs__tab tabs_three is-active">Tabel {{ $title }}</a>
-                                {{-- <a href="#terima" class="mdl-tabs__tab tabs_three">{{ $title }} Diterima</a> --}}
+                                <a href="#masuk" class="mdl-tabs__tab tabs_three is-active">{{ $title }}</a>
                             </div>
-                            <div class="mdl-tabs__panel is-active p-t-20" id="data">
+                            <div class="mdl-tabs__panel is-active p-t-20" id="masuk">
                                 <div class="table-responsive">
                                     <table class="table">
-                                        <div class="btn-group">
-                                            <a href="/kasir/transaksi/create" id="addRow" class="btn btn-info"> Tambah Transaksi Baru 
-                                                <i class="fa fa-plus"></i>
-                                            </a>
-                                        </div>
                                         <tbody>
                                             @php
                                             $no=1
@@ -45,24 +39,37 @@
                                                 <th>Invoice</th>
                                                 <th>Nama Pelanggan</th>
                                                 <th>Pembayaran</th>
+                                                <th>Nama Sales</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
-                                                <th>Aksi</th>
+                                                <th>&nbsp;</th>
                                             </tr>
-                                            @foreach ($transaksis as $transaksi)
+                                            @foreach ($pesanans as $pesanan)
                                             <tr>
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $transaksi->invoice }}</td>
-                                                <td>{{ $transaksi->pelanggans->nama }}</td>
-                                                <td>{{ ucwords($transaksi->kategori_pembayaran) }}</td>
+                                                <td>{{ $pesanan->invoice }}</td>
+                                                <td>{{ $pesanan->pelanggans->nama }}</td>
+                                                <td>{{ ucwords($pesanan->kategori_pembayaran) }}</td>
+                                                @if ($pesanan->agens != NULL)
+                                                <td>{{ $pesanan->agens->nama }}</td>
+                                                @else
+                                                <td>{{ $pesanan->kasirs->nama }}</td>
+                                                @endif
                                                 <td>
                                                     <span class="label label-sm label-warning"> Pending </span>
                                                 </td>
-                                                <td>{{ $transaksi->total_harga }}</td>
+                                                <td>{{ $pesanan->total_harga }}</td>
                                                 <td>
-                                                    <a href="/kasir/transaksi/{{ $transaksi->slug }}" class="btn btn-circle btn-info">
+                                                    <a href="{{ route('pesanan.show', $pesanan->slug) }}" class="btn btn-circle btn-info btn-sm">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
+                                                    <form action="{{ route('kasir.produk.pesanan.accept', $pesanan->slug) }}" method="post" enctype="multipart/form" class="d-inline">
+                                                        @csrf
+                                                        @method('patch')
+                                                        <button type="submit" class="btn btn-circle btn-success btn-sm">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach

@@ -78,12 +78,21 @@
 											<label class="mdl-textfield__label" for="text4">Kontak</label>
 										</div>
 									</div>
-                                    <div class="col-lg-3 p-t-20">
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-width">
-											<input class="mdl-textfield__input" type="text" id="text4" value="{{ $pelanggan->agens->nama }}" readonly>
-											<label class="mdl-textfield__label" for="text4">Sales</label>
-										</div>
-									</div>
+                                    @if($pelanggan->agens != NULL)
+                                        <div class="col-lg-3 p-t-20">
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-width">
+                                                <input class="mdl-textfield__input" type="text" id="text4" value="{{ $pelanggan->agens->nama }}" readonly>
+                                                <label class="mdl-textfield__label" for="text4">Sales</label>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="col-lg-3 p-t-20">
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-width">
+                                                <input class="mdl-textfield__input" type="text" id="text4" value="{{ $pelanggan->kasirs->nama }}" readonly>
+                                                <label class="mdl-textfield__label" for="text4">Kasir</label>
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="col-lg-3 p-t-20">
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-width">
 											<input class="mdl-textfield__input" type="text" id="text4" value="Approved" readonly>

@@ -36,34 +36,34 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <th></th>
+                                                <th>&nbsp;</th>
                                                 <th>Kode</th>
                                                 <th>Nama</th>
-                                                <th>Sales</th>
+                                                <th>Pegawai</th>
                                                 <th>Kontak</th>
-                                                {{-- <th>Toko yang Dipegang</th> --}}
-                                                {{-- <th>Nota Hutang</th> --}}
-                                                {{-- <th>Jatuh Tempo</th> --}}
-                                                <th>Keterangan</th>
+                                                {{-- <th>Keterangan</th> --}}
                                                 <th>Limit</th>
-                                                <th>Omset</th>
+                                                {{-- <th>Omset</th> --}}
                                                 <th>Status </th>
                                                 <th> Action </th>
                                             </tr>
                                             @foreach ($toko as $data)
                                             <tr class="odd gradeX">
                                                 <td class="patient-img">
-                                                    <img src="{{ asset('storage/'.$data->photo_toko) }}" alt="Photo Profil {{ $data->nama }}">
+                                                    <img src="{{ asset('storage/'.$data->photo_ktp) }}" alt="Photo Profil {{ $data->nama }}">
                                                 </td>
                                                 <td class="left">{{ $data->kode }}</td>
                                                 <td>{{ $data->nama }}</td>
-                                                <td>{{ $data->agens->nama }}</td>
+                                                @if($data->agens != NULL)
+                                                    <td>{{ $data->agens->nama }}</td>
+                                                @else
+                                                    <td>{{ $data->kasirs->nama }}</td>
+                                                @endif
                                                 <td class="left">
                                                     <a href="tel:{{ $data->kontak }}">{{ $data->kontak }}</a>
                                                 </td>
-                                                <td class="left">{{ $data->keterangan }}</td>
                                                 <td>{{ $data->limit }}</td>
-                                                <td>{{ $data->omset }}</td>
+                                                {{-- <td>{{ $data->omset }}</td> --}}
                                                 <td>
                                                     <span class="label label-sm label-success"> Approved </span>
                                                 </td>
@@ -99,7 +99,7 @@
                                             <tr>
                                                 <th class="mdl-data-table__cell--non-numeric">Kode</th>
                                                 <th class="mdl-data-table__cell--non-numeric">Nama</th>
-                                                <th class="mdl-data-table__cell--non-numeric">Sales</th>
+                                                <th class="mdl-data-table__cell--non-numeric">Pegawai</th>
                                                 <th>Kategori</th>
                                                 <th>Kontak</th>
                                                 <th>Alamat</th>
@@ -110,7 +110,11 @@
                                             <tr>
                                                 <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->kode }}</td>
                                                 <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->nama }}</td>
-                                                {{-- <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->agens->nama }}</td> --}}
+                                                @if($pelanggan->agens != NULL)
+                                                    <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->agens->nama }}</td>
+                                                @else
+                                                    <td class="mdl-data-table__cell--non-numeric">{{ $pelanggan->kasirs->nama }}</td>
+                                                @endif
                                                 <td>{{ ucwords($pelanggan->kategori) }}</td>
                                                 <td>
                                                     <a href="tel:{{$pelanggan->kontak}}"> {{ $pelanggan->kontak }}</a>

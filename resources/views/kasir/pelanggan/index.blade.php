@@ -46,7 +46,7 @@
                                                 <th>Kategori</th>
                                                 <th>Kontak</th>
                                                 <th>Alamat</th>
-                                                {{-- <th>Status</th> --}}
+                                                <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                             @foreach ($pelanggans as $pelanggan)
@@ -58,9 +58,15 @@
                                                     <a href="tel:{{$pelanggan->kontak}}"> {{ $pelanggan->kontak }}</a>
                                                 </td>
                                                 <td>{{ $pelanggan->alamat }}</td>
-                                                {{-- <td>
-                                                    <span class="label label-sm label-warning"> Pending </span>
-                                                </td> --}}
+                                                @if ($pelanggan->status != true)
+                                                    <td>
+                                                        <span class="label label-sm label-warning"> Pending </span>
+                                                    </td>
+                                                @else
+                                                    <td>
+                                                        <span class="label label-sm label-success"> Approved </span>
+                                                    </td>
+                                                @endif
                                                 <td> &nbsp;
                                                     {{-- <a href="/agen/pelanggan/{{ $pelanggan->slug }}/edit" class="btn btn-circle btn-warning">
                                                         <i class="fa fa-edit"></i> 

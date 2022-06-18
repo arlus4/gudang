@@ -12,7 +12,7 @@ class ProdukHarga extends Model
     use HasFactory;
 
     //fungsi eager loading laravel
-    protected $with = ['produk_stok', 'produk_jasa'];
+    protected $with = ['produk_stok'];
 
     protected $table = 'produk_hargas';
 
@@ -55,10 +55,5 @@ class ProdukHarga extends Model
     public function produk_stok()
     {
         return $this->belongsTo(ProdukStok::class, 'stok_id');
-    }
-
-    public function produk_jasa()
-    {
-        return $this->belongsTo(ProdukJasa::class, 'jasa_id');
     }
 }

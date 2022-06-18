@@ -18,16 +18,19 @@ use App\Http\Controllers\Agen\AgenDashboardController;
 use App\Http\Controllers\Agen\AgenPelangganController;
 use App\Http\Controllers\Agen\AgenPenjualanController;
 use App\Http\Controllers\Agen\AgenTransaksiController;
+use App\Http\Controllers\Kasir\KasirPesananController;
 use App\Http\Controllers\Kasir\KasirProfileController;
 use App\Http\Controllers\Agen\AgenPembayaranController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminPelangganController;
 use App\Http\Controllers\Kasir\KasirDashboardController;
 use App\Http\Controllers\Kasir\KasirPelangganController;
+use App\Http\Controllers\Kasir\KasirPenjualanController;
 use App\Http\Controllers\Kasir\KasirTransaksiController;
 use App\Http\Controllers\Admin\AdminPembayaranController;
 use App\Http\Controllers\Admin\AdminProdukStokController;
 use App\Http\Controllers\Admin\AdminProdukHargaController;
+use App\Http\Controllers\Admin\AdminBarangaKeluarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +69,8 @@ Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::patch('/admin/produk/stok/{stok:slug}', [AdminProdukStokController::class, 'update_harga'])->name('admin.produk.update.harga');
     Route::get('/admin/produk/harga/produkSlug', [AdminProdukHargaController::class, 'produkSlug'])->name('admin.produk.produkSlug');
     Route::resource('/admin/produk/harga', AdminProdukHargaController::class);
+    Route::resource('/admin/produk/deliver', AdminBarangaKeluarController::class);
+    Route::patch('/admin/produk/deliver/{deliver:slug}', [AdminBarangaKeluarController::class, 'approve'])->name('admin.produk.deliver');
     Route::get('/admin/produk/return/pabrik', [AdminProdukReturn::class, 'pabrik']);
     Route::get('/admin/produk/return/pelanggan', [AdminProdukReturn::class, 'pelanggan']);
     Route::resource('admin/transaksi/pesanan', AdminPesananController::class);
@@ -108,7 +113,15 @@ Route::middleware('auth:kasir', 'verified', 'iskasir')->group(function () {
     Route::resource('/kasir/produk/stok', KasirProdukController::class);
     Route::get('/kasir/produk/keluar/keluarSlug', [KasirKeluarController::class, 'keluarSlug']); //diatas resource
     Route::resource('/kasir/produk/keluar', KasirKeluarController::class);
+    Route::resource('/kasir/produk/pesanan', KasirPesananController::class);
+    Route::patch('/kasir/produk/pesanan/{pesanan:slug}', [KasirPesananController::class, 'accept'])->name('kasir.produk.pesanan.accept');
     Route::get('/kasir/pelanggan/pelangganSlug', [KasirPelangganController::class, 'pelangganSlug']);
     Route::resource('/kasir/pelanggan', KasirPelangganController::class);
     Route::resource('/kasir/transaksi', KasirTransaksiController::class);
+    Route::post('/kasir/transaksi/create/addproduct/{id}', [KasirTransaksiController::class, 'addProduct']);
+    Route::post('/kasir/transaksi/create/removeproduct/{id}', [KasirTransaksiController::class, 'removeProduct']);
+    Route::post('/kasir/transaksi/create/clear', [KasirTransaksiController::class, 'clear']);
+    Route::post('/kasir/transaksi/create/tambah/{id}', [KasirTransaksiController::class, 'tambah']);
+    Route::post('/kasir/transaksi/create/bayar', [KasirTransaksiController::class, 'bayar']);
+    Route::resource('/kasir/penjualan', KasirPenjualanController::class);
 });

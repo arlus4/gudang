@@ -26,16 +26,10 @@
                         <div class="mdl-tabs mdl-js-tabs">
                             <div class="mdl-tabs__tab-bar tab-left-side">
                                 <a href="#data" class="mdl-tabs__tab tabs_three is-active">Tabel {{ $title }}</a>
-                                {{-- <a href="#terima" class="mdl-tabs__tab tabs_three">{{ $title }} Diterima</a> --}}
                             </div>
                             <div class="mdl-tabs__panel is-active p-t-20" id="data">
                                 <div class="table-responsive">
                                     <table class="table">
-                                        <div class="btn-group">
-                                            <a href="/kasir/transaksi/create" id="addRow" class="btn btn-info"> Tambah Transaksi Baru 
-                                                <i class="fa fa-plus"></i>
-                                            </a>
-                                        </div>
                                         <tbody>
                                             @php
                                             $no=1
@@ -43,20 +37,22 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Invoice</th>
+                                                <th>Tanggal Pesanan</th>
                                                 <th>Nama Pelanggan</th>
                                                 <th>Pembayaran</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
-                                                <th>Aksi</th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                             @foreach ($transaksis as $transaksi)
                                             <tr>
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $transaksi->invoice }}</td>
-                                                <td>{{ $transaksi->pelanggans->nama }}</td>
-                                                <td>{{ ucwords($transaksi->kategori_pembayaran) }}</td>
+                                                <td>{{ $transaksi->pembayarans->penjualans->tanggal_penjualan }}</td>
+                                                <td>{{ $transaksi->pembayarans->penjualans->pelanggans->nama }}</td>
+                                                <td>{{ ucwords($transaksi->pembayarans->kategori_pembayaran) }}</td>
                                                 <td>
-                                                    <span class="label label-sm label-warning"> Pending </span>
+                                                    <span class="label label-sm label-success"> Approved</span>
                                                 </td>
                                                 <td>{{ $transaksi->total_harga }}</td>
                                                 <td>
