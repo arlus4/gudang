@@ -6,6 +6,7 @@ use App\Models\Agen;
 use App\Models\Pelanggan;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
+use App\Charts\RangkingSalesChart;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,15 +20,15 @@ class AdminAgenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(RangkingSalesChart $chart)
     {
         $agen = Agen::all();
         $omset = Pembayaran::where('agen_id', auth()->user()->id)->sum('total_harga');
         return view('admin/pegawai/agen/index', [
             'title' => 'Data Sales',
             'agen' => $agen,
-            'omset' => $omset
-            // 'chart' => $chart->build()
+            'omset' => $omset,
+            'chart' => $chart->build()
         ]);
     }
 

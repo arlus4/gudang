@@ -93,7 +93,7 @@ class AgenTransaksiController extends Controller
         ];
 
         $stoks = ProdukHarga::all();
-        $pelanggans = Pelanggan::where('agen_id', Auth::guard('agen')->user()->id)->where([['status', 1], ['kategori', 'retail']])->get();
+        $pelanggans = Pelanggan::where('agen_id', Auth::guard('agen')->user()->id)->where([['status', 1], ['kategori', 'supplier']])->get();
         return view('agen/transaksi/create', [
             'title' => "Buat Pesanan",
             'stoks' => $stoks,

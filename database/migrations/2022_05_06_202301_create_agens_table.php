@@ -29,6 +29,7 @@ class CreateAgensTable extends Migration
             $table->string('password');
             $table->boolean('is_agen')->default(true);
             $table->text('alamat');
+            $table->string('omset')->nullable();
             $table->rememberToken();
             $table->string('photo_ktp', 2048)->nullable();
             $table->string('photo_profil', 2048)->nullable();

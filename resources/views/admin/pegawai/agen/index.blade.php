@@ -61,7 +61,7 @@
                                                             <th>Kode</th>
                                                             <th>Nama</th>
                                                             <th>Kontak</th>
-                                                            <th>Omset</th>
+                                                            {{-- <th>Omset</th> --}}
                                                             <th>Reward</th>
                                                             <th>Input Reward</th>
                                                             <th> Action </th>
@@ -78,7 +78,7 @@
                                                             <td class="left">
                                                                 <a href="tel:{{ $s->kontak }}">{{ $s->kontak }}</a>
                                                             </td>
-                                                            <td>@currency($omset)</td>
+                                                            {{-- <td>@currency($omset)</td> --}}
                                                             <td> ... </td>
                                                             <td class="center">
                                                                 <a href="/admin/pegawai/agen/{{ $s->slug }}/reward" type="button" class="btn btn-circle btn-success btn-md m-b-10">
@@ -123,8 +123,8 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="recent-report__chart">
-                                            <div id="chart1"></div>
-                                            {{-- {!! $chart->container() !!} --}}
+                                            {{-- <div class="reward"></div> --}}
+                                            {!! $chart->container() !!}
                                         </div>
                                     </div>
                                 </div>
@@ -136,8 +136,94 @@
         </div>
     </div>
 </div>
-<!-- end page content -->
-{{-- <script src="{{ $chart->cdn() }}"></script>
 
-{{ $chart->script() }} --}}
+{{-- <script type="text/javascript">
+    $(function () {
+        reward();
+    });
+
+    function reward() {
+        var options = {
+            chart: {
+            height: 350,
+            type: "bar",
+            },
+            plotOptions: {
+            bar: {
+                horizontal: false,
+                endingShape: "rounded",
+                columnWidth: "55%",
+            },
+            },
+            dataLabels: {
+            enabled: false,
+            },
+            stroke: {
+            show: true,
+            width: 2,
+            colors: ["transparent"],
+            },
+            series: [
+            {
+                name: "Net Profit",
+                data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+            },
+            {
+                name: "Revenue",
+                data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+            },
+            {
+                name: "Free Cash Flow",
+                data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+            },
+            ],
+            xaxis: {
+            categories: [
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+            ],
+            labels: {
+                style: {
+                colors: "#9aa0ac",
+                },
+            },
+            },
+            yaxis: {
+            title: {
+                text: "$ (thousands)",
+            },
+            labels: {
+                style: {
+                color: "#9aa0ac",
+                },
+            },
+            },
+            fill: {
+            opacity: 1,
+            },
+            tooltip: {
+            y: {
+                formatter: function (val) {
+                return "$ " + val + " thousands";
+                },
+            },
+            },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#reward"), options);
+
+        chart.render();
+    }
+</script> --}}
+<!-- end page content -->
+<script src="{{ $chart->cdn() }}"></script>
+
+{{ $chart->script() }}
 @endsection
