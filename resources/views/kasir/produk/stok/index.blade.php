@@ -26,9 +26,6 @@
                         <li class="nav-item">
                             <a href="#table" class="nav-link active" data-bs-toggle="tab">Tabel {{ $title }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#graph" class="nav-link" data-bs-toggle="tab">Grafik {{ $title }}</a>
-                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active fontawesome-demo" id="table">
@@ -91,25 +88,6 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="graph">
-                            <div class="row">
-                                <div class="card">
-                                    <div class="card-head">
-                                        <header>Grafik {{ $title }}</header>
-                                        <div class="tools">
-                                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
-                                            <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
-                                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="recent-report__chart">
-                                            <div id="chart1"></div>
                                         </div>
                                     </div>
                                 </div>

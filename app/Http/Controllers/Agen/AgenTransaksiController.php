@@ -383,7 +383,7 @@ class AgenTransaksiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Penjualan  $penjualan
+     * @param  \App\Models\Penjualan  $transaksi
      * @return \Illuminate\Http\Response
      */
     public function show(Penjualan $transaksi)

@@ -19,6 +19,7 @@ class AgenPembayaranController extends Controller
     public function index()
     {
         $tempos = Tempo::where('lunas', 0)->where('agen_id', Auth::guard('agen')->user()->id)->get();
+        // dd($tempos);
         return view('agen/pembayaran/index', [
             'title' => 'Daftar Tagihan',
             'tempos' => $tempos

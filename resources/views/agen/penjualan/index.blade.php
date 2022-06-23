@@ -29,7 +29,7 @@
                             </div>
                             <div class="mdl-tabs__panel is-active p-t-20" id="data">
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table table-striped table-bordered table-hover table-checkable order-column valign-middle" id="example4">
                                         <tbody>
                                             @php
                                             $no=1
@@ -58,6 +58,9 @@
                                                 <td>
                                                     <a href="/agen/transaksi/{{ $transaksi->slug }}" class="btn btn-circle btn-info">
                                                         <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <a href="/agen/transaksi/{{ $transaksi->slug }}/return" class="btn btn-circle btn-warning">
+                                                        <i class="fa fa-sign-out"></i>
                                                     </a>
                                                 </td>
                                             </tr>

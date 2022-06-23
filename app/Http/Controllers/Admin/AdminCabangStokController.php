@@ -3,35 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProdukReturn;
 use Illuminate\Http\Request;
 
-class AdminProdukReturn extends Controller
+class AdminCabangStokController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function pabrik()
-    {
-        return view('admin/produk/return/pabrik', [
-            'title' => 'Return Produk Pabrik',
-        ]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function pelanggan()
-    {
-        return view('admin/produk/return/pelanggan', [
-            'title' => 'Return Produk Pelanggan',
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +14,9 @@ class AdminProdukReturn extends Controller
      */
     public function index()
     {
-        //
+        return view('admin/cabang/stok/show', [
+            'title' => "Data Cabang"
+        ]);
     }
 
     /**
@@ -66,10 +43,10 @@ class AdminProdukReturn extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProdukReturn  $produkReturn
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ProdukReturn $produkReturn)
+    public function show($id)
     {
         //
     }
@@ -77,10 +54,10 @@ class AdminProdukReturn extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProdukReturn  $produkReturn
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProdukReturn $produkReturn)
+    public function edit($id)
     {
         //
     }
@@ -89,10 +66,10 @@ class AdminProdukReturn extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProdukReturn  $produkReturn
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProdukReturn $produkReturn)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -100,10 +77,10 @@ class AdminProdukReturn extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProdukReturn  $produkReturn
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProdukReturn $produkReturn)
+    public function destroy($id)
     {
         //
     }

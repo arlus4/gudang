@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AgenLoginController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\KasirLoginController;
+use App\Http\Controllers\Agen\AgenProdukReturn;
 use App\Http\Controllers\Admin\AdminProdukReturn;
 use App\Http\Controllers\Admin\AdminAgenController;
 use App\Http\Controllers\Agen\AgenProdukController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\Kasir\KasirDashboardController;
 use App\Http\Controllers\Kasir\KasirPelangganController;
 use App\Http\Controllers\Kasir\KasirPenjualanController;
 use App\Http\Controllers\Kasir\KasirTransaksiController;
+use App\Http\Controllers\Admin\AdminCabangStokController;
 use App\Http\Controllers\Admin\AdminPembayaranController;
 use App\Http\Controllers\Admin\AdminProdukStokController;
 use App\Http\Controllers\Admin\AdminProdukHargaController;
@@ -53,7 +55,6 @@ Route::post('/admin/login', [AdminLoginController::class, 'authenticate']);
 // Route untuk Admin
 Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/notif', [AdminDashboardController::class, 'notif']);
     Route::resource('/admin/profil', AdminProfileController::class);
     Route::resource('/admin/pegawai/admin', AdminPegawaiController::class);
     Route::get('/admin/pegawai/agen/agenSlug', [AdminAgenController::class, 'agenSlug']);
@@ -81,6 +82,7 @@ Route::middleware(['auth:sanctum', 'verified', 'isadmin'])->group(function () {
     Route::patch('/admin/transaksi/approve/{pesanan:slug}', [AdminPesananController::class, 'approve'])->name('admin.transaksi.approve');
     Route::get('/admin/transaksi/pembayaran', [AdminPembayaranController::class, 'index']);
     Route::patch('/admin/transaksi/pembayaran/{pembayaran:slug}', [AdminPembayaranController::class, 'bayar'])->name('admin.transaksi.pembayaran');
+    Route::resource('/admin/cabang/stok', AdminCabangStokController::class);
 });
 
 // Login Sales
@@ -94,6 +96,8 @@ Route::middleware('auth:agen', 'verified', 'isagen')->group(function () {
     Route::get('/agen/pelanggan/tokoSlug', [AgenPelangganController::class, 'tokoSlug']); //diatas resource
     Route::resource('/agen/pelanggan', AgenPelangganController::class);
     Route::resource('/agen/transaksi', AgenTransaksiController::class);
+    Route::get('/agen/transaksi/{transaksi:slug}/return', [AgenProdukReturn::class, 'kembali']);
+    Route::resource('/agen/return', AgenProdukReturn::class);
     Route::post('/agen/transaksi/create/addproduct/{id}', [AgenTransaksiController::class, 'addProduct']);
     Route::post('/agen/transaksi/create/removeproduct/{id}', [AgenTransaksiController::class, 'removeProduct']);
     Route::post('/agen/transaksi/create/clear', [AgenTransaksiController::class, 'clear']);

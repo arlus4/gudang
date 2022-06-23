@@ -6,6 +6,7 @@ use App\Models\Pelanggan;
 use App\Models\ProdukHarga;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\PelangganBaru;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;

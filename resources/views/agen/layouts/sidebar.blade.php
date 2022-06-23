@@ -37,6 +37,12 @@
                         <span class="title">Produk</span>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::is('agen/return*') ? 'active' : '' }}">
+                    <a href="/agen/return" class="nav-link">
+                        <i class="material-icons">history</i>
+                        <span class="title">Return Produk</span>
+                    </a>
+                </li>
                 <li class="nav-item {{ Request::is('agen/transaksi*') ? 'active' : '' }}">
                     <a href="/agen/transaksi" class="nav-link">
                         <i class="material-icons">add_shopping_cart</i>

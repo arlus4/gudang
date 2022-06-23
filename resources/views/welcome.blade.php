@@ -37,7 +37,7 @@
                     @if (Route::has('login'))
                     <form class="form-404">
                         <span class="login100-form-logo">
-                            <img alt="Login" src="{{ asset('assets/img/logo-2.png') }}">
+                            <img alt="Login" src="{{ asset('assets/logo/logo.png') }}">
                         </span>
                         @auth
                         <span class="form404-title p-b-34 p-t-27">Hai! {{ Auth::user()->name }}</span>

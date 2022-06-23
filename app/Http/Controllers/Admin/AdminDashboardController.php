@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Agen;
 use App\Models\Kasir;
 use App\Models\Pelanggan;
+use App\Models\ProdukStok;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\ProdukStok;
+use App\Notifications\PelangganBaru;
 
 class AdminDashboardController extends Controller
 {

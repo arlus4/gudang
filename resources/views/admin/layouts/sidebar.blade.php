@@ -73,7 +73,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item nav-item {{ Request::is('admin/produk/*') ? 'active open' : '' }}">
+                <li class="nav-item {{ Request::is('admin/produk/*') ? 'active open' : '' }}">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="material-icons">storage</i>
                         <span class="title">Produk</span>
@@ -203,20 +203,20 @@
                         </li>
                     </ul>
                 </li> --}}
-                <li class="nav-item">
+                <li class="nav-item {{ Request::is('admin/cabang*') ? 'active' : '' }}">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="material-icons">business</i>
                         <span class="title">Manajemen Cabang</span>
-                        <span class="arrow "></span>
+                        <span class="arrow {{ Request::is('admin/cabang/*') ? 'open' : '' }}"></span>
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item">
-                            <a href="/cabang/stok" class="nav-link">
+                            <a href="/admin/cabang/stok" class="nav-link nav-toggle">
                                 <i class="fa fa-database"></i> Stok Barang 
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/cabang/transfer_barang" class="nav-link nav-toggle">
+                            <a href="/admin/cabang/transfer_barang" class="nav-link nav-toggle">
                                 <i class="fa fa-exchange"></i> Transer Barang
                             </a>
                         </li>
